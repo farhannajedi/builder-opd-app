@@ -20,4 +20,9 @@ class Opd extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function config()
+    {
+        return $this->hasOne(OpdConfigs::class);
+    }
 }
