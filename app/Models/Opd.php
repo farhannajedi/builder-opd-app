@@ -25,4 +25,24 @@ class Opd extends Model
     {
         return $this->hasOne(OpdConfigs::class);
     }
+
+    public function newsCategories()
+    {
+        return $this->hasMany(NewsCategories::class);
+    }
+
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
+
+    public function galleries()
+    {
+        return $this->hasMany(Galleries::class);
+    }
 }
