@@ -45,4 +45,14 @@ class Opd extends Model
     {
         return $this->hasMany(Galleries::class);
     }
+
+    public function activities()
+    {
+        return $this->hasMany(Activities::class);
+    }
+
+    public function document()
+    {
+        return $this->hasMany(PlanningDocument::class);
+    }
 }
