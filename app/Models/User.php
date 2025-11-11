@@ -3,14 +3,21 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Filament\Models\Contracts\HasTenants;
+use Filament\Panel;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable // implements HasTenants
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -50,4 +57,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // untuk multi tenancy
+    // public function teams(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Opd::class);
+    // }
+
+    // public function getTenants(Panel $panel): Collection
+    // {
+    //     return $this->teams;
+    // }
+
+    // public function canAccessTenant(Model $tenant): bool
+    // {
+    //     return $this->teams()->whereKey($tenant)->exists();
+    // }
 }
