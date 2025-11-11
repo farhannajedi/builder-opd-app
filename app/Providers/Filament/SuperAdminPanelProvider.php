@@ -19,6 +19,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 
 class SuperAdminPanelProvider extends PanelProvider
 {
@@ -53,11 +54,10 @@ class SuperAdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->plugins(
-                [
-                    FilamentShieldPlugin::make()
-                ]
-            )
+            ->plugins([
+                FilamentShieldPlugin::make(),
+                FilamentSpatieRolesPermissionsPlugin::make()
+            ])
             ->authMiddleware([
                 Authenticate::class,
             ]);
