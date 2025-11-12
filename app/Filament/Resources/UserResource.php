@@ -39,7 +39,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->label('Password')
                     ->password()
-                    ->required(fn($record) => $record === null) // wajib isi saat create
+                    // ->required(fn($record) => $record === null) // wajib isi saat create
                     ->dehydrateStateUsing(fn($state) => !empty($state) ? Hash::make($state) : null)
                     ->dehydrated(fn($state) => filled($state)) // hanya update jika diisi
                     ->helperText('Isi password hanya jika ingin mengubah.'),
@@ -47,6 +47,10 @@ class UserResource extends Resource
                     ->label('OPD')
                     ->options(Opd::all()->pluck('name', 'id'))
                     ->searchable(),
+                Forms\Components\Select::make('roles')
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->preload(), // fungsinya adalah agar datanya ada
             ]);
     }
 
@@ -64,6 +68,8 @@ class UserResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('OPD'),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Roles'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime('d M Y'),

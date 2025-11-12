@@ -55,8 +55,8 @@ class SuperAdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->plugins([
-                FilamentShieldPlugin::make(),
-                FilamentSpatieRolesPermissionsPlugin::make()
+                FilamentShieldPlugin::make()
+                // FilamentSpatieRolesPermissionsPlugin::make()
             ])
             ->authMiddleware([
                 Authenticate::class,
