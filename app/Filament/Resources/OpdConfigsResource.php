@@ -25,7 +25,7 @@ class OpdConfigsResource extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('opd_id')
+                Forms\Components\Select::make('opd_id')
                     ->label('OPD')
                     ->searchable()
                     ->relationship('opd', 'name')
