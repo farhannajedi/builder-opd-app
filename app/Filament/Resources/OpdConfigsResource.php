@@ -147,4 +147,16 @@ class OpdConfigsResource extends Resource implements HasShieldPermissions
             'delete',
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $user = filament()->auth()->user();
+
+        if ($user && $user->opd_id) {
+            return parent::getEloquentQuery()
+                ->where('opd_id', $user->opd_id);
+        }
+
+        return parent::getEloquentQuery();
+    }
 }
