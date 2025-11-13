@@ -13,8 +13,9 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\OpdResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\OpdResource\RelationManagers;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 
-class OpdResource extends Resource
+class OpdResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Opd::class;
 
@@ -93,6 +94,17 @@ class OpdResource extends Resource
             'index' => Pages\ListOpds::route('/'),
             'create' => Pages\CreateOpd::route('/create'),
             'edit' => Pages\EditOpd::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
         ];
     }
 }

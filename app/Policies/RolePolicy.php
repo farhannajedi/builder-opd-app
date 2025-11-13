@@ -13,7 +13,7 @@ class RolePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('Super Admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
+        return $user->hasRole('super admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
     }
 
     /**
@@ -21,7 +21,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role): bool
     {
-        return $user->hasRole('Super Admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
+        return $user->hasRole('super admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
     }
 
     /**
@@ -29,7 +29,7 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole('Super Admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
+        return $user->hasRole('super admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
     }
 
     /**
@@ -37,7 +37,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return $user->hasRole('Super Admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
+        return $user->hasRole('super admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
     }
 
     /**
@@ -45,7 +45,7 @@ class RolePolicy
      */
     public function delete(User $user, Role $role): bool
     {
-        return $user->hasRole('Super Admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
+        return $user->hasRole('super admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
     }
 
     /**
@@ -53,7 +53,7 @@ class RolePolicy
      */
     public function restore(User $user, Role $role): bool
     {
-        return $user->hasRole('Super Admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
+        return $user->hasRole('super admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
     }
 
     /**
@@ -61,6 +61,6 @@ class RolePolicy
      */
     public function forceDelete(User $user, Role $role): bool
     {
-        return $user->hasRole('Super Admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
+        return $user->hasRole('super admin'); // gunakan sesuai nama dan sesuaikan abjad dan huruf besar
     }
 }
