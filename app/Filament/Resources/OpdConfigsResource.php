@@ -27,59 +27,43 @@ class OpdConfigsResource extends Resource implements HasShieldPermissions
             ->schema([
                 Forms\Components\Select::make('opd_id')
                     ->label('OPD')
-                    ->searchable()
                     ->relationship('opd', 'name')
                     ->preload()
                     ->required(),
                 Forms\Components\FileUpload::make('logo')
                     ->label('logo')
-                    ->image()
-                    ->directory('favicons')
-                    ->searchable()
-                    ->imagePreviewHeight('100'),
+                    ->image(),
                 Forms\Components\FileUpload::make('favicon')
                     ->label('Favicon')
                     ->image()
-                    ->imageResizeTargetWidth('64')
-                    ->imageResizeTargetHeight('64')
-                    ->directory('favicons')
-                    ->imagePreviewHeight('100')
                     ->nullable(),
                 Forms\Components\TextInput::make('address')
                     ->label('Alamat')
-                    ->nullable()
-                    ->searchable(),
+                    ->nullable(),
                 Forms\Components\TextInput::make('phone')
-                    ->label('Nomor Telepon')
-                    ->searchable(),
+                    ->label('Nomor Telepon'),
                 Forms\Components\TextInput::make('email')
                     ->label('Email')
-                    ->email()
-                    ->searchable(),
+                    ->email(),
                 Forms\Components\TextInput::make('facebook_url')
                     ->label('Facebook URL')
-                    ->searchable()
                     ->nullable(),
                 Forms\Components\TextInput::make('instagram_url')
                     ->label('Instagram URL')
-                    ->searchable()
                     ->nullable(),
                 Forms\Components\TextInput::make('twitter_url')
                     ->label('Twitter URL')
-                    ->searchable()
                     ->nullable(),
                 Forms\Components\TextInput::make('tiktok_url')
                     ->label('Tiktok URL')
-                    ->searchable()
                     ->nullable(),
                 Forms\Components\TextInput::make('youtube_url')
                     ->label('Youtube URL')
-                    ->searchable()
                     ->nullable(),
                 Forms\Components\Select::make('homepage_layout')
                     ->label('-')
-                    ->nullable()
-                    ->searchable(),
+                    ->nullable(),
+
             ]);
     }
 
@@ -89,21 +73,27 @@ class OpdConfigsResource extends Resource implements HasShieldPermissions
             ->columns([
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('Nama OPD')
-                    ->sortable()
-                    ->searchable(),
+                    ->sortable(),
                 Tables\Columns\ImageColumn::make('logo')
                     ->label('Logo')
-                    ->circular(),
+                    ->disk('public'),
                 Tables\Columns\ImageColumn::make('favicon')
                     ->label('Favicon')
-                    ->circular(),
+                    ->disk('public'),
                 Tables\Columns\TextColumn::make('phone')
                     ->label('Telepon'),
                 Tables\Columns\TextColumn::make('email')
                     ->label('Email'),
+                Tables\Columns\TextColumn::make('facebook_url')
+                    ->label('Facebook'),
+                Tables\Columns\TextColumn::make('instagram_url')
+                    ->label('Instagram'),
+                Tables\Columns\TextColumn::make('twitter_url')
+                    ->label('Twitter'),
+                Tables\Columns\TextColumn::make('youtube_url')
+                    ->label('Youtube'),
                 Tables\Columns\TextColumn::make('homepage_layout')
                     ->label('-'),
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime('d M Y H:i'),

@@ -33,14 +33,14 @@ class OpdResource extends Resource implements HasShieldPermissions
                 Forms\Components\TextInput::make('name')
                     ->label('Nama OPD')
                     ->required()
-                    ->live(onBlur: true) // otomatis update slug saat input selesai
-                    ->afterStateUpdated(function ($state, callable $set) {
-                        $set('slug', Str::slug($state));
-                    }),
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn($state, callable $set) => $set('slug', \Illuminate\Support\Str::slug($state))),
                 Forms\Components\TextInput::make('slug')
-                    ->label('slug / domain')
+                    ->label('slug')
                     ->required()
-                    ->unique(),
+                    ->unique()
+                    ->disabled()
+                    ->dehydrated(),
                 Forms\Components\TextInput::make('domain')
                     ->label('domain')
                     ->helperText('note : Domain digunakan sebagai subdomain website'),

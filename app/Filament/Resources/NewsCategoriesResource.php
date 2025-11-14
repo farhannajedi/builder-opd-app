@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use App\Models\NewsCategories;
+use Pages\DeleteNewsCategories;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -25,10 +26,21 @@ class NewsCategoriesResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('opd_id')
-                    ->label('OPD'),
+                    ->label('OPD')
+                    ->relationship('opd', 'name')
+                    ->preload()
+                    ->dehydrated(),
+                // ->default(fn() => filament()->auth()->user()->opd_id)
+                // ->hidden(fn() => !filament()->auth()->user()->hasRole('super admin')),
+                //->options(
+                //     filament()->auth()->user()->hasRole('super admin')
+                //         ? \App\Models\Opd::pluck('name', 'id')
+                //         : \App\Models\Opd::where('id', filament()->auth()->user()->opd_id)->pluck('name', 'id')
+                // )
+                // ->disabled(!filament()->auth()->user()->hasRole('admin BPKAD')),
                 Forms\Components\TextInput::make('title')
                     ->label('Nama Kategori Berita')
-                    ->placeholder('Masukkan nama kategori untuk berita anda...')
+                    ->placeholder('Masukkan nama kategori untuk berita anda....')
                     ->live(onBlur: true)
                     ->afterStateUpdated(function ($state, callable $set) {
                         $set('slug', Str::slug($state));
@@ -36,7 +48,7 @@ class NewsCategoriesResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('slug')
                     ->label('Slug')
-                    ->placeholder('Akan otomatis terisi sesuai judul')
+                    ->placeholder('Akan otomatis terisi sesuai isi judul')
                     ->required()
                     ->disabled()
                     ->dehydrated(),
@@ -106,15 +118,17 @@ class NewsCategoriesResource extends Resource
     }
 
     // hanya user tertentu yang dapat mengakses opd milik mereka masing-masing
-    public static function getEloquentQuery(): Builder
-    {
-        $user = filament()->auth()->user();
+    // public static function getEloquentQuery(): Builder
+    // {
+    //     $user = filament()->auth()->user();
 
-        if ($user && $user->opd_id) {
-            return parent::getEloquentQuery()
-                ->where('opd_id', $user->opd_id);
-        }
+    //     // Superadmin bisa melihat semua
+    //     if ($user->is_superadmin) {
+    //         return parent::getEloquentQuery();
+    //     }
 
-        return parent::getEloquentQuery();
-    }
+    //     // admin opd hanya bisa melihat data opd mereka sendiri
+    //     return parent::getEloquentQuery()
+    //         ->where('opd_id', $user->opd_id);
+    // }
 }
