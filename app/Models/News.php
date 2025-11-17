@@ -21,7 +21,7 @@ class News extends Model
         return $this->belongsTo(Opd::class);
     }
 
-    public function newsCategories()
+    public function category()
     {
         return $this->belongsTo(NewsCategories::class, 'category_id');
     }
