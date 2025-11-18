@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Models\NewsCategories;
 use Pages\DeleteNewsCategories;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\NewsCategoriesResource\Pages;
@@ -23,8 +24,23 @@ class NewsCategoriesResource extends Resource
 
     public static function form(Form $form): Form
     {
+        // ini adalah validasi, agar admin opd tidak dapat memilih opd, namun otomatis terisi berdasarkan user->opd id
+        $auth = Auth::user();
+
+        // Tentukan input untuk opd_id berdasarkan role user
+        $opdField = is_null($auth->opd_id)
+            ? Forms\Components\Select::make('opd_id')
+            ->label('OPD')
+            ->relationship('opd', 'name')
+            ->searchable()
+            ->preload()
+            ->required()
+            : Forms\Components\Hidden::make('opd_id')
+            ->default($auth->opd_id);
+
         return $form
             ->schema([
+                $opdField,
                 Forms\Components\Select::make('opd_id')
                     ->label('OPD')
                     ->relationship('opd', 'name')
@@ -58,6 +74,18 @@ class NewsCategoriesResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            // pemisahan data berdasarkan opd id
+            ->modifyQueryUsing(function (builder $query) {
+                $auth = Auth::user();
+
+                // jika super admin, maka tampilkan semua data
+                if (is_null($auth->opd_id)) {
+                    return;
+                }
+
+                // admin opd
+                $query->where('opd_id', $auth->opd_id);
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('Nama OPD')

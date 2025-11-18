@@ -25,11 +25,25 @@ class ServiceResource extends Resource
 
     public static function form(Form $form): Form
     {
+        // ini adalah validasi, agar admin opd tidak dapat memilih opd, namun otomatis terisi berdasarkan user->opd id
+        $auth = Auth::user();
+
+        // Tentukan input untuk opd_id berdasarkan role user
+        $opdField = is_null($auth->opd_id)
+            ? Forms\Components\Select::make('opd_id')
+            ->label('OPD')
+            ->relationship('opd', 'name')
+            ->searchable()
+            ->preload()
+            ->required()
+            : Forms\Components\Hidden::make('opd_id')
+            ->default($auth->opd_id);
+
         return $form
             ->schema([
-                Forms\Components\Select::make('opd_id')
-                    ->label('OPD')
-                    ->relationship('opd', 'name'),
+                // tambahkan ini
+                $opdField,
+
                 Forms\Components\TextInput::make('name')
                     ->label('Nama')
                     ->required(),
@@ -43,6 +57,7 @@ class ServiceResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            // pemisahan data berdasarkan opd id
             ->modifyQueryUsing(function (builder $query) {
                 $auth = Auth::user();
 
