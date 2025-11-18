@@ -45,7 +45,8 @@ class UserResource extends Resource
                     ->helperText('Isi password hanya jika ingin mengubah.'),
                 Forms\Components\Select::make('opd_id')
                     ->label('OPD')
-                    ->options(Opd::all()->pluck('name', 'id'))
+                    ->relationship('opd', 'name')
+                    ->preload()
                     ->searchable(),
                 Forms\Components\Select::make('roles')
                     ->multiple()

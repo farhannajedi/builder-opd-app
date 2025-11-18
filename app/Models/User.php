@@ -4,7 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use Filament\Models\Contracts\HasTenants;
+use Filament\Models\Contracts\FilamentUser;
+// use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable // implements HasTenants
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
@@ -28,6 +29,7 @@ class User extends Authenticatable // implements HasTenants
         'name',
         'email',
         'password',
+        'opd_id',
     ];
 
     public function opd()
@@ -56,6 +58,12 @@ class User extends Authenticatable // implements HasTenants
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
+        // return $this->hasRole('super admin');
     }
 
     // untuk multi tenancy
