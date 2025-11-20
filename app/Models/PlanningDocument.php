@@ -9,6 +9,7 @@ class PlanningDocument extends Model
     protected $fillable = [
         'opd_id',
         'title',
+        'slug',
         'content',
         'file',
     ];
