@@ -1,0 +1,23 @@
+.html-content {
+  @apply space-y-2
+}
+
+.html-content a {
+  @apply underline font-medium text-blue-600;
+}
+
+.html-content h2 {
+  @apply text-2xl font-bold;
+}
+
+.html-content h3 {
+  @apply text-lg font-semibold;
+}
+
+.html-content ul {
+  @apply marker:text-slate-600 list-disc list-outside pl-8;
+}
+
+.html-content ol {
+  @apply marker:text-slate-600 list-decimal list-outside pl-8;
+}
