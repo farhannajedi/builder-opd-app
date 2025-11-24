@@ -63,13 +63,19 @@
             <li class="">
                 <a href="/berita"
                     class="{{ ($activePage ?? '') === 'berita' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 p-2 uppercase">
-                    berita
+                    Berita
                 </a>
             </li>
             <li class="">
                 <a href="/planning-dokumen"
                     class="{{ ($activePage ?? '') === 'planning-dokumen' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 p-2 uppercase">
                     Arsip Dokumen
+                </a>
+            </li>
+            <li class="">
+                <a href="/layanan"
+                    class="{{ ($activePage ?? '') === 'layanan' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 p-2 uppercase">
+                    Layanan
                 </a>
             </li>
             <!-- <li class="group relative">
@@ -140,6 +146,17 @@
         </a>
         <a href="/planning-dokumen" class="w-full text-lg font-base flex justify-between hover:bg-slate-100 p-2 group">
             <span class="group-hover:text-slate-800">Arsip Dokumen</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="h-8 w-8 rotate-45 group-hover:rotate-90 duration-200 text-slate-400 group-hover:text-slate-800">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 5l0 14" />
+                <path d="M18 11l-6 -6" />
+                <path d="M6 11l6 -6" />
+            </svg>
+        </a>
+        <a href="/layanan" class="w-full text-lg font-base flex justify-between hover:bg-slate-100 p-2 group">
+            <span class="group-hover:text-slate-800">Layanan</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                 class="h-8 w-8 rotate-45 group-hover:rotate-90 duration-200 text-slate-400 group-hover:text-slate-800">
