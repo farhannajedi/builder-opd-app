@@ -16,6 +16,11 @@ class News extends Model
         'published_at',
     ];
 
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
+
     public function opd()
     {
         return $this->belongsTo(Opd::class);

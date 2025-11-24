@@ -1,11 +1,13 @@
 @props(['activePage'])
 
+@php $cfg = $opdConfig ?? null; @endphp
+<!-- menu navigasi -->
 <nav x-data="{ mobileOpen: false }" class="bg-white sticky top-0 z-50 shadow">
     <div class="max-w-screen-lg px-2 flex items-center justify-between mx-auto w-full py-4">
         <div class="flex gap-6">
             <a href="/">
-                <img src="{{ asset('assets/images/logo_kab.png') }}" class="w-auto h-12 hover:scale-110 duration-200"
-                    alt="logo_kab"></a>
+                <img src="{{ $opdConfigs?->logo ? Storage::url($opdConfigs->logo) : asset('assets/images/logo_kab.png') }}"
+                    class="w-auto h-12 hover:scale-110 duration-200" alt="logo_kab"></a>
             <img src="{{ asset('assets/images/komdigi.png') }}" class="w-auto h-12 hover:scale-110 duration-200"
                 alt="logo_hut">
         </div>
@@ -64,7 +66,13 @@
                     berita
                 </a>
             </li>
-            <li class="group relative">
+            <li class="">
+                <a href="/arsip-dokumen"
+                    class="{{ ($activePage ?? '') === 'arsip-dokumen' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 p-2 uppercase">
+                    Arsip Dokumen
+                </a>
+            </li>
+            <!-- <li class="group relative">
                 <a href="javacript:void(0)"
                     class="{{ ($activePage ?? '') === 'informasi-publik' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 py-2 flex items-center gap-1">
                     <span>Informasi Publik</span>
@@ -88,19 +96,19 @@
                         </div>
                     </a>
                 </div>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
                 <a href="/tautan-aplikasi"
                     class="{{ ($activePage ?? '') === 'tautan-aplikasi' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 py-2 uppercase">
                     Tautan Aplikasi
                 </a>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
                 <a href="https://ppid.karimunkab.go.id/" target="_blank"
                     class="hover:text-slate-800 border-transparent border-b-2 h-full block hover:border-b-2 py-2 uppercase">
                     PPID
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
     {{-- Mobile Menu --}}
