@@ -1,4 +1,4 @@
-@php
+<!-- @php
 // daftar OPD unik (untuk sidebar)
 $opdList = \App\Models\PlanningDocument::with('opd')
 ->get()
@@ -11,9 +11,13 @@ $opdList = \App\Models\PlanningDocument::with('opd')
 $documents = \App\Models\PlanningDocument::with('opd')
 ->latest()
 ->paginate(10);
+@endphp -->
+
+@php
+$documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
 @endphp
 
-@extends('layouts.app', ['activePage' => 'informasi-publik'])
+@extends('layouts.app', ['activePage' => 'Arsip Dokumen'])
 
 @section('content')
 <section class="max-w-screen-lg px-2 mx-auto w-full">
@@ -23,7 +27,7 @@ $documents = \App\Models\PlanningDocument::with('opd')
 
     <div class="flex flex-col md:flex-row gap-2 py-16">
         {{-- SIDEBAR --}}
-        <div class="w-full md:w-1/3 p-4 h-min border rounded-lg border-slate-200 space-y-2">
+        <!-- <div class="w-full md:w-1/3 p-4 h-min border rounded-lg border-slate-200 space-y-2">
             <p class="text-lg font-medium text-slate-600">Organisasi/OPD</p>
             <hr class="border-t border-slate-200">
 
@@ -44,7 +48,7 @@ $documents = \App\Models\PlanningDocument::with('opd')
                 </li>
                 @endforeach
             </ul>
-        </div>
+        </div> -->
 
         {{-- LIST DOKUMEN --}}
         <div class="w-full md:w-2/3 p-4 border rounded-lg border-slate-200 space-y-4">

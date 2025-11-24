@@ -12,6 +12,7 @@ class PlanningDocument extends Model
         'slug',
         'content',
         'file',
+        'published_at',
     ];
 
     public function opd()

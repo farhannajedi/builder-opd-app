@@ -67,8 +67,8 @@
                 </a>
             </li>
             <li class="">
-                <a href="/arsip-dokumen"
-                    class="{{ ($activePage ?? '') === 'arsip-dokumen' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 p-2 uppercase">
+                <a href="/planning-dokumen"
+                    class="{{ ($activePage ?? '') === 'planning-dokumen' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 p-2 uppercase">
                     Arsip Dokumen
                 </a>
             </li>
@@ -90,7 +90,7 @@
                             Nomor Penting
                         </div>
                     </a>
-                    <a href="/arsip-dokumen">
+                    <a href="/">
                         <div class="hover:bg-slate-100 p-2 rounded">
                             Arsip Dokumen
                         </div>
@@ -138,7 +138,18 @@
                 <path d="M6 11l6 -6" />
             </svg>
         </a>
-        <div class="p-2">
+        <a href="/planning-dokumen" class="w-full text-lg font-base flex justify-between hover:bg-slate-100 p-2 group">
+            <span class="group-hover:text-slate-800">Arsip Dokumen</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="h-8 w-8 rotate-45 group-hover:rotate-90 duration-200 text-slate-400 group-hover:text-slate-800">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 5l0 14" />
+                <path d="M18 11l-6 -6" />
+                <path d="M6 11l6 -6" />
+            </svg>
+        </a>
+        <!-- <div class="p-2">
             <a href="javascript:void(0)"
                 class="w-full text-lg font-base flex justify-between hover:bg-slate-100  group">
                 <span class="group-hover:text-slate-800">Informasi Publik </span>
@@ -161,9 +172,9 @@
                     <a href="/arsip-dokumen">Arsip Dokumen</a>
                 </li>
             </ul>
-        </div>
+        </div> -->
 
-        <a href="/tautan-aplikasi" class="w-full text-lg font-base flex justify-between hover:bg-slate-100 p-2 group">
+        <!-- <a href="/tautan-aplikasi" class="w-full text-lg font-base flex justify-between hover:bg-slate-100 p-2 group">
             <span class="group-hover:text-slate-800">Tautan Aplikasi</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -185,7 +196,7 @@
                 <path d="M18 11l-6 -6" />
                 <path d="M6 11l6 -6" />
             </svg>
-        </a>
+        </a> -->
         {{-- Mobile Menu List --}}
 
         {{-- Searchbox --}}
