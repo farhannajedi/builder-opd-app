@@ -2,7 +2,7 @@
 $news = App\Models\News::whereNotNull('published_at')->orderBy('published_at', 'desc')->limit(4)->get();
 $documents = App\Models\PlanningDocument::orderBy('published_at', 'desc')->limit(3)->get();
 $services = App\Models\Service::orderBy('published_at', 'desc')->limit(3)->get();
-$services = App\Models\Service::orderBy('published_at', 'desc')->limit(3)->get();
+$galleries = App\Models\Galleries::orderBy('published_at', 'desc')->limit(3)->get();
 @endphp
 
 @extends('layouts.app', ['activePage' => 'beranda'])
@@ -10,4 +10,6 @@ $services = App\Models\Service::orderBy('published_at', 'desc')->limit(3)->get()
 @section('content')
 <x-sections.berita :news="$news" />
 <x-sections.planning-dokumen :documents="$documents" />
+<x-sections.layanan :services="$services" />
+<x-sections.galeri :galleries="$galleries" />
 @endsection

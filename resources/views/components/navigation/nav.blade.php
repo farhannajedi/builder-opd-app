@@ -78,6 +78,12 @@
                     Layanan
                 </a>
             </li>
+            <li class="">
+                <a href="/galeri"
+                    class="{{ ($activePage ?? '') === 'galeri' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 p-2 uppercase">
+                    Galeri
+                </a>
+            </li>
             <!-- <li class="group relative">
                 <a href="javacript:void(0)"
                     class="{{ ($activePage ?? '') === 'informasi-publik' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 py-2 flex items-center gap-1">

@@ -11,6 +11,7 @@ class Galleries extends Model
         'title',
         'images',
         'description',
+        'published_at',
     ];
 
     public function opd()

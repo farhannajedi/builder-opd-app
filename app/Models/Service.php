@@ -10,6 +10,7 @@ class Service extends Model
         'opd_id',
         'name',
         'description',
+        'published_at',
     ];
 
     public function opd()
