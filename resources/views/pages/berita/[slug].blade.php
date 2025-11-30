@@ -1,5 +1,5 @@
 @php
-$news = App\Models\News::with('category', 'opd')->where('slug', $slug)->firstOrFail();
+$news = App\Models\News::with('category', env('APP_ID'))->where('slug', $slug)->get()->firstOrFail();
 @endphp
 
 @extends('layouts.app', ['activePage' => 'berita'])
@@ -7,53 +7,53 @@ $news = App\Models\News::with('category', 'opd')->where('slug', $slug)->firstOrF
 @section('content')
 <div class="max-w-screen-lg mx-auto w-full bg-white">
 
-    <div class="max-w-screen-md mx-auto w-full space-y-6 py-16">
-        {{-- Breadcrumbs --}}
-        <ul class="text-center flex gap-2 justify-center">
-            <li class="text-xl font-medium text-slate-600"><a href="/berita" class="hover:underline">
-                    Berita</a></li>
-            <li class="text-xl font-medium text-slate-600">/</li>
-            <li class="text-xl font-medium text-orange-600">{{ $news->category->title }}</li>
-        </ul>
-        {{-- Breadcrumbs --}}
+  <div class="max-w-screen-md mx-auto w-full space-y-6 py-16">
+    {{-- Breadcrumbs --}}
+    <ul class="text-center flex gap-2 justify-center">
+      <li class="text-xl font-medium text-slate-600"><a href="/berita" class="hover:underline">
+          Berita</a></li>
+      <li class="text-xl font-medium text-slate-600">/</li>
+      <li class="text-xl font-medium text-orange-600">{{ $news->category->title }}</li>
+    </ul>
+    {{-- Breadcrumbs --}}
 
-        <div class="grid gap-4 place-content-center">
-            <h1 class="text-center text-5xl leading-16 font-medium text-slate-700">
-                {{ $news->title }}
-            </h1>
+    <div class="grid gap-4 place-content-center">
+      <h1 class="text-center text-5xl leading-16 font-medium text-slate-700">
+        {{ $news->title }}
+      </h1>
 
-            <div class="flex items-center justify-center gap-2 text-slate-600 h-fit text-lg">
-                <p>{{ $news->published_at->isoFormat('d MMMM Y') }}</p>
-                <x-icons.dot class="w-2 h-2" />
-                <p>{{ $news->category->title }}</p>
-            </div>
-        </div>
+      <div class="flex items-center justify-center gap-2 text-slate-600 h-fit text-lg">
+        <p>{{ $news->published_at->isoFormat('d MMMM Y') }}</p>
+        <x-icons.dot class="w-2 h-2" />
+        <p>{{ $news->category->title }}</p>
+      </div>
+    </div>
 
-        <div class="grid gap-4">
-            <img class="w-full h-auto min-h-56 object-cover ring-1 ring-zinc-300" src="{{ asset($news->image_url) }}"
-                alt=" {{ $news->title }}">
+    <div class="grid gap-4">
+      <img class="w-full h-auto min-h-56 object-cover ring-1 ring-zinc-300" src="{{ asset($news->image_url) }}"
+        alt=" {{ $news->title }}">
 
-            @if (!empty($news->images) && count($news->images) > 1)
-            <div class="flex gap-2 overflow-auto no-scrollbar">
-                @foreach ($news->images as $index => $image)
-                <img class="w-1/4 h-28 object-cover saturate-100 {{ $index !== 0 ? 'contrast-50 grayscale' : '' }}"
-                    src="{{ asset('storage/' . $firstNews->image_url) }}" alt="thumbnail-{{ $index }}">
-                @endforeach
-            </div>
-            @endif
-        </div>
+      @if (!empty($news->images) && count($news->images) > 1)
+      <div class="flex gap-2 overflow-auto no-scrollbar">
+        @foreach ($news->images as $index => $image)
+        <img class="w-1/4 h-28 object-cover saturate-100 {{ $index !== 0 ? 'contrast-50 grayscale' : '' }}"
+          src="{{ asset('storage/' . $firstNews->image_url) }}" alt="thumbnail-{{ $index }}">
+        @endforeach
+      </div>
+      @endif
+    </div>
 
 
-        {{-- html tags --}}
-        <div class="text-xl leading-8 space-y-2 text-slate-700 html-content">
-            {!! $news->content !!}
-        </div>
-        {{-- html tags --}}
+    {{-- html tags --}}
+    <div class="text-xl leading-8 space-y-2 text-slate-700 html-content">
+      {!! $news->content !!}
+    </div>
+    {{-- html tags --}}
 
-        <hr class="border-t border-slate-400">
+    <hr class="border-t border-slate-400">
 
-        {{-- Share --}}
-        {{-- <div class="space-y-2 ">
+    {{-- Share --}}
+    {{-- <div class="space-y-2 ">
         <p class="text-slate-700 text-lg">Bagikan:</p>
         <div class="flex gap-4 items-center">
           <button
@@ -86,7 +86,7 @@ $news = App\Models\News::with('category', 'opd')->where('slug', $slug)->firstOrF
         </div>
       </div> --}}
 
-    </div>
+  </div>
 
 </div>
 @endsection
