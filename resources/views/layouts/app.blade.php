@@ -17,7 +17,9 @@ $opd = Opd::find(env('APP_ID'));
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <title>{{ $title?? 'OPD' }}</title>
 
+    {{-- Memuat semua aset yang didaftarkan di AppServiceProvider --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link

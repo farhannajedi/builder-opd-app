@@ -44,5 +44,18 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('opdConfigs', $opdConfigs);
         });
+
+        // Mendaftarkan semua entry points yang akan digunakan di seluruh aplikasi
+        Vite::withEntryPoints([
+            'resources/css/app.css',
+            'resources/js/app.js',
+        ]);
+
+        app()->singleton('current_opd', function () {
+            return env('APP_ID');
+        });
+
+
+        // $css_url = Vite::asset('resources/css/app.css');
     }
 }

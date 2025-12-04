@@ -1,5 +1,5 @@
 @php
-$galleries = App\Models\Galleries::orderBy('created_at', 'desc')->get()->paginate(10);
+$galleries = App\Models\Galleries::orderBy('created_at', 'desc')->get();
 @endphp
 
 @extends('layouts.app', ['activePage' => 'galeri'])
@@ -21,7 +21,7 @@ $galleries = App\Models\Galleries::orderBy('created_at', 'desc')->get()->paginat
                 <div class="p-2 flex items-start h-full border border-slate-300 hover:border-slate-400 
                                 gap-2 rounded-lg h-min group duration-200">
 
-                    {{-- IMAGE --}}
+                    {{-- Gambar --}}
                     <div class="hidden md:block bg-slate-100 rounded p-1">
                         <img src="{{ asset('storage/' . $gal->images) }}" alt="{{ $gal->title }}"
                             class="h-20 w-24 object-cover rounded-md">
@@ -29,12 +29,12 @@ $galleries = App\Models\Galleries::orderBy('created_at', 'desc')->get()->paginat
 
                     <div class="space-y-2 flex flex-col justify-between h-full w-full">
 
-                        {{-- TITLE --}}
+                        {{-- Judul --}}
                         <p class="text-xl font-medium text-slate-700 group-hover:text-slate-800 line-clamp-2">
                             {{ $gal->title }}
                         </p>
 
-                        {{-- DESCRIPTION --}}
+                        {{-- Deskripsi --}}
                         <p class="text-slate-600 text-sm line-clamp-3">
                             {{ $gal->description }}
                         </p>
@@ -97,11 +97,6 @@ $galleries = App\Models\Galleries::orderBy('created_at', 'desc')->get()->paginat
                 @empty
                 <p class="text-slate-500">Tidak ada galeri ditemukan.</p>
                 @endforelse
-            </div>
-
-            {{-- paginate --}}
-            <div class="pt-4">
-                {{ $galleries->links() }}
             </div>
         </div>
     </div>

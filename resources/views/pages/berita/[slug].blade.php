@@ -1,5 +1,5 @@
 @php
-$news = App\Models\News::with('category', env('APP_ID'))->where('slug', $slug)->get()->firstOrFail();
+$news = App\Models\News::with('category', 'opd')->where('slug', $slug)->firstOrFail();
 @endphp
 
 @extends('layouts.app', ['activePage' => 'berita'])
@@ -37,7 +37,7 @@ $news = App\Models\News::with('category', env('APP_ID'))->where('slug', $slug)->
       <div class="flex gap-2 overflow-auto no-scrollbar">
         @foreach ($news->images as $index => $image)
         <img class="w-1/4 h-28 object-cover saturate-100 {{ $index !== 0 ? 'contrast-50 grayscale' : '' }}"
-          src="{{ asset('storage/' . $firstNews->image_url) }}" alt="thumbnail-{{ $index }}">
+          src="{{ asset('storage/' . $image) }}" alt="thumbnail-{{ $index }}">
         @endforeach
       </div>
       @endif
