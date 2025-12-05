@@ -9,7 +9,7 @@
 
             {{-- FIRST NEWS --}}
             @php
-            $first = $news[0];
+            $first = $news;
             $firstImage = asset('storage/' . $first->image_url);
             @endphp
 

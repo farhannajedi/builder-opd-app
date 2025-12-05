@@ -65,7 +65,7 @@ class PlanningDocumentResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('file')
                     ->label('File')
-                    ->directory('document/' . now()->format('Y-m'))
+                    ->directory('document/files/' . now()->format('Y-m'))
                     ->downloadable()
                     ->helperText('Maks Size: 1MB')
                     ->required(),

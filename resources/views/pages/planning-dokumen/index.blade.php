@@ -1,5 +1,5 @@
 @php
-// Query untuk mengambil dokumen terbaru (sudah benar, hanya satu kali)
+// Query untuk mengambil dokumen terbaru
 $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
 @endphp
 

@@ -1,18 +1,24 @@
 @php
-use App\Models\PlanningDocument;
+// 1. Resolve Dokumen berdasarkan slug (Folio menyediakan variabel $slug)
+$document = PlanningDocument::with('opd')->where('slug', $slug)->firstOrFail();
 
-// variabel $slug dari URL (misal: /dokumen/nama-dokumen)
-$document = PlanningDocument::with('opd')->where('slug', $slug)->first();
+// Jika dokumen tidak ditemukan, Folio akan mengarahkan ke halaman 404
+if (!$document) {
+abort(404);
+}
 
-// path file dan tipe:
+// --- Penentuan Path & Ukuran File ---
+// Kolom 'file' berisi path relatif dari storage/app/public, misal: 'document/2025-12/namafile.pdf'
+// Menggunakan asset() untuk URL frontend yang benar
 $relativePath = 'storage/' . $document->file;
+$fullPath = public_path($relativePath);
 
 // Hitung ukuran dan tipe file
 $fileSize = 'N/A';
 if (file_exists($fullPath)) {
 $fileSize = number_format(filesize($fullPath) / 1024 / 1024, 2) . ' MB';
 }
-$fileType = strtoupper(pathinfo($document->file, PATHINFO_EXTENSION) ?? 'N/A');
+$fileType = strtoupper(pathinfo($document->file, PATHINFO_EXTENSION) ?? 'PDF');
 
 @endphp
 
@@ -41,10 +47,10 @@ $fileType = strtoupper(pathinfo($document->file, PATHINFO_EXTENSION) ?? 'N/A');
 
                 <hr class="mb-4 border-gray-200">
 
+                {{-- DESKRIPSI (KONTEN) DOKUMEN --}}
                 @if ($document->content)
                 <div class="mb-4 text-sm text-gray-700 leading-relaxed">
                     <p class="font-semibold text-base mb-1">Deskripsi:</p>
-                    {{-- Asumsi content adalah Rich Editor HTML --}}
                     {!! $document->content !!}
                 </div>
                 <hr class="mb-4 border-gray-200">
@@ -58,7 +64,6 @@ $fileType = strtoupper(pathinfo($document->file, PATHINFO_EXTENSION) ?? 'N/A');
                     </p>
                     <p class="flex items-center gap-2">
                         <span class="font-semibold w-24">Publikasi:</span>
-                        {{-- Menggunakan created_at --}}
                         <span>{{ $document->created_at->isoFormat('D MMMM Y') }}</span>
                     </p>
                     <p class="flex items-center gap-2">
