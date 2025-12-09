@@ -29,7 +29,7 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                     @forelse ($documents as $doc)
 
                     {{-- CARD DOKUMEN BARU (Link ke Detail Halaman) --}}
-                    <a href="/dokumen/{{ $doc->slug }}"
+                    <a href="/planning-dokumen/{{ $doc->slug }}"
                         class="block border border-gray-200 rounded-lg p-4 transition duration-300 hover:shadow-md hover:border-blue-400 bg-white group"
                         style="text-decoration: none;">
 

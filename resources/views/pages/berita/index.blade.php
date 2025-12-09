@@ -27,11 +27,13 @@ $otherNews = News::with('category', 'opd')
             <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-14">
                 @forelse ($otherNews as $news)
                 <div class="rounded-lg group">
+                    <div
+                        class="relative w-full aspect-[16/9] overflow-hidden rounded-lg ring-1 ring-zinc-300 shadow-md hover:shadow-lg">
 
-                    {{-- 'images' dan prefix 'storage/' --}}
-                    <img src="{{ asset('storage/' . $news->images) }}"
-                        class="w-full h-auto min-h-32 max-h-44 duration-200 object-cover rounded-lg ring-1 ring-zinc-300 shadow-md hover:shadow-lg"
-                        alt="{{ $news->title }}">
+                        {{-- 'images' dan prefix 'storage/' --}}
+                        <img src="{{ asset('storage/' . $news->images) }}"
+                            class="absolute inset-0 w-full h-full object-cover duration-200" alt="{{ $news->title }}">
+                    </div>
 
                     <div class="text-sm flex items-center gap-2 pt-3 pb-1 text-slate-600 h-fit">
                         {{-- Tanggal Publikasi --}}

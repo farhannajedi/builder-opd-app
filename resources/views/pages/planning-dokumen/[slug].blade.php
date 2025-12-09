@@ -1,118 +1,85 @@
 @php
-// 1. Resolve Dokumen berdasarkan slug (Folio menyediakan variabel $slug)
-$document = PlanningDocument::with('opd')->where('slug', $slug)->firstOrFail();
 
-// Jika dokumen tidak ditemukan, Folio akan mengarahkan ke halaman 404
-if (!$document) {
-abort(404);
-}
+$document = App\Models\PlanningDocument::with('opd')
+->where('slug', $slug)
+->firstOrFail();
 
-// --- Penentuan Path & Ukuran File ---
-// Kolom 'file' berisi path relatif dari storage/app/public, misal: 'document/2025-12/namafile.pdf'
-// Menggunakan asset() untuk URL frontend yang benar
-$relativePath = 'storage/' . $document->file;
-$fullPath = public_path($relativePath);
-
-// Hitung ukuran dan tipe file
-$fileSize = 'N/A';
-if (file_exists($fullPath)) {
-$fileSize = number_format(filesize($fullPath) / 1024 / 1024, 2) . ' MB';
-}
-$fileType = strtoupper(pathinfo($document->file, PATHINFO_EXTENSION) ?? 'PDF');
+$fileUrl = asset('storage/' . $document->file);
+$extension = strtolower(pathinfo($document->file, PATHINFO_EXTENSION));
 
 @endphp
 
-@extends('layouts.app', ['activePage' => 'Informasi Publik'])
+@extends('layouts.app', ['activePage' => 'Arsip Dokumen'])
 
 @section('content')
-<div class="bg-gray-50 min-h-screen">
-    <section class="max-w-screen-xl px-4 mx-auto w-full py-12 md:py-16">
+{{-- PAGE WRAPPER --}}
+<div class="max-w-5xl mx-auto py-10">
 
-        {{-- Header Breadcrumb --}}
-        <div class="mb-6 text-sm text-gray-500">
-            <a href="/dokumen" class="hover:underline">Dokumen Perencanaan</a>
-            <span class="mx-1">/</span>
-            <span class="font-medium text-gray-700">{{ Str::limit($document->title, 50) }}</span>
-        </div>
+    {{-- HEADER SECTION --}}
+    <div class="bg-white shadow-md rounded-xl p-8 mb-10 border border-gray-200">
+        <a href="/planning-dokumen"
+            class="text-blue-600 hover:text-blue-800 text-sm font-semibold flex items-center gap-1 mb-6">
+            <span class="text-lg">←</span> Kembali ke Daftar Dokumen
+        </a>
 
-        {{-- GRID UTAMA: INFORMASI (Kiri) dan PREVIEW (Kanan) --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <h1 class="text-4xl font-extrabold text-gray-800 leading-tight">
+            {{ $document->title }}
+        </h1>
 
-            {{-- Kolom Kiri: INFORMASI DETAIL --}}
-            <div class="md:col-span-1 bg-white p-6 rounded-xl shadow-lg border border-gray-200 h-min">
-
-                <h1 class="text-2xl font-bold text-gray-800 mb-4">
-                    {{ $document->title }}
-                </h1>
-
-                <hr class="mb-4 border-gray-200">
-
-                {{-- DESKRIPSI (KONTEN) DOKUMEN --}}
-                @if ($document->content)
-                <div class="mb-4 text-sm text-gray-700 leading-relaxed">
-                    <p class="font-semibold text-base mb-1">Deskripsi:</p>
-                    {!! $document->content !!}
-                </div>
-                <hr class="mb-4 border-gray-200">
-                @endif
-
-                {{-- METADATA DOKUMEN --}}
-                <div class="space-y-3 text-sm text-gray-600">
-                    <p class="flex items-center gap-2">
-                        <span class="font-semibold w-24">Oleh:</span>
-                        <span>{{ $document->opd->name ?? 'Tidak Diketahui' }}</span>
-                    </p>
-                    <p class="flex items-center gap-2">
-                        <span class="font-semibold w-24">Publikasi:</span>
-                        <span>{{ $document->created_at->isoFormat('D MMMM Y') }}</span>
-                    </p>
-                    <p class="flex items-center gap-2">
-                        <span class="font-semibold w-24">Terakhir diperbarui:</span>
-                        <span>{{ $document->updated_at->isoFormat('D MMMM Y') }}</span>
-                    </p>
-                    <p class="flex items-center gap-2">
-                        <span class="font-semibold w-24">Ukuran File:</span>
-                        <span>{{ $fileSize }}</span>
-                    </p>
-                    <p class="flex items-center gap-2">
-                        <span class="font-semibold w-24">Jenis File:</span>
-                        <span>{{ $fileType }}</span>
-                    </p>
-                </div>
-
-                <hr class="my-4 border-gray-200">
-
-                {{-- TOMBOL DOWNLOAD --}}
-                <a href="{{ asset($relativePath) }}" download
-                    class="w-full bg-blue-600 text-white rounded-lg px-4 py-3 text-lg font-medium flex items-center justify-center gap-2 hover:bg-blue-700 transition duration-200 shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 5v14" />
-                        <path d="M19 12l-7 7-7-7" />
-                    </svg>
-                    Download
-                </a>
+        <div class="mt-3 flex items-center gap-3 text-gray-600">
+            <div class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold uppercase tracking-wide">
+                {{ $document->opd->name }}
             </div>
 
-            {{-- Kolom Kanan: PREVIEW DOKUMEN --}}
-            <div class="md:col-span-2 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-                <div class="p-4 bg-gray-100 border-b border-gray-200 flex items-center gap-2 text-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                    </svg>
-                    <span class="font-semibold">Preview Dokumen</span>
-                </div>
-
-                {{-- IFRAME UNTUK MENAMPILKAN PDF DENGAN GOOGLE VIEWER --}}
-                <iframe src="https://docs.google.com/gview?url={{ url(asset($relativePath)) }}&embedded=true"
-                    class="w-full" style="height: 80vh;" frameborder="0">
-                    <p class="p-4 text-center text-gray-500">
-                        Browser Anda tidak mendukung preview. Silakan unduh dokumen.
-                    </p>
-                </iframe>
-            </div>
+            @if ($document->published_at)
+            <p class="text-sm">
+                Dipublikasikan: <strong>{{ Carbon\Carbon::parse($document->published_at)->format('d M Y') }}</strong>
+            </p>
+            @endif
         </div>
-    </section>
+    </div>
+
+    {{-- FILE PREVIEW SECTION --}}
+    @if ($document->file)
+    <div class="bg-white shadow-md rounded-xl border border-gray-200 overflow-hidden mb-10">
+        <div class="p-5 border-b">
+            <h3 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+                Pratinjau Dokumen
+            </h3>
+            <p class="text-sm text-gray-500">** Jika preview tidak tampil, gunakan tombol download di bawah .**</p>
+        </div>
+
+        <div class="w-full bg-gray-50">
+            @if ($extension === 'pdf')
+            {{-- PDF VIEWER --}}
+            <iframe src="{{ $fileUrl }}" class="w-full h-[700px] rounded-b-xl"></iframe>
+            @else
+            {{-- GOOGLE DOCS VIEWER --}}
+            <iframe src="https://docs.google.com/gview?url={{ $fileUrl }}&embedded=true"
+                class="w-full h-[700px] rounded-b-xl" frameborder="0"></iframe>
+            @endif
+        </div>
+    </div>
+    @endif
+
+
+    {{-- CONTENT SECTION --}}
+    <div class="bg-white shadow-md rounded-xl border border-gray-200 p-8 mb-10">
+        <article class="prose prose-lg max-w-none text-gray-800 leading-relaxed">
+            {!! $document->content !!}
+        </article>
+    </div>
+
+    {{-- ACTION BUTTONS --}}
+    @if ($document->file)
+    <div class="flex justify-center">
+        <a href="{{ $fileUrl }}" target="_blank"
+            class="px-6 py-3 bg-green-600 text-white text-lg font-semibold rounded-lg shadow hover:bg-green-700 hover:shadow-lg transition">
+            Download Dokumen
+        </a>
+    </div>
+    @endif
+
 </div>
+
 @endsection
