@@ -6,14 +6,12 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
 @extends('layouts.app', ['activePage' => 'Arsip Dokumen'])
 
 @section('content')
-<div class="bg-gray-50 min-h-screen">
+<div class="max-w-screen-lg mx-auto w-full">
     <section class="max-w-screen-xl px-4 mx-auto w-full py-12 md:py-16">
 
         {{-- Header Halaman --}}
-        <div class="mb-10 border-b border-gray-300 pb-3">
-            <h1 class="text-2xl md:text-2xl font-extrabold text-gray-900 tracking-tight">
-                Arsip Dokumen Perencanaan
-            </h1>
+        <div class="pt-4 mb-10 border-b border-gray-300 pb-3">
+            <p class="text-4xl font-medium text-slate-800">Arsip Dokumen Perencanaan</p>
         </div>
 
         {{-- CONTAINER UTAMA --}}
@@ -22,7 +20,7 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
             {{-- LIST DOKUMEN --}}
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200">
                 <p class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-4">
-                    Dokumen Terbaru
+                    Dokumen Perencanaan
                 </p>
 
                 <div class="space-y-4">
