@@ -1,90 +1,96 @@
 @php
-$services = App\Models\Service::orderBy('created_at', 'desc')->paginate(10);
+// Ambil semua layanan yang sudah dipublish
+$services = App\Models\Service::with('opd')
+->whereNotNull('published_at')
+->latest()
+->paginate(10);
 @endphp
 
-@extends('layouts.app', ['activePage' => 'layanan'])
+@extends('layouts.app', ['activePage' => 'Layanan'])
 
 @section('content')
-<section class="max-w-screen-lg px-2 mx-auto w-full">
-    <div class="pt-10">
-        <p class="text-4xl font-medium text-slate-800">Layanan</p>
-    </div>
+<div class="max-w-screen-lg mx-auto w-full">
+    <section class="max-w-screen-xl px-4 mx-auto w-full py-12 md:py-16">
 
-    <div class="flex flex-col md:flex-row gap-2 py-16">
+        {{-- Header Halaman --}}
+        <div class="pt-4 mb-10 border-b border-gray-300 pb-3">
+            <p class="text-4xl font-medium text-slate-800">
+                Daftar Layanan
+            </p>
+        </div>
 
-        {{-- LIST LAYANAN --}}
-        <div class="w-full md:w-2/3 p-4 border rounded-lg border-slate-200 space-y-4">
-            <p class="text-2xl font-medium text-slate-600">Semua Layanan</p>
+        {{-- CONTAINER --}}
+        <div class="grid grid-cols-1 gap-10">
 
-            <div class="pt-4 border-t border-slate-300 space-y-4">
-                @forelse ($services as $service)
-                <div class="p-2 flex items-start h-full border border-slate-300 hover:border-slate-400 
-                            gap-2 rounded-lg h-min group duration-200">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200">
+                <p class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-4">
+                    Layanan Tersedia
+                </p>
 
-                    {{-- ICON --}}
-                    <div class="hidden md:block bg-slate-100 rounded p-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                            class="h-12 w-auto flex-none text-slate-500 group-hover:text-slate-600">
-                            <path d="M9 12l2 2l4 -4" />
-                            <path d="M12 21a9 9 0 1 1 9 -9" />
-                        </svg>
-                    </div>
+                <div class="space-y-4">
+                    @forelse ($services as $service)
 
-                    <div class="space-y-2 flex flex-col justify-between h-full w-full">
-                        {{-- NAMA LAYANAN --}}
-                        <p class="text-xl font-medium text-slate-700 group-hover:text-slate-800 line-clamp-2">
-                            {{ $service->name }}
-                        </p>
+                    {{-- CARD --}}
+                    <a href="/layanan/{{ $service->id }}"
+                        class="block border border-gray-200 rounded-lg p-4 hover:shadow-md transition bg-white group"
+                        style="text-decoration: none;">
 
-                        {{-- DESKRIPSI --}}
-                        <p class="text-slate-600 text-sm line-clamp-3">
-                            {{ $service->description }}
-                        </p>
+                        <div class="flex items-start justify-between gap-4">
 
-                        <div class="flex gap-2 text-slate-600 items-center justify-between">
-                            <div class="flex flex-col md:flex-row md:items-center gap-2">
-
-                                {{-- TANGGAL DIBUAT --}}
-                                <div class="flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" class="h-5 w-5 stroke-[1.5]">
-                                        <path stroke="none" d="M0 0h24v24H0z" />
-                                        <path
-                                            d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
-                                        <path d="M16 3l0 4" />
-                                        <path d="M8 3l0 4" />
-                                        <path d="M4 11h16" />
+                            {{-- KIRI --}}
+                            <div class="flex items-start gap-4 flex-grow">
+                                <div class="bg-blue-100 rounded-lg p-3 flex-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 20h9" />
+                                        <path d="M12 4h9" />
+                                        <path d="M4 9h16" />
+                                        <path d="M4 15h16" />
                                     </svg>
-                                    <p>{{ $service->created_at->isoFormat('D MMMM Y') }}</p>
                                 </div>
 
-                                <x-icons.dot class="hidden md:block h-1 w-1 text-slate-400" />
+                                <div class="flex-grow space-y-1">
+                                    <p class="text-lg font-bold text-gray-800 group-hover:text-blue-600">
+                                        {{ $service->name }}
+                                    </p>
 
-                                {{-- OPD --}}
-                                <div class="flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" class="h-5 w-5 stroke-[1.5]">
-                                        <path d="M4 21v-15c0 -1 1 -2 2 -2h5c1 0 2 1 2 2v15" />
-                                        <path d="M16 8h2c1 0 2 1 2 2v11" />
-                                    </svg>
-                                    <p>{{ $service->opd->name ?? 'Tidak diketahui' }}</p>
+                                    <div class="flex flex-wrap text-sm text-gray-500 gap-4 mt-1">
+                                        <span>
+                                            {{ $service->published_at->isoFormat('D MMMM Y') }}
+                                        </span>
+
+                                        <span>
+                                            {{ $service->opd->name ?? '-' }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
+
+                            {{-- KANAN --}}
+                            <div class="flex items-center">
+                                <span class="bg-blue-600 text-white rounded-lg px-3 py-2 text-sm">
+                                    Detail
+                                </span>
+                            </div>
+
                         </div>
+                    </a>
+
+                    @empty
+                    <div class="bg-gray-100 p-8 text-center rounded-lg text-gray-600">
+                        Tidak ada layanan yang tersedia.
                     </div>
+                    @endforelse
                 </div>
 
-                @empty
-                <p class="text-slate-500">Tidak ada layanan ditemukan.</p>
-                @endforelse
-            </div>
-
-            {{-- Pagination --}}
-            <div class="pt-4">
-                {{ $services->links() }}
+                {{-- Pagination --}}
+                @if ($services->hasPages())
+                <div class="pt-6 border-t mt-6">
+                    {{ $services->links() }}
+                </div>
+                @endif
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 @endsection
