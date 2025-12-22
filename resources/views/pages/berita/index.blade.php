@@ -1,16 +1,30 @@
 @php
 use App\Models\News;
 
-// Mengambil semua berita terbaru, tanpa filter OPD (sesuai permintaan).
-// Jika Anda ingin memfilter berdasarkan OPD, gunakan: ->where('opd_id', env('APP_ID'))
-$otherNews = News::with('category', 'opd')
+/** * LOGIKA:
+* Kita tidak lagi menggunakan withoutGlobalScope agar filter otomatis berjalan.
+* Filter akan mencari id OPD berdasarkan slug 'tp-pkk' yang ada di .env
+*/
+$otherNews = News::with(['category', 'opd'])
 ->latest()
 ->paginate(9);
+
+// Ambil nama OPD secara dinamis dari relasi data pertama (jika ada)
+$opdName = $otherNews->first()?->opd?->name ?? 'Instansi';
+
+// Ambil APP_ID untuk kebutuhan debug tampilan saja
+$currentAppId = getenv('APP_ID');
 @endphp
 
 @extends('layouts.app', ['activePage' => 'berita'])
 
 @section('content')
+{{-- Bagian Debug (Opsional: bisa dihapus jika sudah jalan) --}}
+<div class="bg-gray-100 p-4 mb-4 text-xs font-mono">
+    <p>Current APP_ID (Slug): {{ $currentAppId }}</p>
+    <p>Data OPD Ditemukan: {{ $opdName }}</p>
+</div>
+
 <div class="max-w-screen-lg mx-auto w-full">
 
     <hr class="border-t-1 border-slate-200">
@@ -20,7 +34,8 @@ $otherNews = News::with('category', 'opd')
 
             {{-- Header --}}
             <div class="pt-4">
-                <p class="text-4xl font-medium text-slate-800">Berita Terbaru</p>
+                {{-- Nama OPD ditambahkan secara dinamis di sini --}}
+                <p class="text-4xl font-medium text-slate-800">Berita Terbaru {{ $opdName }}</p>
             </div>
 
             {{-- LIST BERITA --}}
@@ -53,7 +68,7 @@ $otherNews = News::with('category', 'opd')
                     </a>
                 </div>
                 @empty
-                <p class="col-span-full text-center text-slate-500">Belum ada berita lainnya.</p>
+                <p class="col-span-full text-center text-slate-500">Belum ada berita untuk {{ $opdName }}.</p>
                 @endforelse
             </div>
 
@@ -107,7 +122,7 @@ $otherNews = News::with('category', 'opd')
                                 @endif
                 </ul>
 
-                {{-- Arrow buttons (duplicate optional) --}}
+                {{-- Arrow buttons --}}
                 <div class="flex gap-2">
                     <a href="{{ $otherNews->previousPageUrl() }}"
                         class="{{ $otherNews->onFirstPage() ? 'pointer-events-none text-slate-300' : 'hover:text-slate-600 text-slate-500' }} bg-white hover:bg-slate-200 rounded p-1 ring-1 ring-zinc-300">
@@ -126,7 +141,6 @@ $otherNews = News::with('category', 'opd')
                 </div>
             </div>
             @endif
-
 
         </div>
     </section>

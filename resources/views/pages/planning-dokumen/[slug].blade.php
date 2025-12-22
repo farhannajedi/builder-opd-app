@@ -18,8 +18,8 @@ $extension = strtolower(pathinfo($document->file, PATHINFO_EXTENSION));
     {{-- HEADER SECTION --}}
     <div class="bg-white shadow-md rounded-xl p-8 mb-10 border border-gray-200">
         <a href="/planning-dokumen"
-            class="text-blue-600 hover:text-blue-800 text-sm font-semibold flex items-center gap-1 mb-6">
-            <span class="text-lg">←</span> Kembali ke Daftar Dokumen
+            class="mt-3 inlibe-flex bg-blue-600 text-white gap-2 rounded-lg px-3 py-2 text-sm hover:text-gray-800 px-4">
+            Kembali ke Daftar Dokumen
         </a>
 
         <h1 class="text-4xl font-extrabold text-gray-800 leading-tight">

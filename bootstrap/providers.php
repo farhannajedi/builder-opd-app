@@ -2,6 +2,7 @@
 
 return [
     App\Providers\AppServiceProvider::class,
+    App\Providers\ChildAppFolioServiceProvider::class,
     App\Providers\Filament\SuperAdminPanelProvider::class,
     App\Providers\FolioServiceProvider::class,
 ];
