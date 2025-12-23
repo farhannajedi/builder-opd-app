@@ -148,4 +148,10 @@ class NewsResource extends Resource
             'edit' => Pages\EditNews::route('/{record}/edit'),
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        // Mengizinkan Super Admin melihat semua data di tabel Filament
+        return parent::getEloquentQuery()->withoutGlobalScope('filterOPD');
+    }
 }

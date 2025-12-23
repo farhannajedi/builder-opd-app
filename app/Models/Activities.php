@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activities extends Model
 {
+    use \App\Traits\BelongsToOpd;
     protected $fillable = [
         'opd_id',
         'title',

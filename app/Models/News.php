@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class News extends Model
 {
+
+    use \App\Traits\BelongsToOpd;
     protected $fillable = [
         'opd_id',
         'category_id',
@@ -23,7 +25,7 @@ class News extends Model
 
     protected static function booted()
     {
-        $slug = getenv('APP_ID'); // Isinya 'tp-pkk'
+        $slug = getenv('APP_ID');
 
         if ($slug) {
             static::addGlobalScope('filterOPD', function (Builder $builder) use ($slug) {

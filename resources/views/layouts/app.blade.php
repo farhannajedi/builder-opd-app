@@ -61,7 +61,7 @@ $opd = Opd::find(env('APP_ID'));
 
                 {{-- Kontak --}}
                 <div class="text-sm space-y-1">
-                    <p class="text-yellow-200 mb-1 font-medium">Kontak</p>
+                    <p class="text-yellow-200 mb-1 font-medium">Hubungi Kami</p>
                     <p>Jl. Jendral Sudirman No. ...</p>
                     <p>Email: diskominfo@karimun.go.id</p>
                     <p>Telp: (0777) xxxx</p>

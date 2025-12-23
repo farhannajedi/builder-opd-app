@@ -1,19 +1,32 @@
 @php
 use App\Models\News;
 
-/** * LOGIKA:
-* Kita tidak lagi menggunakan withoutGlobalScope agar filter otomatis berjalan.
-* Filter akan mencari id OPD berdasarkan slug 'tp-pkk' yang ada di .env
+/**
+* LOGIKA DETEKSI DOMAIN
+* Jika diakses dari domain pusat (misal: localhost/utama), APP_ID biasanya kosong.
+* Jika diakses dari domain anak (misal: tp-pkk.test), APP_ID terisi dari .env anak.
 */
+$slug = getenv('APP_ID');
+
+if (!$slug) {
+// TAMPILAN PUSAT: Melihat berita dari semua OPD
+$otherNews = News::withoutGlobalScope('filterOPD')
+->with(['category', 'opd'])
+->latest()
+->paginate(9);
+$opdName = "Semua Instansi";
+} else {
+// TAMPILAN ANAK: Otomatis terfilter oleh Trait BelongsToOpd
 $otherNews = News::with(['category', 'opd'])
 ->latest()
 ->paginate(9);
 
-// Ambil nama OPD secara dinamis dari relasi data pertama (jika ada)
+// Ambil nama OPD secara dinamis untuk judul
 $opdName = $otherNews->first()?->opd?->name ?? 'Instansi';
+}
 
-// Ambil APP_ID untuk kebutuhan debug tampilan saja
-$currentAppId = getenv('APP_ID');
+// Untuk keperluan debug tampilan yang Anda buat tadi
+$currentAppId = $slug ?? 'Pusat (Global)';
 @endphp
 
 @extends('layouts.app', ['activePage' => 'berita'])

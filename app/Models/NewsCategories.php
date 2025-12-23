@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToOpd;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
 
 class NewsCategories extends Model
 {
-    use hasRoles;
+    use hasRoles, BelongsToOpd;
 
     protected $fillable = [
         'opd_id',

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
+
+    use \App\Traits\BelongsToOpd;
     protected $fillable = [
         'opd_id',
         'name',

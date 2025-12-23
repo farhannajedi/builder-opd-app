@@ -55,6 +55,7 @@ class AppServiceProvider extends ServiceProvider
             return env('APP_ID');
         });
 
+        \App\Models\Opd::observe(\App\Observers\OpdObserver::class);
 
         // $css_url = Vite::asset('resources/css/app.css');
     }
