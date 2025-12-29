@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 
 trait BelongsToOpd
@@ -11,7 +12,7 @@ trait BelongsToOpd
      */
     protected static function bootBelongsToOpd()
     {
-        // 1. FILTERING: Otomatis membatasi data yang muncul di Web Anak (PUPR, PKK, dll)
+        // Otomatis membatasi data yang muncul di Web child (PUPR, PKK, dll)
         $slug = getenv('APP_ID');
         if ($slug) {
             static::addGlobalScope('filterOPD', function (Builder $builder) use ($slug) {
@@ -22,10 +23,10 @@ trait BelongsToOpd
             });
         }
 
-        // 2. AUTO-ASSIGN: Isi kolom opd_id otomatis saat Admin simpan data di Filament
+        // Isi kolom opd_id otomatis saat Admin simpan data di halaman admin
         static::creating(function ($model) {
-            if (auth()->check() && auth()->user()->opd_id) {
-                $model->opd_id = auth()->user()->opd_id;
+            if (auth::check() && auth::user()->opd_id) {
+                $model->opd_id = auth::user()->opd_id;
             }
         });
     }
