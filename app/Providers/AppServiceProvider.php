@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // override public path untuk asset vite
-        // ini adalah untuk chield
+        // ini adalah untuk chield project
         // Vite::useBuildDirectory('build');
 
         // app()->bind('path.public', function () {
