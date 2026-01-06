@@ -57,10 +57,16 @@ class GalleriesResource extends Resource
                     ->label('OPD')
                     ->relationship('opd', 'name'),
                 Forms\Components\TextInput::make('title')
-                    ->label('Judul'),
-                // ->afterStateUpdated(function ($state, callable $set) {
-                //     $set('slug', Str::slug($state));
-                // }), // mengisi kolom slug sesuai dengan isian kolom title
+                    ->label('Judul')
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $set('slug', Str::slug($state));
+                    }), // mengisi kolom slug sesuai dengan isian kolom title
+                Forms\Components\TextInput::make('slug')
+                    ->label('slug')
+                    ->placeholder('Akan otomatis terisi sesuai isi judul')
+                    ->readOnly()
+                    ->required(),
                 Forms\Components\FileUpload::make('images')
                     ->label('Gambar')
                     ->image()
