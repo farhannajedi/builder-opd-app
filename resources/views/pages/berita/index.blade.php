@@ -1,24 +1,20 @@
 @php
 use App\Models\News;
 
-/**
-* Jika diakses dari domain pusat (misal: localhost/utama), APP_ID kosong.
-* Jika diakses dari domain web child (misal: tp-pkk.test), APP_ID terisi dari .env child.
-*/
+// Jika diakses dari domain pusat (misal: localhost/utama), APP_ID kosong.
+// Jika diakses dari domain web child (misal: tp-pkk.test), APP_ID terisi dari .env child.
+
+<!-- nantinya akan mengarahkan ke slug berdasarkan App id -->
 $slug = getenv('APP_ID');
 
 if (!$slug) {
-// TAMPILAN PUSAT: Melihat berita dari semua OPD
-$otherNews = News::withoutGlobalScope('filterOPD')
-->with(['category', 'opd'])
-->latest()
-->paginate(9);
+// TAMPILAN utama: Melihat berita dari semua OPD
+$otherNews = News::withoutGlobalScope('filterOPD')->with(['category', 'opd'])->latest()->paginate(9);
+
 $opdName = "Semua Instansi";
 } else {
 // TAMPILAN ANAK: Otomatis terfilter oleh Trait BelongsToOpd
-$otherNews = News::with(['category', 'opd'])
-->latest()
-->paginate(9);
+$otherNews = News::with(['category', 'opd'])->latest()->paginate(9);
 
 // Ambil nama OPD secara dinamis untuk judul
 $opdName = $otherNews->first()?->opd?->name ?? 'Instansi';
@@ -31,7 +27,7 @@ $currentAppId = $slug ?? 'Pusat (Global)';
 @extends('layouts.app', ['activePage' => 'berita'])
 
 @section('content')
-{{-- Bagian Debug (Opsional: bisa dihapus jika sudah jalan) --}}
+<!-- debug content -->
 <div class="bg-gray-100 p-4 mb-4 text-xs font-mono">
     <p>Current APP_ID (Slug): {{ $currentAppId }}</p>
     <p>Data OPD Ditemukan: {{ $opdName }}</p>
@@ -44,36 +40,36 @@ $currentAppId = $slug ?? 'Pusat (Global)';
     <section class="w-full slate-100 py-16">
         <div class="max-w-screen-lg px-2 grid gap-8 mx-auto w-full">
 
-            {{-- Header --}}
+            <!-- tampilan header -->
             <div class="pt-4">
-                {{-- Nama OPD ditambahkan secara dinamis di sini --}}
+                <!-- Nama OPD ditambahkan secara dinamis di sini -->
                 <p class="text-4xl font-medium text-slate-800">Berita Terbaru {{ $opdName }}</p>
             </div>
 
-            {{-- LIST BERITA --}}
+            <!-- LIST BERITA  -->
             <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-14">
                 @forelse ($otherNews as $news)
                 <div class="rounded-lg group">
                     <div
                         class="relative w-full aspect-[16/9] overflow-hidden rounded-lg ring-1 ring-zinc-300 shadow-md hover:shadow-lg">
 
-                        {{-- 'images' dan prefix 'storage/' --}}
+                        <!-- 'images' dan prefix 'storage/' -->
                         <img src="{{ asset('storage/' . $news->images) }}"
                             class="absolute inset-0 w-full h-full object-cover duration-200" alt="{{ $news->title }}">
                     </div>
 
                     <div class="text-sm flex items-center gap-2 pt-3 pb-1 text-slate-600 h-fit">
-                        {{-- Tanggal Publikasi --}}
+                        <!-- Tanggal Publikasi  -->
                         <p>{{ $news->published_at->isoFormat('d MMMM Y') }}</p>
 
-                        {{-- Kategori Berita --}}
+                        <!-- Kategori Berita  -->
                         @if ($news->category)
                         <x-icons.dot class="w-1 h-1" />
                         <p>{{ $news->category->title ?? '-' }}</p>
                         @endif
                     </div>
 
-                    {{-- Judul Berita (Link ke Detail) --}}
+                    <!-- Judul Berita (Link ke Detail)  -->
                     <a href="/berita/{{ $news->slug }}"
                         class="text-lg font-medium text-slate-600 hover:underline underline-offset-2 cursor-pointer hover:text-orange-600">
                         {{ Str::limit($news->title, 80) }}
@@ -84,11 +80,11 @@ $currentAppId = $slug ?? 'Pusat (Global)';
                 @endforelse
             </div>
 
-            {{-- Custom Pagination --}}
+            <!-- halaman semua berita -->
             @if ($otherNews->hasPages())
             <div class="flex border-t border-slate-200 pt-6 justify-between items-center">
                 <ul class="flex items-center gap-4 text-lg font-medium">
-                    {{-- Page Links --}}
+                    <!-- arahkan halaman -->
                     @php
                     $start = max(1, $otherNews->currentPage() - 2);
                     $end = min($otherNews->lastPage(), $otherNews->currentPage() + 2);
@@ -134,7 +130,7 @@ $currentAppId = $slug ?? 'Pusat (Global)';
                                 @endif
                 </ul>
 
-                {{-- Arrow buttons --}}
+                <!-- arrow button -->
                 <div class="flex gap-2">
                     <a href="{{ $otherNews->previousPageUrl() }}"
                         class="{{ $otherNews->onFirstPage() ? 'pointer-events-none text-slate-300' : 'hover:text-slate-600 text-slate-500' }} bg-white hover:bg-slate-200 rounded p-1 ring-1 ring-zinc-300">

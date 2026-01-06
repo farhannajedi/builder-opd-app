@@ -78,7 +78,7 @@ $otherGalleries = Galleries::where('opd_id', $gallery->opd_id)
             </div>
         </div>
 
-        {{-- Sidebar (Kanan) --}}
+        {{-- Sidebar (Kanan) menampilkan galeri lainnya --}}
         <div class="space-y-8">
             <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
                 <h3 class="text-xl font-bold text-slate-800 mb-6">Foto Lainnya</h3>
@@ -92,11 +92,12 @@ $otherGalleries = Galleries::where('opd_id', $gallery->opd_id)
                         </div>
                         <div class="flex-1">
                             <h4
-                                class="text-sm font-bold text-slate-800 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                                class="text-sm font-medium text-slate-800 line-clamp-2 group-hover:text-blue-600 transition-colors">
                                 {{ $item->title }}
                             </h4>
                             <p class="text-[10px] text-slate-400 mt-1 uppercase">
-                                {{ $item->created_at->diffForHumans() }}</p>
+                                {{ $item->created_at->diffForHumans() }}
+                            </p>
                         </div>
                     </a>
                     @empty
