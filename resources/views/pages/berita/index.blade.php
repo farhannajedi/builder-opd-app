@@ -2,9 +2,8 @@
 use App\Models\News;
 
 /**
-* LOGIKA DETEKSI DOMAIN
-* Jika diakses dari domain pusat (misal: localhost/utama), APP_ID biasanya kosong.
-* Jika diakses dari domain anak (misal: tp-pkk.test), APP_ID terisi dari .env anak.
+* Jika diakses dari domain pusat (misal: localhost/utama), APP_ID kosong.
+* Jika diakses dari domain web child (misal: tp-pkk.test), APP_ID terisi dari .env child.
 */
 $slug = getenv('APP_ID');
 

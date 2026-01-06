@@ -23,6 +23,7 @@ class News extends Model
         'published_at' => 'datetime',
     ];
 
+    // isi slug otomatis
     protected static function booted()
     {
         $slug = getenv('APP_ID');
