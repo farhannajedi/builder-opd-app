@@ -4,7 +4,7 @@ use App\Models\News;
 // Jika diakses dari domain pusat (misal: localhost/utama), APP_ID kosong.
 // Jika diakses dari domain web child (misal: tp-pkk.test), APP_ID terisi dari .env child.
 
-<!-- nantinya akan mengarahkan ke slug berdasarkan App id -->
+// nantinya akan mengarahkan ke slug berdasarkan App id
 $slug = getenv('APP_ID');
 
 if (!$slug) {

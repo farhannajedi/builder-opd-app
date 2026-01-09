@@ -12,14 +12,14 @@ $services = App\Models\Service::with('opd')
 <div class="max-w-screen-lg mx-auto w-full">
     <section class="max-w-screen-xl px-4 mx-auto w-full py-12 md:py-16">
 
-        {{-- Header Halaman --}}
+        <!-- Header Halaman  -->
         <div class="pt-4 mb-10 border-b border-gray-300 pb-3">
             <p class="text-4xl font-medium text-slate-800">
                 Daftar Layanan
             </p>
         </div>
 
-        {{-- CONTAINER --}}
+        <!-- List Layanan tersedia -->
         <div class="grid grid-cols-1 gap-10">
 
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200">
@@ -30,14 +30,14 @@ $services = App\Models\Service::with('opd')
                 <div class="space-y-4">
                     @forelse ($services as $service)
 
-                    {{-- CARD --}}
+                    <!-- kotak pembungkus content -->
                     <a href="/layanan/{{ $service->id }}"
                         class="block border border-gray-200 rounded-lg p-4 hover:shadow-md transition bg-white group"
                         style="text-decoration: none;">
 
                         <div class="flex items-start justify-between gap-4">
 
-                            {{-- KIRI --}}
+                            <!-- berada di kiri -->
                             <div class="flex items-start gap-4 flex-grow">
                                 <div class="bg-blue-100 rounded-lg p-3 flex-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600"
@@ -66,7 +66,7 @@ $services = App\Models\Service::with('opd')
                                 </div>
                             </div>
 
-                            {{-- KANAN --}}
+                            <!-- berada di kanan -->
                             <div class="flex items-center">
                                 <span class="bg-blue-600 text-white rounded-lg px-3 py-2 text-sm">
                                     Detail
@@ -83,7 +83,7 @@ $services = App\Models\Service::with('opd')
                     @endforelse
                 </div>
 
-                {{-- Pagination --}}
+                <!-- pagination -->
                 @if ($services->hasPages())
                 <div class="pt-6 border-t mt-6">
                     {{ $services->links() }}

@@ -17,7 +17,7 @@ $opd = Opd::find(env('APP_ID'));
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <title>{{ $title?? 'OPD' }}</title>
 
-    {{-- Memuat semua aset yang didaftarkan di AppServiceProvider --}}
+    <!-- Memuat semua aset yang didaftarkan di AppServiceProvider -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,7 +37,7 @@ $opd = Opd::find(env('APP_ID'));
     </main>
     <footer class="w-full bg-yellow-600 text-yellow-50 pt-9 pb-5 relative overflow-hidden">
 
-        {{-- BIG BACKGROUND TEXT --}}
+        <!-- teks background -->
         <p class="pointer-events-none select-none absolute -left-4 top-2
         text-[170px] font-black tracking-widest leading-none
         bg-gradient-to-t from-yellow-200 via-yellow-800 to-yellow-800 bg-clip-text text-transparent opacity-40">
@@ -51,7 +51,7 @@ $opd = Opd::find(env('APP_ID'));
 
         <div class="max-w-screen-lg mx-auto px-4 relative z-10">
 
-            {{-- TOP SECTION --}}
+            <!-- section atas -->
             <div class="flex justify-between items-start gap-10 mb-14">
                 <div>
                     <img src="{{ asset('assets/images/logo_kab.png') }}" class="w-28 mb-3 drop-shadow-xl" alt="">
@@ -59,7 +59,7 @@ $opd = Opd::find(env('APP_ID'));
                     <p class="text-sm text-white-200 drop-shadow">Diskominfo</p>
                 </div>
 
-                {{-- Kontak --}}
+                <!-- Kontak  -->
                 <div class="text-sm space-y-1">
                     <p class="text-yellow-200 mb-1 font-medium">Hubungi Kami</p>
                     <p>Jl. Jendral Sudirman No. ...</p>
@@ -67,7 +67,7 @@ $opd = Opd::find(env('APP_ID'));
                     <p>Telp: (0777) xxxx</p>
                 </div>
 
-                {{-- Sosial Media --}}
+                <!-- Link Sosial Media  -->
                 <div class="text-sm space-y-1">
                     <p class="text-yellow-200 mb-1 font-medium">Media Sosial</p>
                     <div class="flex gap-4">
@@ -93,7 +93,7 @@ $opd = Opd::find(env('APP_ID'));
         </div>
     </footer>
 
-    {{-- COPYRIGHT BAR --}}
+    <!-- Bar Copyright -->
     <div class="w-full bg-yellow-600 shadow py-1">
         <p class="text-sm text-center font-medium text-yellow-800">Copyright &copy; 2025</p>
     </div>

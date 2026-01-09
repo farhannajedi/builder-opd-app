@@ -9,15 +9,14 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
 <div class="max-w-screen-lg mx-auto w-full">
     <section class="max-w-screen-xl px-4 mx-auto w-full py-12 md:py-16">
 
-        {{-- Header Halaman --}}
+        <!-- header halaman -->
         <div class="pt-4 mb-10 border-b border-gray-300 pb-3">
             <p class="text-4xl font-medium text-slate-800">Arsip Dokumen Perencanaan</p>
         </div>
 
-        {{-- CONTAINER UTAMA --}}
+        <!-- container utama -->
         <div class="grid grid-cols-1 gap-10">
-
-            {{-- LIST DOKUMEN --}}
+            <!-- list dokumen -->
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200">
                 <p class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-4">
                     Dokumen Perencanaan
@@ -26,17 +25,14 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                 <div class="space-y-4">
                     @forelse ($documents as $doc)
 
-                    {{-- CARD DOKUMEN BARU (Link ke Detail Halaman) --}}
+                    <!-- Link ke Detail Halaman -->
                     <a href="/planning-dokumen/{{ $doc->slug }}"
                         class="block border border-gray-200 rounded-lg p-4 transition duration-300 hover:shadow-md hover:border-blue-400 bg-white group"
                         style="text-decoration: none;">
-
                         <div class="flex items-start justify-between gap-4">
-
-                            {{-- KIRI: ICON DAN DETAIL DOKUMEN --}}
+                            <!-- icon dan detail dokumen -->
                             <div class="flex items-start gap-4 flex-grow">
-
-                                {{-- ICON FILE STATIS (PDF/DOC) --}}
+                                <!-- icon file statis -->
                                 <div class="bg-blue-100 rounded-lg p-3 flex-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -46,17 +42,16 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                                     </svg>
                                 </div>
 
-                                {{-- DETAIL --}}
+                                <!-- detail dokumen -->
                                 <div class="flex-grow space-y-1">
                                     <p
                                         class="text-lg font-bold text-gray-800 line-clamp-2 group-hover:text-blue-600 transition duration-150">
                                         {{ $doc->title }}
                                     </p>
 
-                                    {{-- META DATA --}}
+                                    <!-- metadata -->
                                     <div class="flex flex-wrap text-sm text-gray-500 gap-x-4 gap-y-1 mt-1">
-
-                                        {{-- TANGGAL --}}
+                                        <!-- tanggal diupload -->
                                         <div class="flex items-center gap-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 stroke-[1.5]"
                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,7 +61,7 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                                             <span>{{ $doc->created_at->isoFormat('D MMMM Y') }}</span>
                                         </div>
 
-                                        {{-- OPD --}}
+                                        <!-- OPD -->
                                         <div class="flex items-center gap-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 stroke-[1.5]"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -80,10 +75,8 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                                 </div>
                             </div>
 
-                            {{-- KANAN: STATUS DAN INDIKATOR LINK --}}
+                            <!-- status dan indikator link -->
                             <div class="flex-none flex items-center gap-2">
-
-                                {{-- INDIKATOR NON-LINK --}}
                                 <div
                                     class="bg-blue-600 text-white rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
@@ -95,7 +88,7 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                                     Detail File
                                 </div>
 
-                                {{-- Panah Link --}}
+                                <!-- panah link -->
                                 <div class="hidden md:block">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="h-6 w-6 text-blue-500 group-hover:translate-x-1 transition duration-150"
@@ -114,7 +107,7 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                     @endforelse
                 </div>
 
-                {{-- Pagination --}}
+                <!-- pagination -->
                 @if ($documents->hasPages())
                 <div class="pt-6 border-t mt-6 border-gray-200">
                     {{ $documents->links() }}

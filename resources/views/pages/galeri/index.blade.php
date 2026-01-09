@@ -20,19 +20,19 @@ $galleries = Galleries::orderBy('created_at', 'desc')->get();
         <p class="text-slate-500 mt-2">Kumpulan dokumentasi kegiatan terbaru.</p>
     </div>
 
-    {{-- GRID SYSTEM: 1 Kolom di tampilan mobile, 3 tampilan gambar di tampilan dekstop --}}
+    <!-- Grid 3 gambar di tampilan dekstop -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         @forelse ($galleries as $gal)
-        {{-- Link Detail membungkus seluruh gambarnya nanti --}}
+        <!-- Link Detail yang membungkus seluruh gambar -->
         <a href="{{ url('galeri/' . $gal->slug) }}"
             class="group block bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
 
-            {{-- Container Gambar dengan Rasio 4:3 --}}
+            <!-- Container Gambar dengan Rasio 4:3  -->
             <div class="relative aspect-video sm:aspect-[4/3] overflow-hidden bg-slate-100">
                 <img src="{{ asset('storage/' . $gal->images) }}" alt="{{ $gal->title }}"
                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
 
-                {{-- Overlay saat cursor diarahkan ke gambar --}}
+                <!-- Overlay saat cursor diarahkan ke gambar  -->
                 <div
                     class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +44,7 @@ $galleries = Galleries::orderBy('created_at', 'desc')->get();
                 </div>
             </div>
 
-            {{-- Konten Teks --}}
+            <!-- Konten Teks Detail -->
             <div class="p-4">
                 <p class="text-xs font-bold text-orange-600 uppercase tracking-wider mb-1">
                     {{ $gal->opd->name ?? 'Instansi' }}

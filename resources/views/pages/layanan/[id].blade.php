@@ -12,14 +12,14 @@ $service = App\Models\Service::with('opd')
 <div class="max-w-screen-lg mx-auto w-full">
     <section class="max-w-screen-xl px-4 mx-auto w-full py-12 md:py-16">
 
-        {{-- Breadcrumb --}}
+        <!-- Breadcrumb  -->
         <div class="mb-6 text-sm text-gray-500">
             <a href="/layanan" class="hover:text-blue-600">Layanan</a>
             <span class="mx-2">/</span>
             <span class="text-gray-700">{{ $service->name }}</span>
         </div>
 
-        {{-- Header --}}
+        <!-- Judul Layanan -->
         <div class="mb-10 border-b border-gray-300 pb-4">
             <h1 class="text-4xl font-semibold text-slate-800">
                 {{ $service->name }}
@@ -42,15 +42,14 @@ $service = App\Models\Service::with('opd')
             </div>
         </div>
 
-        {{-- Konten --}}
+        <!-- Konten Deskripsi -->
         <div class="mt-4 mb-6 bg-white rounded-xl shadow border border-gray-200 p-6 md:p-8">
             <article class="prose max-w-none">
                 {!! nl2br(e($service->description)) !!}
             </article>
         </div>
 
-        {{-- Tombol Kembali --}}
-        {{-- KANAN --}}
+        <!-- Tombol Kembali  -->
         <div class="flex mt-8">
             <a href="/layanan" class="inlibe-flex bg-blue-600 text-white gap-2 rounded-lg px-3 py-2 text-sm">
                 Kembali Ke Daftar Layanan

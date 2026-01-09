@@ -12,10 +12,8 @@ $extension = strtolower(pathinfo($document->file, PATHINFO_EXTENSION));
 @extends('layouts.app', ['activePage' => 'Arsip Dokumen'])
 
 @section('content')
-{{-- PAGE WRAPPER --}}
 <div class="max-w-5xl mx-auto py-10">
-
-    {{-- HEADER SECTION --}}
+    <!-- bagian header section -->
     <div class="bg-white shadow-md rounded-xl p-8 mb-10 border border-gray-200">
         <a href="/planning-dokumen"
             class="mt-3 inlibe-flex bg-blue-600 text-white gap-2 rounded-lg px-3 py-2 text-sm hover:text-gray-800 px-4">
@@ -39,7 +37,7 @@ $extension = strtolower(pathinfo($document->file, PATHINFO_EXTENSION));
         </div>
     </div>
 
-    {{-- FILE PREVIEW SECTION --}}
+    <!-- mengarahkan ke detail file / folder -->
     @if ($document->file)
     <div class="bg-white shadow-md rounded-xl border border-gray-200 overflow-hidden mb-10">
         <div class="p-5 border-b">
@@ -63,14 +61,14 @@ $extension = strtolower(pathinfo($document->file, PATHINFO_EXTENSION));
     @endif
 
 
-    {{-- CONTENT SECTION --}}
+    <!-- content  -->
     <div class="bg-white shadow-md rounded-xl border border-gray-200 p-8 mb-10">
         <article class="prose prose-lg max-w-none text-gray-800 leading-relaxed">
             {!! $document->content !!}
         </article>
     </div>
 
-    {{-- ACTION BUTTONS --}}
+    <!-- button section download -->
     @if ($document->file)
     <div class="flex justify-center">
         <a href="{{ $fileUrl }}" target="_blank"

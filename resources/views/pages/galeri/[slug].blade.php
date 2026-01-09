@@ -16,7 +16,7 @@ $otherGalleries = Galleries::where('opd_id', $gallery->opd_id)
 
 @section('content')
 <section class="max-w-screen-lg px-4 mx-auto w-full py-12">
-    {{-- Breadcrumb --}}
+    <!-- Breadcrumb  -->
     <nav class="flex mb-8 text-sm text-slate-500 gap-2">
         <a href="{{ url('/') }}" class="hover:text-blue-600">Beranda</a>
         <span>/</span>
@@ -27,9 +27,9 @@ $otherGalleries = Galleries::where('opd_id', $gallery->opd_id)
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
-        {{-- Konten Utama (Kiri) --}}
+        <!-- Konten Utama (Kiri)  -->
         <div class="lg:col-span-2 space-y-6">
-            {{-- Judul & Meta --}}
+            <!-- Judul & Meta  -->
             <div class="space-y-4">
                 <h1 class="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
                     {{ $gallery->title }}
@@ -51,20 +51,20 @@ $otherGalleries = Galleries::where('opd_id', $gallery->opd_id)
                 </div>
             </div>
 
-            {{-- Gambar Besar --}}
+            <!-- Gambar Besar Konten Berita -->
             <div class="rounded-2xl overflow-hidden shadow-lg bg-slate-100">
                 <img src="{{ asset('storage/' . $gallery->images) }}" alt="{{ $gallery->title }}"
                     class="w-full h-auto object-cover">
             </div>
 
-            {{-- Deskripsi --}}
+            <!-- Detail Deskripsi -->
             <div class="prose prose-slate max-w-none">
                 <p class="text-slate-700 leading-relaxed text-lg italic border-l-4 border-slate-200 pl-4">
                     {{ $gallery->description ?: 'Tidak ada deskripsi untuk galeri ini.' }}
                 </p>
             </div>
 
-            {{-- Tombol Kembali --}}
+            <!-- Tombol Kembali  -->
             <div class="pt-6">
                 <a href="{{ url('/galeri') }}"
                     class="inline-flex items-center gap-2 text-blue-600 font-medium hover:underline">
@@ -78,7 +78,7 @@ $otherGalleries = Galleries::where('opd_id', $gallery->opd_id)
             </div>
         </div>
 
-        {{-- Sidebar (Kanan) menampilkan galeri lainnya --}}
+        <!-- Sidebar (Kanan) tampilan galeri lainnya  -->
         <div class="space-y-8">
             <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
                 <h3 class="text-xl font-bold text-slate-800 mb-6">Foto Lainnya</h3>
@@ -106,7 +106,7 @@ $otherGalleries = Galleries::where('opd_id', $gallery->opd_id)
                 </div>
             </div>
 
-            {{-- Info Box --}}
+            <!-- Box konten Info -->
             <div class="bg-blue-600 rounded-2xl p-6 text-white shadow-xl shadow-blue-100">
                 <h4 class="font-bold mb-2">Butuh Informasi?</h4>
                 <p class="text-sm text-blue-100 mb-4">Hubungi admin {{ $gallery->opd->name }} untuk informasi lebih
