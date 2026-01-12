@@ -4,15 +4,12 @@
 <section class="w-full bg-white py-10 md:py-20">
     <div class="max-w-screen-lg px-2 bg-white mx-auto grid gap-6">
         <p class="text-5xl font-medium text-slate-700">Berita Karimun</p>
-
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-            {{-- FIRST NEWS --}}
+            <!-- berita pertama -->
             @php
             $first = $news;
             $firstImage = asset('storage/' . $first->image_url);
             @endphp
-
             <div class="h-72 md:h-96 bg-cover grid items-end" style="background-image: url('{{ $firstImage }}')">
                 <div class="bg-slate-900/50 p-4 h-full flex flex-col gap-2 w-full justify-between">
                     <div>
@@ -38,7 +35,7 @@
                 </div>
             </div>
 
-            {{-- NEXT NEWS --}}
+            <!-- berita selanjutnya -->
             <div class="h-full w-full grid grid-cols-2 gap-2 md:gap-4 auto-rows-fr">
 
                 @foreach ($news->slice(1)->values() as $index => $item)
@@ -48,7 +45,7 @@
                 $image = asset('storage/' . $item->image_url);
                 @endphp
 
-                {{-- SECOND NEWS (Lebar) --}}
+                <!-- tampilan berita selanjutnya -->
                 @if ($isSecond)
                 <div class="bg-slate-800 {{ $colSpan }} h-full w-full">
                     <div class="w-1/2 bg-cover h-full" style="background-image: url('{{ $image }}')">
@@ -78,7 +75,7 @@
                     </div>
                 </div>
 
-                {{-- NEWS ITEM BIASA --}}
+                <!-- news item -->
                 @else
                 <div class="h-full w-full bg-cover grid items-end" style="background-image: url('{{ $image }}')">
                     <div class="bg-slate-800/50 p-2 md:p-4 h-full flex gap-2 flex-col w-full justify-between">
@@ -105,7 +102,6 @@
                     </div>
                 </div>
                 @endif
-
                 @endforeach
             </div>
 

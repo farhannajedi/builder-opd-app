@@ -11,7 +11,7 @@
             <img src="{{ asset('assets/images/komdigi.png') }}" class="w-auto h-12 hover:scale-110 duration-200"
                 alt="logo_hut">
         </div>
-        {{-- Nav Menu Mobile --}}
+        <!-- menu navbar mobile -->
         <div class="block md:hidden">
             <button @click="mobileOpen = !mobileOpen"
                 class="bg-white hover:bg-slate-800 p-2 active:scale-95 rounded-lg border border-slate-300 group duration-200">
@@ -23,7 +23,7 @@
                     <path d="M4 12l16 0" />
                     <path d="M4 18l16 0" />
                 </svg>
-                {{-- Switch this icon when reverse status --}}
+                <!-- mengganti icon -->
                 <svg x-show="mobileOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round"
                     class="text-slate-600 group-hover:text-white h-6 w-6">
@@ -33,7 +33,7 @@
                 </svg>
             </button>
         </div>
-        {{-- Hidden on mobile --}}
+        <!-- jika dibuka diaplikasi mobile -->
         <div class="bg-white w-1/3 h-10 border border-slate-400 rounded-lg hidden md:flex p-1">
             <input type="text" class="flex-1 focus:outline-none pl-2" placeholder="Pencarian">
             <button class="bg-white hover:bg-amber-300 rounded-r-md px-2">
@@ -46,7 +46,7 @@
             </button>
         </div>
     </div>
-    {{-- Menu navigator --}}
+    <!-- menu navigasi -->
     <div class="hidden md:block max-w-screen-lg px-2 mx-auto w-full border-t-1 border-slate-200">
         <ul class="text-sm font-medium uppercase flex gap-4 text-slate-600">
             <li class="h-full">
@@ -123,11 +123,9 @@
             </li> -->
         </ul>
     </div>
-    {{-- Mobile Menu --}}
+    <!-- menu pada tampilan mobile -->
     <div id="mobile-menu" x-cloak x-show="mobileOpen" x-transition @click.away="mobileOpen = false"
         class="block md:hidden shadow-lg bg-white p-2 absolute w-full rounded-b-lg border-t-1 border-slate-200 text-slate-600 grid divide-y divide-slate-400">
-
-        {{-- Mobile Menu List --}}
         <a href="/" class="w-full text-lg font-base flex justify-between hover:bg-slate-100 p-2 group">
             <span class="group-hover:text-slate-800">Beranda</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -220,20 +218,18 @@
                 <path d="M6 11l6 -6" />
             </svg>
         </a> -->
-        {{-- Mobile Menu List --}}
 
-        {{-- Searchbox --}}
-        {{-- <div class="bg-white w-full h-10 border border-slate-400 rounded-lg flex p-1 mt-4">
-        <input type="text" class="flex-1 focus:outline-none pl-2" placeholder="Pencarian">
-        <button class="bg-white hover:bg-amber-300 rounded-r-md px-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="text-orange-600 h-6 w-auto" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-            <path d="M21 21l-6 -6" />
-          </svg>
-        </button>
-      </div> --}}
-        {{-- Menu --}}
+        <!-- button search -->
+        <div class="bg-white w-full h-10 border border-slate-400 rounded-lg flex p-1 mt-4">
+            <input type="text" class="flex-1 focus:outline-none pl-2" placeholder="Pencarian">
+            <button class="bg-white hover:bg-amber-300 rounded-r-md px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="text-orange-600 h-6 w-auto" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                    <path d="M21 21l-6 -6" />
+                </svg>
+            </button>
+        </div>
     </div>
 </nav>
