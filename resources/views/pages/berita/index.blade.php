@@ -28,18 +28,15 @@ $currentAppId = $slug ?? 'Pusat (Global)';
 
 @section('content')
 <!-- debug content -->
-<div class="bg-gray-100 p-4 mb-4 text-xs font-mono">
+<!-- <div class="bg-gray-100 p-4 mb-4 text-xs font-mono">
     <p>Current APP_ID (Slug): {{ $currentAppId }}</p>
     <p>Data OPD Ditemukan: {{ $opdName }}</p>
-</div>
+</div> -->
 
 <div class="max-w-screen-lg mx-auto w-full">
-
     <hr class="border-t-1 border-slate-200">
-
     <section class="w-full slate-100 py-16">
         <div class="max-w-screen-lg px-2 grid gap-8 mx-auto w-full">
-
             <!-- tampilan header -->
             <div class="pt-4">
                 <!-- Nama OPD ditambahkan secara dinamis di sini -->
