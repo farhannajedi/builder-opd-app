@@ -1,9 +1,6 @@
 @php
 // Ambil semua layanan yang sudah dipublish
-$services = App\Models\Service::with('opd')
-->whereNotNull('published_at')
-->latest()
-->paginate(10);
+$services = App\Models\Service::with('opd')->whereNotNull('published_at')->latest()->paginate(10);
 @endphp
 
 @extends('layouts.app', ['activePage' => 'Layanan'])
@@ -54,14 +51,28 @@ $services = App\Models\Service::with('opd')
                                         {{ $service->name }}
                                     </p>
 
-                                    <div class="flex flex-wrap text-sm text-gray-500 gap-4 mt-1">
-                                        <span>
-                                            {{ $service->published_at->isoFormat('D MMMM Y') }}
-                                        </span>
+                                    <!-- metadata -->
+                                    <div class="flex flex-wrap text-sm text-gray-500 gap-x-4 gap-y-1 mt-1">
+                                        <!-- tanggal diupload -->
+                                        <div class="flex items-center gap-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 stroke-[1.5]"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                            <span>{{ $service->created_at->isoFormat('D MMMM Y') }}</span>
+                                        </div>
 
-                                        <span>
-                                            {{ $service->opd->name ?? '-' }}
-                                        </span>
+                                        <!-- OPD -->
+                                        <div class="flex items-center gap-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 stroke-[1.5]"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M3 21v-2a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v2" />
+                                                <circle cx="12" cy="7" r="4" />
+                                            </svg>
+                                            <span>{{ $service->opd->name ?? 'OPD Tidak Diketahui' }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

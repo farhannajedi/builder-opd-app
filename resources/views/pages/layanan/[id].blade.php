@@ -1,9 +1,6 @@
 @php
 // Ambil parameter id dari URL (Folio)
-$service = App\Models\Service::with('opd')
-->where('id', $id)
-->whereNotNull('published_at')
-->firstOrFail();
+$service = App\Models\Service::with('opd')->where('id', $id)->whereNotNull('created_at')->firstOrFail();
 @endphp
 
 @extends('layouts.app', ['activePage' => 'Detail Layanan'])
