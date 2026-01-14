@@ -83,7 +83,7 @@ class NewsCategoriesResource extends Resource
                     return;
                 }
 
-                // admin opd
+                // jika admin opd
                 $query->where('opd_id', $auth->opd_id);
             })
             ->columns([

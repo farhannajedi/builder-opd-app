@@ -61,7 +61,7 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                                             <span>{{ $doc->created_at->isoFormat('D MMMM Y') }}</span>
                                         </div>
 
-                                        <!-- OPD -->
+                                        <!-- nama OPD -->
                                         <div class="flex items-center gap-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 stroke-[1.5]"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"

@@ -55,17 +55,17 @@ $extension = strtolower(pathinfo($document->file, PATHINFO_EXTENSION));
     <div class="bg-white shadow-md rounded-xl border border-gray-200 overflow-hidden mb-10">
         <div class="p-5 border-b">
             <h3 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                Pratinjau Dokumen
+                Tampilan Dokumen
             </h3>
-            <p class="text-sm text-gray-500">** Jika preview tidak tampil, gunakan tombol download di bawah .**</p>
+            <p class="text-sm text-gray-500">** Jika preview tidak tampil, unduh dokumen pada tombol dibawah .**</p>
         </div>
 
         <div class="w-full bg-gray-50">
             @if ($extension === 'pdf')
-            {{-- PDF VIEWER --}}
+            <!-- pdf tampilan -->
             <iframe src="{{ $fileUrl }}" class="w-full h-[700px] rounded-b-xl"></iframe>
             @else
-            {{-- GOOGLE DOCS VIEWER --}}
+            <!-- tampilan google docs -->
             <iframe src="https://docs.google.com/gview?url={{ $fileUrl }}&embedded=true"
                 class="w-full h-[700px] rounded-b-xl" frameborder="0"></iframe>
             @endif

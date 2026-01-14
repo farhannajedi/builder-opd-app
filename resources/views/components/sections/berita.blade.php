@@ -1,111 +1,101 @@
 @props(['news'])
 
-@if ($news->count() >= 4)
+<!-- hanya menampilkan 3 berita terbaru berdasarkan tanggal upload -->
+@php
+$latestNews = $news->sortByDesc('published_at')->take(3);
+
+// ambil nama opd
+$opdName = $latestNews->first()?->opd?->name ?? 'Instansi';
+@endphp
+
+<!-- jika berita lebih dari -->
+@if ($latestNews->count() > 0)
 <section class="w-full bg-white py-10 md:py-20">
-    <div class="max-w-screen-lg px-2 bg-white mx-auto grid gap-6">
-        <p class="text-5xl font-medium text-slate-700">Berita Karimun</p>
+    <div class="max-w-screen-lg px-4 bg-white mx-auto grid gap-6">
+        <p class="text-2xl md:text-2xl font-medium text-slate-700">Berita {{ $opdName }}</p>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- berita pertama -->
             @php
-            $first = $news;
-            $firstImage = asset('storage/' . $first->image_url);
+            $first = $latestNews->first();
+            $firstImage = asset('storage/' . $first->images);
             @endphp
-            <div class="h-72 md:h-96 bg-cover grid items-end" style="background-image: url('{{ $firstImage }}')">
-                <div class="bg-slate-900/50 p-4 h-full flex flex-col gap-2 w-full justify-between">
-                    <div>
-                        <div class="w-fit whitespace-nowrap p-0.5 rounded-md text-slate-100 text-sm">
-                            <p>{{ $first->published_at->isoFormat('D MMMM Y') }}</p>
-                        </div>
+            <div class="h-80 md:h-[500px] relative overflow-hidden rounded-2xl group">
+                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                    style="background-image: url('{{ $firstImage }}')"></div>
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent p-6 flex flex-col justify-between">
+                    <div class="bg-blue-600 w-fit px-3 py-1 rounded-full text-white text-xs font-semibold">
+                        {{ $first->published_at->isoFormat('D MMMM Y') }}
+                    </div>
+                    <div class="flex flex-col gap-4">
                         <a href="/berita/{{ $first->slug }}"
-                            class="hover:underline underline-offset-2 text-3xl leading-[1.2] font-medium hover:text-white text-slate-100 line-clamp-3">
+                            class="text-2xl md:text-3xl font-bold text-white hover:underline decoration-2 underline-offset-4 line-clamp-3 leading-tight">
                             {{ $first->title }}
                         </a>
-                    </div>
-                    <div class="flex justify-end">
-                        <a href="/berita/{{ $first->slug }}"
-                            class="ring-2 hover:bg-white ring-white p-2 rounded-full group duration-200 cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 text-white group-hover:text-slate-800 group-hover:rotate-45 duration-200"
-                                fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
-                            </svg>
-                        </a>
+                        <div class="flex justify-end">
+                            <a href="/berita/{{ $first->slug }}"
+                                class="bg-white/20 backdrop-blur-md hover:bg-white p-3 rounded-full transition-all duration-300 group/btn">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6 text-white group-hover/btn:text-slate-900 group-hover/btn:rotate-45 transition-transform"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- berita selanjutnya -->
-            <div class="h-full w-full grid grid-cols-2 gap-2 md:gap-4 auto-rows-fr">
-
-                @foreach ($news->slice(1)->values() as $index => $item)
+            <div class="grid grid-cols-2 gap-4">
+                @foreach ($latestNews->slice(1)->values() as $index => $item)
                 @php
-                $isSecond = $index === 0;
-                $colSpan = $isSecond ? 'col-span-2 flex' : '';
-                $image = asset('storage/' . $item->image_url);
+                // Berita kedua (index 0 di slice) ambil lebar penuh, sisanya bagi dua
+                $isWide = $index === 0;
+                $image = asset('storage/' . $item->images);
                 @endphp
 
-                <!-- tampilan berita selanjutnya -->
-                @if ($isSecond)
-                <div class="bg-slate-800 {{ $colSpan }} h-full w-full">
-                    <div class="w-1/2 bg-cover h-full" style="background-image: url('{{ $image }}')">
-                    </div>
+                <div
+                    class="{{ $isWide ? 'col-span-2 h-48 md:h-60' : 'col-span-1 h-44 md:h-56' }} relative rounded-2xl overflow-hidden group shadow-sm">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                        style="background-image: url('{{ $image }}')"></div>
 
-                    <div class="w-1/2 h-full flex flex-col justify-between p-2 md:p-4 gap-2">
-                        <div>
-                            <div class="w-fit whitespace-nowrap p-0.5 rounded-md text-slate-100 text-sm">
-                                <p>{{ $item->published_at->isoFormat('D MMMM Y') }}</p>
-                            </div>
+                    {{-- Overlay Gradasi agar teks terbaca --}}
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent p-4 flex flex-col justify-between">
+                        <span class="text-[10px] md:text-xs text-slate-200 font-medium">
+                            {{ $item->published_at->isoFormat('D MMM Y') }}
+                        </span>
+
+                        <div class="flex flex-col gap-2">
                             <a href="/berita/{{ $item->slug }}"
-                                class="hover:underline underline-offset-2 text-xl leading-[1.2] font-light hover:text-white text-slate-50 line-clamp-3">
+                                class="text-sm md:text-base font-semibold text-white line-clamp-2 hover:text-blue-300 transition-colors leading-tight">
                                 {{ $item->title }}
                             </a>
-                        </div>
-                        <div class="flex justify-end">
-                            <a href="/berita/{{ $item->slug }}"
-                                class="ring-1 hover:bg-white ring-white p-1.5 rounded-full group duration-200 cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-white group-hover:text-slate-800 group-hover:rotate-45 duration-200"
-                                    fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
-                                </svg>
-                            </a>
+                            <div class="flex justify-end">
+                                <a href="/berita/{{ $item->slug }}"
+                                    class="bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white p-1.5 rounded-full transition-all group/sbtn">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 text-white group-hover/sbtn:text-slate-900 group-hover/sbtn:rotate-45"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- news item -->
-                @else
-                <div class="h-full w-full bg-cover grid items-end" style="background-image: url('{{ $image }}')">
-                    <div class="bg-slate-800/50 p-2 md:p-4 h-full flex gap-2 flex-col w-full justify-between">
-                        <div>
-                            <div class="w-fit p-0.5 rounded-md text-slate-100 text-sm">
-                                <p>{{ $item->published_at->isoFormat('D MMMM Y') }}</p>
-                            </div>
-                            <a href="/berita/{{ $item->slug }}"
-                                class="hover:underline underline-offset-2 text-xl leading-[1.2] font-light hover:text-white text-slate-50 line-clamp-3">
-                                {{ $item->title }}
-                            </a>
-                        </div>
-                        <div class="flex justify-end">
-                            <a href="/berita/{{ $item->slug }}"
-                                class="ring-1 hover:bg-white ring-white p-1.5 rounded-full group duration-200 cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-white group-hover:text-slate-800 group-hover:rotate-45 duration-200"
-                                    fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                @endif
                 @endforeach
             </div>
-
         </div>
+
+        <!-- lihat semua berita yang tersedia -->
+        <div class="md:hidden">
+            <a href="/berita" class="block w-full text-center bg-slate-100 text-slate-800 py-4 rounded-2xl font bold">
+                Lihat Semua Berita Tersedia</a>
+        </div>
+
     </div>
 </section>
 @endif
