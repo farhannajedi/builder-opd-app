@@ -11,7 +11,7 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
 
         <!-- header halaman -->
         <div class="pt-4 mb-10 border-b border-gray-300 pb-3">
-            <p class="text-4xl font-medium text-slate-800">Arsip Dokumen Perencanaan</p>
+            <p class="text-2xl md:text-2xl font-medium text-slate-700">Arsip Dokumen Perencanaan</p>
         </div>
 
         <!-- container utama -->

@@ -15,7 +15,7 @@ $extension = strtolower(pathinfo($document->file, PATHINFO_EXTENSION));
     <nav class="flex mb-8 text-sm text-slate-500 gap-2">
         <a href="{{ url('/') }}" class="hover:text-blue-600">Beranda</a>
         <span>/</span>
-        <a href="{{ url('/berita') }}" class="hover:text-blue-600">Arsip Dokumen</a>
+        <a href="{{ url('/planning-dokumen') }}" class="hover:text-blue-600">Arsip Dokumen</a>
         <span>/</span>
         <span class="text-slate-800 truncate">{{ Str::limit($document->title, 40) }}</span>
     </nav>
@@ -23,14 +23,14 @@ $extension = strtolower(pathinfo($document->file, PATHINFO_EXTENSION));
     <div class="bg-white shadow-md rounded-xl p-8 mb-10 border border-gray-200">
         <!-- tombol back -->
         <div class="border-t border-slate-100">
-            <a href="{{ url('/berita') }}"
+            <a href="{{ url('/planning-dokumen') }}"
                 class="inline-flex items-center gap-2 text-blue-600 font-medium hover:underline">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                Kembali ke Daftar Berita
+                Kembali ke Halaman Daftar Dokumen
             </a>
         </div>
         <h1 class="text-4xl font-extrabold text-gray-800 leading-tight">
