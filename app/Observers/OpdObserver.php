@@ -15,7 +15,7 @@ class OpdObserver
     public function created(Opd $opd): void
     {
         $slug = $opd->slug;
-        $basePath = realpath(base_path('../'));
+        $basePath = realpath(base_path('./'));
         $newProjectPath = $basePath . DIRECTORY_SEPARATOR . $slug;
         $masterPath = $basePath . DIRECTORY_SEPARATOR . 'master-opd';
 
