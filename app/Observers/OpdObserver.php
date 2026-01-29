@@ -16,13 +16,13 @@ class OpdObserver
     {
         $slug = $opd->slug;
         $basePath = realpath(base_path('../'));
-        $newProjectPath = $basePath('../' . $slug);
-        $masterPath = $basePath . DIRECTORY_SEPARATOR . 'master-opd';
+        $newProjectPath = $basePath . DIRECTORY_SEPARATOR . $slug;
+        $masterPath = base_path('master-opd');
 
         // membuat folder proyek baru jika belum ada
         if (!File::isDirectory($newProjectPath)) {
-            File::makeDirectory($newProjectPath . '/public', 0755, true);
-            File::makeDirectory($newProjectPath . '/bootstrap', 0755, true);
+            File::makeDirectory($newProjectPath . DIRECTORY_SEPARATOR . '/public', 0755, true);
+            File::makeDirectory($newProjectPath . DIRECTORY_SEPARATOR . '/bootstrap', 0755, true);
 
             // Salin file jembatan dari folder master-opd
             if (File::isDirectory($masterPath)) {
