@@ -27,9 +27,16 @@ $app->setBasePath($coreAppPath);
 $app->usePublicPath(realpath(__DIR__));
 Facade::setFacadeApplication($app);
 
-// Memaksa Vite mencari manifest di folder pusat
-$manifestPath = $coreAppPath . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'build';
-Vite::useManifestFilename($manifestPath . DIRECTORY_SEPARATOR . 'manifest.json');
+$hotFilePath = $coreAppPath . '/public/hot';
+$app->singleton('vite.hotfile', fn() => $hotFilePath);
+
+// Tangani Manifest untuk mode production (npm run build)
+// Karena kita sudah membuat SYMLINK folder 'build' di Observer, 
+// sebenarnya Laravel akan otomatis menemukannya. Namun, baris ini mempertegas lokasinya.
+$manifestPath = realpath(__DIR__ . '/build/manifest.json');
+if (file_exists($manifestPath)) {
+    Vite::useManifestFilename($manifestPath);
+}
 
 // vite membaca file dari folder pusat saat npm run dev
 // $hotFilePath = $coreAppPath . '/public/hot';
