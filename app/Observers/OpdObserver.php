@@ -15,8 +15,8 @@ class OpdObserver
     public function created(Opd $opd): void
     {
         $slug = $opd->slug;
-        $basePath = realpath(base_path('./'));
-        $newProjectPath = $basePath . DIRECTORY_SEPARATOR . $slug;
+        $basePath = realpath(base_path('../'));
+        $newProjectPath = $basePath('../' . $slug);
         $masterPath = $basePath . DIRECTORY_SEPARATOR . 'master-opd';
 
         // membuat folder proyek baru jika belum ada
@@ -53,8 +53,8 @@ class OpdObserver
 
         // Daftar folder yang harus di-link ke pusat
         $foldersToLink = [
-            'storage' => base_path('storage/app/public'),
-            'build'   => $corePublicPath . DIRECTORY_SEPARATOR . 'build',
+            'storage' => storage_path('app/public'),
+            'build'   => public_path('build'),
         ];
 
         foreach ($foldersToLink as $linkName => $targetPath) {
@@ -102,6 +102,10 @@ class OpdObserver
     protected function removeFolder(Opd $opd)
     {
         $slug = $opd->slug;
+        if (empty($slug)) {
+            Log::error("Gagal menghapus folder: Slug OPD kosong.");
+            return;
+        }
         $basePath = realpath(base_path('../'));
         $projectPath = $basePath . DIRECTORY_SEPARATOR . $slug;
 
