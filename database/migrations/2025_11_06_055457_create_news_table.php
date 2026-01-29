@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('opd_id')->constrained('opd')->cascadeOnDelete();
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('opd_id')->constrained('opds')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('news_categories')->cascadeOnDelete();
             $table->string('title');
             $table->string('slug');
             $table->string('deskripsi');

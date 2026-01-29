@@ -12,6 +12,11 @@ trait BelongsToOpd
      */
     protected static function bootBelongsToOpd()
     {
+        // jangan jalan di model opd
+        if ((new static)->getTable() === 'opds') {
+            return;
+        }
+
         // Otomatis membatasi data yang muncul di Web child (PUPR, PKK, dll)
         $slug = getenv('APP_ID');
         if ($slug) {
@@ -36,6 +41,6 @@ trait BelongsToOpd
      */
     public function opd()
     {
-        return $this->belongsTo(\App\Models\Opd::class, 'opd_id');
+        // return $this->belongsTo(\App\Models\Opd::class, 'opd_id');
     }
 }

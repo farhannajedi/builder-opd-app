@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('planning_documents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('opd_id')->constrained('opd')->cascadeOnDelete();
+            $table->foreignId('opd_id')->constrained('opds')->cascadeOnDelete();
             $table->string('title');
             $table->longText('content');
             $table->string('file');

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // tambahkan kolom opd_id dan relasi ke tabel opds
-            $table->foreignId('opd_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('opd_id')->nullable()->constrained('opds')->nullOnDelete();
         });
     }
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('opd_configs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('opd_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('opd_id')->constrained('opds')->cascadeOnDelete();
             $table->string('logo')->nullable();
             $table->string('favicon')->nullable();
             $table->string('address')->nullable();
