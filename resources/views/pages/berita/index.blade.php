@@ -7,6 +7,7 @@ use App\Models\News;
 // nantinya akan mengarahkan ke slug berdasarkan App id
 $slug = getenv('APP_ID');
 
+// where('opd_id' ,env('APP_ID')) -> untuk filter opd berdasarkan app_id
 if (!$slug) {
 // TAMPILAN utama: Melihat berita dari semua OPD
 $otherNews = News::withoutGlobalScope('filterOPD')->with(['category', 'opd'])->latest()->paginate(9);
