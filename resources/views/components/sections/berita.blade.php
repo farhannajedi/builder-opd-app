@@ -10,9 +10,12 @@ $opdName = $latestNews->first()?->opd?->name ?? 'Instansi';
 
 <!-- jika berita lebih dari -->
 @if ($latestNews->count() > 0)
-<section class="w-full bg-white py-10 md:py-20">
+<section class="w-full bg-white mb-2 py-10 md:py-20">
     <div class="max-w-screen-lg px-4 bg-white mx-auto grid gap-6">
-        <p class="text-2xl md:text-2xl font-medium text-slate-700">Berita {{ $opdName }}</p>
+        <p class="flex justify-center text-2xl md:text-2xl font-medium text-slate-700">Berita {{ $opdName }}
+        <div class="w-full md:w-l mb-2 h-0.5 mx-auto bg-gradient-to-r from-transparent via-orange-500 to-transparent">
+        </div>
+        </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             @php
@@ -92,7 +95,7 @@ $opdName = $latestNews->first()?->opd?->name ?? 'Instansi';
 
         <!-- lihat semua berita yang tersedia -->
         <div class="md:hidden">
-            <a href="/berita" class="block w-full text-center bg-slate-100 text-slate-800 py-4 rounded-2xl font bold">
+            <a href="/berita" class="block w-full text-center bg-slate-100 text-slate-800 py-2 rounded-2xl font bold">
                 Lihat Semua Berita Tersedia</a>
         </div>
 

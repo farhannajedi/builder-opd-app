@@ -6,13 +6,8 @@ $latestDocuments = $documents->sortByDesc('published_at')->take(3);
 $opdName = $latestDocuments->first()?->opd?->name ?? 'Instansi';
 @endphp
 
-<div class="max-w-screen-lg mx-auto w-full">
+<div class="max-w-screen-lg mx-auto mb-9 w-full">
     <section class="max-w-screen-xl px-2 mx-auto w-full py-2 md:py-2">
-        <!-- header halaman -->
-        <div class="flex justify-center pt-4 mb-2 border-gray-300 pb-3">
-            <h1 class="text-3xl md:text-2xl font-medium text-slate-700">Dokumen Perencanaan {{$opdName}}</h1>
-        </div>
-
         <!-- konten container utama -->
         <div class="grid grid-cols-1 gap-10">
             <!-- list dokuemen -->
@@ -30,7 +25,7 @@ $opdName = $latestDocuments->first()?->opd?->name ?? 'Instansi';
 
                     <!-- link to detail halaman -->
                     <a href="/planning-dokumen/{{ $doc->slug }}"
-                        class="block border border-gray-200 rounded-lg p-4 transition duration-300 hover:border-orange-400 bg-white group"
+                        class="block border border-gray-200 rounded-lg p-5 transition duration-300 hover:border-orange-400 bg-white group"
                         style="text-decoration: none;">
                         <div class="flex item-start justify-between gap-4">
                             <!-- detail dokumen -->
@@ -108,7 +103,7 @@ $opdName = $latestDocuments->first()?->opd?->name ?? 'Instansi';
                 </div>
                 <footer class="flex pt-4 items-center gap-4">
                     <div class="flex-grow border-b border-yellow-500"></div>
-                    <a wire:navigate="" href="https://merantikab.go.id/publikasi-dokumen"
+                    <a wire:navigate="" href="/planning-dokumen"
                         class="inline-flex items-center gap-2 border border-slate-200 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white transition">
                         Selengkapnya
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
