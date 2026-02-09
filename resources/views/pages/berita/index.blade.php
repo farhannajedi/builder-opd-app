@@ -1,5 +1,6 @@
 @php
 use App\Models\News;
+use App\Models\NewsCategories;
 
 // Jika diakses dari domain pusat (misal: localhost/utama), APP_ID kosong.
 // Jika diakses dari domain web child (misal: tp-pkk.test), APP_ID terisi dari .env child.
@@ -11,6 +12,10 @@ $slug = getenv('APP_ID');
 if (!$slug) {
 // TAMPILAN utama: Melihat berita dari semua OPD
 $otherNews = News::withoutGlobalScope('filterOPD')->with(['category', 'opd'])->latest()->paginate(9);
+$newsCategory = NewsCategories::limit(7)->get();
+
+// $news = News::orderBy('published_by', 'desc')->paginate(9);
+// $newsCategory = NewsCategories::limit(7)->get();
 
 $opdName = "Semua Instansi";
 } else {
