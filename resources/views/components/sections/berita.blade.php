@@ -8,7 +8,7 @@ $latestNews = $news->sortByDesc('published_at')->take(3);
 $opdName = $latestNews->first()?->opd?->name ?? 'Instansi';
 @endphp
 
-<!-- jika berita lebih dari -->
+<!-- jika berita lebih dari n -->
 @if ($latestNews->count() > 0)
 <section class="w-full bg-white mb-2 py-10 md:py-20">
     <div class="max-w-screen-lg px-4 bg-white mx-auto grid gap-6">
