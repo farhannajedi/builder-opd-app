@@ -1,8 +1,8 @@
-<div class="border b-2 border-slate-400 overflow-x-auto scroll-smoth">
+<div class="border-b-2 border-slate-400 overflow-x-auto scroll-smoth no-scrollbar">
     <div class="flex gap-2 min-w-0 select-none">
-        <div class="relative flex srhink-0
+        <div class="relative flex-srhink-0
 {{ request()->is('berita') ? 'text-slate-600 font-semibold' : 'text-salte-500' }}">
-            <a href="/berita" class="pb-2 pt-3">
+            <a href="/berita" class="block pb-2 pt-3 px-1">
                 <p class="font-heading font-medium relative z-10">Semua Berita</p>
             </a>
             @if (request()->is('beita'))

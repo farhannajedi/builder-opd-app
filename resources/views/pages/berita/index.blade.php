@@ -48,9 +48,10 @@ $currentAppId = $slug ?? 'Pusat (Global)';
                 <!-- Nama OPD ditambahkan secara dinamis di sini -->
                 <p class="text-4xl font-medium text-slate-800">Berita Terbaru {{ $opdName }}</p>
             </div>
-
+            <x-commons.category-news :categories="$newsCategory" />
             <!-- LIST BERITA  -->
             <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-14">
+
                 @forelse ($otherNews as $news)
                 <div class="rounded-lg group">
                     <div
