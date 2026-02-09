@@ -22,7 +22,7 @@ $opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
                 @forelse($latestServices as $service)
                 <div
-                    class="w-full max-w-sm border border-gray-200 rounded-lg p-5 transition duration-300 hover:border-orange-400 bg-white flex flex-col h-full">
+                    class="w-full max-w-sm border border-gray-200 rounded-lg p-5 transition duration-300 hover:border-orange-300 bg-white flex flex-col h-full">
                     <!-- Icon -->
                     <div class="flex justify-center mb-4">
                         <div class="bg-blue-100 rounded-lg p-3">
@@ -47,7 +47,7 @@ $opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
 
                     <!-- status dan indikator link detail layanan -->
                     <div class="flex justify-center gap-2">
-                        <a href="/layanan/{{ $service->slug }}"
+                        <a href="/layanan/{{ $service->id }}"
                             class="bg-orange-600 text-white rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-1">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
