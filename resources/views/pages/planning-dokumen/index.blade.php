@@ -24,17 +24,16 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
 
                 <div class="space-y-4">
                     @forelse ($documents as $doc)
-
                     <!-- Link ke Detail Halaman -->
                     <a href="/planning-dokumen/{{ $doc->slug }}"
-                        class="block border border-gray-200 rounded-lg p-4 transition duration-300 hover:shadow-md hover:border-blue-400 bg-white group"
+                        class="block border border-slate-300 rounded-lg p-4 transition duration-300 hover:shadow-md hover:border-orange-200 bg-white group"
                         style="text-decoration: none;">
                         <div class="flex items-start justify-between gap-4">
                             <!-- icon dan detail dokumen -->
                             <div class="flex items-start gap-4 flex-grow">
                                 <!-- icon file statis -->
                                 <div class="bg-blue-100 rounded-lg p-3 flex-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600"
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-orange-600"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M14 3v4a1 1 0 0 0 1 1h4" />
@@ -45,7 +44,7 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                                 <!-- detail dokumen -->
                                 <div class="flex-grow space-y-1">
                                     <p
-                                        class="text-lg font-bold text-gray-800 line-clamp-2 group-hover:text-blue-600 transition duration-150">
+                                        class="text-lg font-bold text-gray-800 line-clamp-2 group-hover:text-slate-600 transition duration-150">
                                         {{ $doc->title }}
                                     </p>
 
@@ -78,7 +77,7 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                             <!-- status dan indikator link -->
                             <div class="flex-none flex items-center gap-2">
                                 <div
-                                    class="bg-blue-600 text-white rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-1">
+                                    class="bg-orange-600 text-white rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
@@ -91,7 +90,7 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                                 <!-- panah link -->
                                 <div class="hidden md:block">
                                     <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-blue-500 group-hover:translate-x-1 transition duration-150"
+                                        class="h-6 w-6 text-orange-500 group-hover:translate-x-1 transition duration-150"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M5 12h14M12 5l7 7-7 7" />

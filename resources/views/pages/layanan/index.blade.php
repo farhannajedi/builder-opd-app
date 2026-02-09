@@ -37,7 +37,7 @@ $services = App\Models\Service::with('opd')->whereNotNull('published_at')->lates
                             <!-- berada di kiri -->
                             <div class="flex items-start gap-4 flex-grow">
                                 <div class="bg-blue-100 rounded-lg p-3 flex-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600"
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-orange-600"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M12 20h9" />
                                         <path d="M12 4h9" />

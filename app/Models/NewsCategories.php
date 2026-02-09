@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\BelongsToOpd;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Permission\Traits\HasRoles;
 
 class NewsCategories extends Model
@@ -16,6 +17,11 @@ class NewsCategories extends Model
         'title',
         'slug',
     ];
+
+    public function links(): HasMany
+    {
+        return $this->hasMany(News::class, 'news_category_id');
+    }
 
     public function opd()
     {
