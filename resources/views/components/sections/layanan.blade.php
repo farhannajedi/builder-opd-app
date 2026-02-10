@@ -6,8 +6,8 @@ $latestServices = $services->sortByDesc('published_at')->take(5);
 $opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
 @endphp
 
-<section class="max-w-screen-xl px-2 mx-auto w-full py-2 md:py-2">
-    <div class="max-w-screen-lg mx-auto w-full">
+<div class="w-full max-w-screen-lg bg-white mx-auto grid gap-6">
+    <section class="w-full bg-whith py-10 md:py-10">
         <!-- Card Utama -->
         <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-200">
             <div class="text-center mb-6">
@@ -23,7 +23,7 @@ $opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
                 @forelse($latestServices as $service)
                 <!-- menampilkan items berada ditengah -->
                 <div
-                    class="w-full sm:w-[48%] md:w-[30%] max-w-sm border border-gray-200 rounded-lg p-5 transition duration-300 hover:border-orange-300 bg-white flex flex-col h-ful">
+                    class="w-full sm:w-[48%] md:w-[30%] max-w-sm border border-gray-200 rounded-lg p-5 transition duration-300 hover:border-orange-300 bg-white flex flex-col h-full">
                     <!-- Icon -->
                     <div class="flex justify-center mb-4">
                         <div class="bg-blue-100 rounded-lg p-3">
@@ -85,5 +85,5 @@ $opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
                 </a>
             </footer>
         </div>
-    </div>
-</section>
+    </section>
+</div>
