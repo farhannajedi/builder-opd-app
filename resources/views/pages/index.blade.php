@@ -4,9 +4,9 @@ use App\Models\Opd;
 $opd = Opd::find(env('APP_ID'));
 
 $news = App\Models\News::whereNotNull('published_at')->orderBy('published_at', 'desc')->limit(4)->get();
-$documents = App\Models\PlanningDocument::orderBy('published_at', 'desc')->limit(3)->get();
+$documents = App\Models\PlanningDocument::orderBy('published_at', 'desc')->limit(4)->get();
 $services = App\Models\Service::orderBy('published_at', 'desc')->limit(6)->get();
-$galleries = App\Models\Galleries::orderBy('published_at', 'desc')->limit(3)->get();
+$galleries = App\Models\Galleries::orderBy('published_at', 'desc')->limit(6)->get();
 @endphp
 
 @extends('layouts.app', ['activePage' => 'beranda'])
