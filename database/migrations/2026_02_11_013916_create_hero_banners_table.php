@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hero_sections', function (Blueprint $table) {
+        Schema::create('hero_banners', function (Blueprint $table) {
             $table->id();
             $table->foreignId('opd_id')->constrained('opds')->cascadeOnDelete();
-            $table->string('title');
-            $table->json('letters')->nullable();
-            $table->text('subtitle')->nullable();
-            $table->string('is_active')->default('false')->nullable();
+            $table->foreignId('hero_section_id')->constrained('hero_sections')->cascadeOnDelete();
+            $table->string('image_path');
+            $table->integer('order')->default(1);
             $table->date('published_at')->nullable();
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hero_sections');
+        Schema::dropIfExists('hero_banners');
     }
 };
