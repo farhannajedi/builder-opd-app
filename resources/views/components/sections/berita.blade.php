@@ -66,7 +66,7 @@ $opdName = $latestNews->first()?->opd?->name ?? 'Instansi';
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                                 style="background-image: url('{{ $image }}')"></div>
 
-                            {{-- Overlay Gradasi agar teks terbaca --}}
+                            <!-- Overlay Gradasi agar teks terbaca -->
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent p-4 flex flex-col justify-between">
                                 <span class="text-[10px] md:text-xs text-slate-200 font-medium">
@@ -98,8 +98,7 @@ $opdName = $latestNews->first()?->opd?->name ?? 'Instansi';
 
                 <!-- lihat semua berita yang tersedia -->
                 <div class="md:hidden">
-                    <a href="/berita"
-                        class="block w-full text-center bg-slate-100 text-slate-800 py-2 rounded-2xl font bold">
+                    <a href="/berita" class="block text-center bg-slate-100 text-slate-800 rounded-2xl font bold">
                         Lihat Semua Berita Tersedia</a>
                 </div>
             </div>

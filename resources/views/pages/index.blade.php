@@ -12,6 +12,7 @@ $galleries = App\Models\Galleries::orderBy('published_at', 'desc')->limit(6)->ge
 @extends('layouts.app', ['activePage' => 'beranda'])
 
 @section('content')
+<!-- mendaftarkan hero section agar tampil -->
 <x-sections.berita :news="$news" />
 <x-sections.planning-dokumen :documents="$documents" />
 <x-sections.layanan :services="$services" />

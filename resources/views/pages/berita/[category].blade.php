@@ -33,7 +33,7 @@ $news = News::where('category_id', $category->id)->orderBy('published_at', 'desc
                 </a>
             </div>
             @empty
-            <p class="col-span-full py-100 text-center text-slate-500">Belum ada berita pada kategori</p>
+            <p class="col-span-full text-center text-slate-500">Belum ada berita pada kategori</p>
             @endforelse
         </div>
 

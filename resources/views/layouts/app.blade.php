@@ -68,7 +68,7 @@ $opd = Opd::find(env('APP_ID'));
                 </div>
 
                 <!-- Link Sosial Media  -->
-                <div class="text-sm space-y-1">
+                <!-- <div class="text-sm space-y-1">
                     <p class="text-yellow-200 mb-1 font-medium">Media Sosial</p>
                     <div class="flex gap-4">
                         <a href="#" target="_blank"
@@ -88,7 +88,7 @@ $opd = Opd::find(env('APP_ID'));
                             <x-icons.youtube class="w-5 h-5" />
                         </a>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </footer>

@@ -32,17 +32,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // view composer lama
+        // View::composer('*', function ($view) {
+
+        //     $opdId = session('current_opd_id'); // atau logic lain jika multisite
+        //     $opdConfigs = null;
+
+        //     if ($opdId) {
+        //         $opdConfigs = OpdConfigs::where('opd_id', $opdId)->first();
+        //     }
+
+        //     $view->with('opdConfigs', $opdConfigs);
+        // });
+
+        // Variabel $opdConfigs akan otomatis ada di semua file blade/folio
         View::composer('*', function ($view) {
-
-            $opdId = session('current_opd_id'); // atau logic lain jika multisite
-            $opdConfigs = null;
-
-            if ($opdId) {
-                $opdConfigs = OpdConfigs::where('opd_id', $opdId)->first();
-            }
-
-            $view->with('opdConfigs', $opdConfigs);
+            $view->with('opdConfigs', OpdConfigs::first());
         });
 
         // Mendaftarkan semua entry points yang akan digunakan di seluruh aplikasi

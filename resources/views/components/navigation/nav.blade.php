@@ -3,13 +3,15 @@
 @php $cfg = $opdConfig ?? null; @endphp
 <!-- menu navigasi -->
 <nav x-data="{ mobileOpen: false }" class="bg-white sticky top-0 z-50 shadow">
-    <div class="max-w-screen-lg px-2 flex items-center justify-between mx-auto w-full py-4">
-        <div class="flex gap-6">
+    <div class="max-w-screen-lg flex items-center justify-between mx-auto w-full py-4">
+        <div class="flex item-center gap-6">
             <a href="/">
-                <img src="{{ $opdConfigs?->logo ? Storage::url($opdConfigs->logo) : asset('assets/images/logo_kab.png') }}"
-                    class="w-auto h-12 hover:scale-110 duration-200" alt="logo_kab"></a>
-            <img src="{{ asset('assets/images/komdigi.png') }}" class="w-auto h-12 hover:scale-110 duration-200"
-                alt="logo_hut">
+                <img src="{{ asset('assets/images/logo_kab.png') }}"
+                    class="w-24 h-12 object-contain hover:scale-110 duration-200" alt="logo_kab"></a>
+            <img src="{{ $opdConfigs?->logo ? Storage::url($opdConfigs->logo) : asset('assets/images/logo_kab.png') }}"
+                class="w-24 h-12 object-contain hover:scale-110 duration-200" alt="logo_opd">
+            <img src="{{ $opdConfigs?->favicon ? Storage::url($opdConfigs->favicon) : asset('assets/images/logo_kab.png') }}"
+                class="w-24 h-12 object-contain hover:scale-110 duration-200" alt="logo_favicon">
         </div>
         <!-- menu navbar mobile -->
         <div class="block md:hidden">
