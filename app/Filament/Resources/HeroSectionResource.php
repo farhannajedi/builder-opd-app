@@ -64,7 +64,7 @@ class HeroSectionResource extends Resource
                                 fn($component, $state) =>
                                 $component->state(is_array($state) ? implode(',', $state) : $state)
                             )
-                            ->dehydratedStateUsing(fn($state) => array_map('trim', explode(',', $state)))
+                            ->dehydrateStateUsing(fn($state) => array_map('trim', explode(',', $state)))
                             ->nullable(),
                         Forms\Components\TextInput::make('subtitle')
                             ->label('slogan/subjudul')

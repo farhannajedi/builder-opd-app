@@ -8,10 +8,9 @@ use Illuminate\Support\Facades\File;
 
 class OpdObserver
 {
-    /**
-     * observer digunakan sebagai pembuatan folder otomatis build folder
-     * Setelah data OPD berhasil disimpan ke database
-     */
+    // observer digunakan sebagai pembuatan folder otomatis build folder
+    // Setelah data OPD berhasil disimpan ke database
+
     public function created(Opd $opd): void
     {
         $slug = $opd->slug;
