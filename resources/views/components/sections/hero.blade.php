@@ -48,9 +48,10 @@ $hero = \App\Models\HeroSection::with(['banners'])->where('is_active', true)->la
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- window.swiper, mengartikan bahwa menggunakan swiper dengan global cdn -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var swiper = new Swiper(".heroSwiper", {
+        var swiper = new window.Swiper(".heroSwiper", {
             effect: "fade",
             fadeEffect: {
                 crossFade: true
