@@ -1,10 +1,7 @@
 @php
 // Ambil data Hero Section yang aktif
 // Sesuaikan logika pengambilan ID (bisa dari env atau database)
-$hero = \App\Models\HeroSection::with(['banners'])
-->where('is_active', true)
-->latest('published_at')
-->first();
+$hero = \App\Models\HeroSection::with(['banners'])->where('is_active', true)->latest('published_at')->first();
 @endphp
 
 @if($hero)
@@ -15,8 +12,7 @@ $hero = \App\Models\HeroSection::with(['banners'])
         <div class="swiper-wrapper">
             @foreach($hero->banners as $banner)
             <div class="swiper-slide relative overflow-hidden">
-                <img src="{{ asset('storage/' . $banner->image_path) }}"
-                    class="absolute inset-0 w-full h-full object-cover transform scale-110 transition-transform duration-[5000ms] ease-out slide-image"
+                <img src="{{ asset('storage/' . $banner->image_path) }}" class="w-full h-full object-cover slide-image"
                     alt="Banner">
                 <div class="absolute inset-0 bg-black/40 z-10"></div>
             </div>
@@ -38,14 +34,12 @@ $hero = \App\Models\HeroSection::with(['banners'])
                     </h1>
                 </div>
 
-                <div class="flex-none lg:pl-12 border-t-4 lg:border-t-0 lg:border-l-4 border-orange-600 pt-6 lg:pt-2">
-                    <div
-                        class="grid gap-3 text-3xl lg:text-5xl font-bold text-slate-100 italic tracking-tighter uppercase">
-                        @php $slogans = explode('|', $hero->subtitle); @endphp
-                        @foreach($slogans as $slogan)
-                        <p class="whitespace-nowrap drop-shadow-md">{{ trim($slogan) }}</p>
-                        @endforeach
-                    </div>
+                <div
+                    class="pl-0 lg:pl-8 flex-0 text-4xl grid gap-2 font-medium text-slate-100 border-t-2 lg:border-t-0 border-l-0 lg:border-l-2 border-orange-600 pt-4 lg:pt-0">
+                    @php $slogans = explode('|', $hero->subtitle); @endphp
+                    @foreach($slogans as $slogan)
+                    <p class="whitespace-nowrap drop-shadow-md">{{ trim($slogan) }}</p>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -55,45 +49,35 @@ $hero = \App\Models\HeroSection::with(['banners'])
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var swiper = new Swiper(".heroSwiper", {
-        effect: "fade",
-        fadeEffect: {
-            crossFade: true
-        },
-        loop: true,
-        speed: 2000,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true
-        },
-        on: {
-            slideChangeTransitionStart: function() {
-                const images = document.querySelectorAll('.slide-image');
-                images.forEach(img => img.classList.remove('scale-100'));
+    document.addEventListener('DOMContentLoaded', function() {
+        var swiper = new Swiper(".heroSwiper", {
+            effect: "fade",
+            fadeEffect: {
+                crossFade: true
             },
-            slideChangeTransitionEnd: function() {
-                const activeSlideImg = document.querySelector('.swiper-slide-active .slide-image');
-                if (activeSlideImg) activeSlideImg.classList.add('scale-100');
+            loop: false,
+            speed: 2000,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true
             }
-        }
+        });
     });
-});
 </script>
 
 <style>
-h1 span {
-    display: inline-block;
-}
+    h1 span {
+        display: inline-block;
+    }
 
-.swiper-pagination-bullet-active {
-    background: #ea580c !important;
-    width: 30px !important;
-    border-radius: 5px !important;
-}
+    .swiper-pagination-bullet-active {
+        background: #ea580c !important;
+        width: 30px !important;
+        border-radius: 5px !important;
+    }
 </style>
 @endif

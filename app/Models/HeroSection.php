@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Opd;
-use App\Models\HeroBanners;
+use App\Models\HeroBanner;
 use Illuminate\Database\Eloquent\Model;
 
 class HeroSection extends Model
@@ -30,7 +30,7 @@ class HeroSection extends Model
 
     public function banners()
     {
-        return $this->hasMany(HeroBanners::class)->orderBy('order');
+        return $this->hasMany(HeroBanner::class)->orderBy('order');
     }
 
     // jika disimpan data baru, data lama akan menjadi false / tidak aktif

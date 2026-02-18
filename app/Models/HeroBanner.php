@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HeroBanners extends Model
+class HeroBanner extends Model
 {
     protected $fillable = [
         'opd_id',
@@ -17,6 +17,16 @@ class HeroBanners extends Model
     protected $casts = [
         'published_at' => 'datetime',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($banner) {
+            // Jika opd_id kosong, ambil dari HeroSection induknya
+            if (blank($banner->opd_id)) {
+                $banner->opd_id = $banner->heroSection->opd_id;
+            }
+        });
+    }
 
     public function opd()
     {

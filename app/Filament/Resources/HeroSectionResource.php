@@ -95,8 +95,6 @@ class HeroSectionResource extends Resource
                                     ->numeric()
                                     ->default(1)
                                     ->required(),
-                                Forms\Components\Hidden::make('opd_id')
-                                    ->default(fn(Forms\Get $get) => $get('../../opd_id')),
                             ])
                             ->columns(3)
                             ->grid(2)
