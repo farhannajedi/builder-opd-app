@@ -21,6 +21,8 @@ class OpdConfigsResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationIcon = 'heroicon-o-cog';
 
+    protected static ?string $navigationLabel = 'Pengaturan OPD';
+
     public static function form(Form $form): Form
     {
         return $form

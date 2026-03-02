@@ -23,14 +23,14 @@ class OpdObserver
             File::makeDirectory($newProjectPath . DIRECTORY_SEPARATOR . '/public', 0755, true);
             File::makeDirectory($newProjectPath . DIRECTORY_SEPARATOR . '/bootstrap', 0755, true);
 
-            // Salin file jembatan dari folder master-opd
+            // Salin file dari folder master-opd 
             if (File::isDirectory($masterPath)) {
                 File::copy($masterPath . '/public/index.php', $newProjectPath . '/public/index.php');
                 File::copy($masterPath . '/public/.htaccess', $newProjectPath . '/public/.htaccess');
                 File::copy($masterPath . '/bootstrap/app.php', $newProjectPath . '/bootstrap/app.php');
             }
 
-            // Buat file .env khusus untuk identitas web child
+            // membuat file .env khusus untuk identitas web child secara otomatis
             $env = "APP_NAME=\"" . $opd->name . "\"\n" .
                 "APP_ID=\"" . $slug . "\"\n" .
                 "APP_ENV=local\n" .

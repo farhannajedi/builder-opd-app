@@ -1,4 +1,3 @@
-use Illuminate\Support\Facades\Storage;
 @props(['activePage'])
 
 @php $cfg = $opdConfig ?? null; @endphp

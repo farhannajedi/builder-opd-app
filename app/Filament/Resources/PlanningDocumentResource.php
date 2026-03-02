@@ -23,6 +23,8 @@ class PlanningDocumentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document';
 
+    protected static ?string $navigationLabel = 'Arsip Dokumen';
+
     public static function form(Form $form): Form
     {
         // ini adalah validasi, agar admin opd tidak dapat memilih opd, namun otomatis terisi berdasarkan user->opd id
