@@ -1,63 +1,45 @@
 <?php
 
 use Dotenv\Dotenv;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Vite;
 
-// Path Absolut ke Aplikasi Pusat
+// path menuju msaster-opd di web utamanya
 $coreAppPath = realpath(__DIR__ . '/../../web-builder-app');
 require $coreAppPath . '/vendor/autoload.php';
 
-// Load .env dari folder anak
+// load file .env
 if (file_exists(dirname(__DIR__) . '/.env')) {
     $dotenv = Dotenv::createImmutable(dirname(__DIR__));
     $dotenv->load();
 }
 
-// Set Path Inti
-putenv('CHILD_PROJECT_PATH=' . $coreAppPath);
-
-// Boot Aplikasi
-$app = require_once dirname(__DIR__) . '/bootstrap/app.php';
-
-// Atur Path & Facade
+// booting laravel
+$app = require dirname(__DIR__) . '/bootstrap/app.php';
 $app->setBasePath($coreAppPath);
-$app->usePublicPath(realpath(__DIR__));
+$app->usePublicPath(__DIR__);
+
 Facade::setFacadeApplication($app);
 
-$hotFilePath = $coreAppPath . '/public/hot';
-$app->singleton('vite.hotfile', fn() => $hotFilePath);
+// vite
+$app->booting(function () use ($app, $coreAppPath) {
+    // Paksa Vite mencari di folder 'build' milik child
+    Vite::useBuildDirectory('build');
 
-// Tangani Manifest untuk mode production (npm run build)
-// Karena kita sudah membuat SYMLINK folder 'build' di Observer, 
-// sebenarnya Laravel akan otomatis menemukannya. Namun, baris ini mempertegas lokasinya.
-$manifestPath = realpath(__DIR__ . '/build/manifest.json');
-if (file_exists($manifestPath)) {
-    Vite::useManifestFilename($manifestPath);
-}
+    // Gunakan nama file saja Laravel akan menggabungnya dengan public_path(__DIR__)
+    Vite::useManifestFilename('manifest.json');
 
-// vite membaca file dari folder pusat saat npm run dev
-// $hotFilePath = $coreAppPath . '/public/hot';
-// if (file_exists($hotFilePath)) {
-//     // Memaksa Vite menggunakan file hot milik pusat
-//     $app->singleton('vite.hotfile', fn() => $hotFilePath);
-// }
-
-// Jika menggunakan helper asset() untuk file statis di folder public pusat
-// Kita buat alias agar asset() mengarah ke domain pusat atau menggunakan symlink.
-// ---------------------------------------------------------
-
-// Registrasi Folio
-$app->booting(function () use ($coreAppPath) {
+    // Registrasi Folio Pages dari Master
     $folioPath = $coreAppPath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'pages';
-    if (is_dir($folioPath)) {
+    if (class_exists(\Laravel\Folio\Folio::class) && is_dir($folioPath)) {
         \Laravel\Folio\Folio::path($folioPath);
     }
 });
 
-// Jalankan Kernel
+// menjalankan Aplikasi
 $kernel = $app->make(Kernel::class);
-$response = $kernel->handle($request = Request::capture())->send();
+$response = $kernel->handle($request = Request::capture());
+$response->send();
 $kernel->terminate($request, $response);

@@ -8,130 +8,175 @@ use Illuminate\Support\Facades\File;
 
 class OpdObserver
 {
-    // observer digunakan sebagai pembuatan folder otomatis build folder
-    // Setelah data OPD berhasil disimpan ke database
 
+    protected function ensureMasterBuildSymlink(): void
+    {
+        $masterPublic = base_path('master-opd/public');
+        $targetBuild = base_path('public/build');
+        $link = $masterPublic . '/build';
+
+        if (!file_exists($targetBuild)) {
+            Log::error("Build master belum ada. Jalankan npm run build dulu.");
+            return;
+        }
+
+        if (!file_exists($link)) {
+
+            if (PHP_OS_FAMILY === 'Windows') {
+                exec("mklink /D \"$link\" \"$targetBuild\"");
+            } else {
+                symlink($targetBuild, $link);
+            }
+
+            Log::info("Symlink build master-opd berhasil dibuat.");
+        }
+    }
+
+    // buat folder website child web OPD
     public function created(Opd $opd): void
     {
         $slug = $opd->slug;
+
+        if (empty($slug)) {
+            Log::error("Slug OPD kosong, gagal membuat child web.");
+            return;
+        }
+
         $basePath = realpath(base_path('../'));
-        $newProjectPath = $basePath . DIRECTORY_SEPARATOR . $slug;
+        $projectPath = $basePath . DIRECTORY_SEPARATOR . $slug;
         $masterPath = base_path('master-opd');
 
-        // membuat folder proyek baru jika belum ada
-        if (!File::isDirectory($newProjectPath)) {
-            File::makeDirectory($newProjectPath . DIRECTORY_SEPARATOR . '/public', 0755, true);
-            File::makeDirectory($newProjectPath . DIRECTORY_SEPARATOR . '/bootstrap', 0755, true);
+        // buat struktur folder child web OPD jika belum ada
+        if (!File::isDirectory($projectPath)) {
 
-            // Salin file dari folder master-opd 
+            File::makeDirectory($projectPath . '/public', 0755, true);
+            File::makeDirectory($projectPath . '/bootstrap', 0755, true);
+
+            //   copy file core dari master-opd
             if (File::isDirectory($masterPath)) {
-                File::copy($masterPath . '/public/index.php', $newProjectPath . '/public/index.php');
-                File::copy($masterPath . '/public/.htaccess', $newProjectPath . '/public/.htaccess');
-                File::copy($masterPath . '/bootstrap/app.php', $newProjectPath . '/bootstrap/app.php');
+
+                File::copy(
+                    $masterPath . '/public/index.php',
+                    $projectPath . '/public/index.php'
+                );
+
+                File::copy(
+                    $masterPath . '/public/.htaccess',
+                    $projectPath . '/public/.htaccess'
+                );
+
+                File::copy(
+                    $masterPath . '/bootstrap/app.php',
+                    $projectPath . '/bootstrap/app.php'
+                );
             }
 
-            // membuat file .env khusus untuk identitas web child secara otomatis
+            //    buat file .env di web folder chil nya
             $env = "APP_NAME=\"" . $opd->name . "\"\n" .
                 "APP_ID=\"" . $slug . "\"\n" .
                 "APP_ENV=local\n" .
                 "APP_DEBUG=true\n" .
-                "APP_URL=\"http://" . $slug . ".test\"\n";
-            File::put($newProjectPath . '/.env', $env);
+                "APP_URL=\"http://" . $opd->domain . ".test\"\n";
 
-            // memanggil createSymlinks agar folder 'build' (Vite) ikut terbuat
-            $this->createSymlinks($newProjectPath);
+            File::put($projectPath . '/.env', $env);
+
+            // membuat symlink asset storage
+            $this->createSymlinks($projectPath);
+
+            // create file build di folder master-opd
+            $this->ensureMasterBuildSymlink();
+
+            Log::info("Child website berhasil dibuat untuk OPD: {$slug}");
         }
     }
 
-    /**
-     * Helper untuk membuat Symlink Lengkap (Storage & Build Vite)
-     */
-    protected function createSymlinks($projectPath)
+    protected function createSymlinks(string $projectPath): void
     {
-        $corePublicPath = base_path('public');
+        $corePublicPath = public_path();
+        $coreStoragePath = storage_path('app/public');
+        $targetPublic = $projectPath . DIRECTORY_SEPARATOR . 'public';
 
-        // Daftar folder yang harus di-link ke pusat
-        $foldersToLink = [
-            'storage' => storage_path('app/public'),
-            'build'   => public_path('build'),
+        // Daftar Folder yang harus di link
+        $folders = [
+            'storage' => $coreStoragePath,
+            'build'   => $corePublicPath . DIRECTORY_SEPARATOR . 'build',
+            'images'  => $corePublicPath . DIRECTORY_SEPARATOR . 'images',
         ];
 
-        foreach ($foldersToLink as $linkName => $targetPath) {
-            $shortcutPath = $projectPath . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $linkName;
+        foreach ($folders as $name => $target) {
+            $linkPath = $targetPublic . DIRECTORY_SEPARATOR . $name;
+            $this->safeSymlink($target, $linkPath, true);
+        }
 
-            // Pastikan folder target di induk folder ada sebelum di-link
-            if (!File::isDirectory($targetPath)) {
-                Log::warning("Gagal membuat symlink: Folder target {$targetPath} tidak ditemukan. Pastikan sudah menjalankan 'npm run build'.");
-                continue;
-            }
+        // Daftar File satuan yang harus di link
+        $files = [
+            'logo_kab.png' => $corePublicPath . DIRECTORY_SEPARATOR . 'logo_kab.png',
+        ];
 
-            // Hapus jika link lama sudah ada (untuk refresh)
-            if (file_exists($shortcutPath)) {
-                PHP_OS_FAMILY === 'Windows' ? exec("rmdir \"$shortcutPath\"") : unlink($shortcutPath);
-            }
-
-            // Buat Symlink berdasarkan Sistem Operasi
-            if (PHP_OS_FAMILY === 'Windows') {
-                exec("mklink /D \"$shortcutPath\" \"$targetPath\"");
-            } else {
-                symlink($targetPath, $shortcutPath);
-            }
+        foreach ($files as $name => $target) {
+            $linkPath = $targetPublic . DIRECTORY_SEPARATOR . $name;
+            $this->safeSymlink($target, $linkPath, false);
         }
     }
 
-    /**
-     * Kejadian: Saat data OPD dihapus (Normal Delete)
-     */
+    protected function safeSymlink(string $target, string $link, bool $isDir): void
+    {
+        if (!file_exists($target)) return;
+
+        // Hapus link lama jika ada agar tidak konflik
+        if (file_exists($link) || is_link($link)) {
+            PHP_OS_FAMILY === 'Windows'
+                ? exec($isDir ? "rmdir /S /Q \"$link\"" : "del /F /Q \"$link\"")
+                : unlink($link);
+        }
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $mode = $isDir ? '/D' : '';
+            // Jalankan perintah mklink
+            exec("mklink $mode \"$link\" \"$target\"");
+        } else {
+            symlink($target, $link);
+        }
+    }
+
+    // hapus folder child web OPD
     public function deleted(Opd $opd): void
     {
         $this->removeFolder($opd);
     }
 
-    /**
-     * Kejadian: Saat data OPD dihapus permanen (Force Delete)
-     */
-    public function forceDeleted(Opd $opd): void
-    {
-        $this->removeFolder($opd);
-    }
-
-    /**
-     * Helper untuk menghapus folder proyek anak
-     */
-    protected function removeFolder(Opd $opd)
+    // hapus folder child web OPD
+    protected function removeFolder(Opd $opd): void
     {
         $slug = $opd->slug;
-        if (empty($slug)) {
-            Log::error("Gagal menghapus folder: Slug OPD kosong.");
-            return;
-        }
+
+        if (empty($slug)) return;
+
         $basePath = realpath(base_path('../'));
         $projectPath = $basePath . DIRECTORY_SEPARATOR . $slug;
+        $domain = $opd->domain . ".test";
 
         if (File::isDirectory($projectPath)) {
             try {
-                // Hapus symlink dulu agar folder bisa dihapus bersih di Windows
                 $this->removeSymlinks($projectPath);
                 File::deleteDirectory($projectPath);
 
-                Log::info("Berhasil menghapus folder proyek: " . $slug);
+                Log::info("Folder child web berhasil dihapus: {$slug}");
             } catch (\Exception $e) {
-                Log::error("Gagal menghapus folder proyek {$slug}: " . $e->getMessage());
+                Log::error("Gagal hapus folder {$slug}: " . $e->getMessage());
             }
         }
     }
 
-    /**
-     * Helper untuk membersihkan Symlink sebelum hapus folder
-     */
-    protected function removeSymlinks($projectPath)
+    //    hapus symslinknya 
+    protected function removeSymlinks(string $projectPath): void
     {
-        $publicPath = $projectPath . DIRECTORY_SEPARATOR . 'public';
         $links = ['storage', 'build'];
 
         foreach ($links as $link) {
-            $target = $publicPath . DIRECTORY_SEPARATOR . $link;
-            if (file_exists($target)) {
+            $target = $projectPath . '/public/' . $link;
+
+            if (file_exists($target) || is_link($target)) {
                 if (PHP_OS_FAMILY === 'Windows') {
                     exec("rmdir \"$target\"");
                 } else {

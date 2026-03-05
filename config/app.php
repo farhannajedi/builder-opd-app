@@ -99,6 +99,9 @@ return [
 
     'key' => env('APP_KEY'),
 
+    // agar asset resolve benar
+    'asset_url' => env('ASSET_URL'),
+
     'previous_keys' => [
         ...array_filter(
             explode(',', (string) env('APP_PREVIOUS_KEYS', ''))

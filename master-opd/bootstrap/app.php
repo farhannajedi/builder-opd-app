@@ -1,10 +1,7 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
-| Jembatan Bootstrap Multi-Tenant
-|--------------------------------------------------------------------------
-| File ini memanggil bootstrap asli dari web-builder-app
+ File ini memanggil bootstrap asli dari web-builder-app
 */
 
 // Ambil path absolut ke aplikasi inti dari child project
