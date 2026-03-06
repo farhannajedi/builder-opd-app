@@ -44,6 +44,7 @@ class OpdObserver
             }
 
             // Membuat file .env khusus untuk identitas web child
+            // seharusnya disini tu pakai $domain, tapi url tetap membaca url.test nya pakai $slug karna nama folder berdasarkan slug
             $env = "APP_NAME=\"" . $opd->name . "\"\n" .
                 "APP_ID=\"" . $slug . "\"\n" .
                 "APP_ENV=local\n" .
@@ -78,7 +79,7 @@ class OpdObserver
         foreach ($foldersToLink as $linkName => $targetPath) {
             $shortcutPath = $targetPublic . DIRECTORY_SEPARATOR . $linkName;
 
-            // folder target di induk folder ada sebelum di link
+            // ini memastikan folder target di core folder harus ada sebelum di link
             if (!File::isDirectory($targetPath)) {
                 Log::warning("Gagal membuat symlink: Folder target {$targetPath} tidak ditemukan.");
                 continue;
@@ -119,7 +120,7 @@ class OpdObserver
         }
     }
 
-    // hapus opd
+    // jika hapus opd, jalankan juga hapus foldernya
     public function deleted(Opd $opd): void
     {
         $this->removeFolder($opd);
