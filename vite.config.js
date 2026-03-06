@@ -10,6 +10,9 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    build: {
+        manifest: true,
+    },
 
     // Tambahkan ini agar manifest menggunakan path absolut
     server: {
