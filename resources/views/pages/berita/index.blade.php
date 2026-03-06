@@ -1,6 +1,7 @@
 @php
 use App\Models\News;
 use App\Models\NewsCategories;
+use Illuminate\Support\Str;
 
 // Jika diakses dari domain pusat (misal: localhost/utama), APP_ID kosong.
 // Jika diakses dari domain web child (misal: tp-pkk.test), APP_ID terisi dari .env child.

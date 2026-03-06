@@ -13,10 +13,10 @@
         <!-- menu kategori berita -->
         <div
             class="relative flex-shrink-0 rounded hover:bg-slate-200 cursor-pointer {{ request()->is('berita/' . $category->slug) ? 'text-slate-800 font-semibold' : 'text-slate-500' }}">
-            <a href="/berita/{{ $category->slug }}" class="block pb-2 pt-3 px-2">
+            <a href="/berita/kategori/{{ $category->slug }}" class="block pb-2 pt-3 px-2">
                 <p class="font-heading font-medium relative z-10">{{ $category->title }}</p>
             </a>
-            @if (request()->is('berita/' . $category->slug))
+            @if (request()->is('berita/kategori/' . $category->slug))
             <div class="absolute bottom-0 left-0 h-1 w-full rounded-t-md bg-orange-400"></div>
             @endif
         </div>
