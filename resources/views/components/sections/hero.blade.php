@@ -4,6 +4,21 @@
 $hero = \App\Models\HeroSection::with(['banners'])->where('is_active', true)->latest('published_at')->first();
 @endphp
 
+<style>
+    h1 span {
+        display: inline-block;
+        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+    }
+
+    /* agar teks tidak terpotong saat layar sangat kecil */
+    @media (max-width: 640px) {
+        h1 {
+            letter-spacing: -0.05em !important;
+            /* untuk merapatkan sedikit di mobile */
+        }
+    }
+</style>
+
 @if($hero)
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
@@ -19,14 +34,16 @@ $hero = \App\Models\HeroSection::with(['banners'])->where('is_active', true)->la
             @endforeach
         </div>
 
-        <div class="absolute inset-0 z-20 flex items-center">
-            <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-12 w-full">
-                <div class="w-full lg:flex-1">
-                    <h1
-                        class="w-full text-[14vw] lg:text-[9rem] font-black tracking-widest leading-none flex justify-between text-white uppercase select-none drop-shadow-2xl">
+        <div class="absolute inset-0 z-20 flex items-center justify-center">
+            <div class="container mx-auto px-6 flex flex-col items-center text-center w-full max-w-7xl">
+                <div class="w-full mb-4 lg:mb-6">
+                    <h1 class="w-full text-[10vw] lg:text-[7rem] font-black tracking-normal
+                        lg:tracking-widest leading-none flex justify-between text-white uppercase select-none
+                        drop-shadow-2xl">
                         @if($hero->letters)
                         @foreach($hero->letters as $letter)
-                        <span class="hover:text-orange-500 transition-colors duration-300">{{ $letter }}</span>
+                        <span
+                            class="hover:text-orange-500 transition-all duration-300 transform hover:scale-110 cursor-default">{{ $letter }}</span>
                         @endforeach
                         @else
                         {{ $hero->title }}
@@ -34,11 +51,18 @@ $hero = \App\Models\HeroSection::with(['banners'])->where('is_active', true)->la
                     </h1>
                 </div>
 
+                <!--  -->
                 <div
-                    class="pl-0 lg:pl-8 flex-0 text-4xl grid gap-2 font-medium text-slate-100 border-t-2 lg:border-t-0 border-l-0 lg:border-l-2 border-orange-600 pt-4 lg:pt-0">
+                    class="w-full h-1 lg:h-1.5 bg-gradient-to-r from-transparent via-orange-600 to-transparent mb-6 lg:mb-8 shadow-lg">
+                </div>
+
+                <div class="flex flex-col gap-2 md:gap-4">
                     @php $slogans = explode('|', $hero->subtitle); @endphp
                     @foreach($slogans as $slogan)
-                    <p class="whitespace-nowrap drop-shadow-md">{{ trim($slogan) }}</p>
+                    <p
+                        class="text-2xl md:text-4xl lg:text-5xl font-bold text-slate-100 uppercase tracking-widest drop-shadow-lg italic">
+                        {{ trim($slogan) }}
+                    </p>
                     @endforeach
                 </div>
             </div>

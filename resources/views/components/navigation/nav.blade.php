@@ -70,13 +70,13 @@
             </li>
             <li class="">
                 <a href="/planning-dokumen"
-                    class="{{ ($activePage ?? '') === 'planning-dokumen' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 p-2 uppercase">
+                    class="{{ ($activePage ?? '') === 'Arsip Dokumen' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 p-2 uppercase">
                     Arsip Dokumen
                 </a>
             </li>
             <li class="">
                 <a href="/layanan"
-                    class="{{ ($activePage ?? '') === 'layanan' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 p-2 uppercase">
+                    class="{{ ($activePage ?? '') === 'Layanan' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 p-2 uppercase">
                     Layanan
                 </a>
             </li>
@@ -99,11 +99,6 @@
                             Pengumuman
                         </div>
                     </a>
-                    <a href="/nomor-penting">
-                        <div class="hover:bg-slate-100 p-2 rounded">
-                            Nomor Penting
-                        </div>
-                    </a>
                     <a href="/">
                         <div class="hover:bg-slate-100 p-2 rounded">
                             Arsip Dokumen
@@ -111,20 +106,9 @@
                     </a>
                 </div>
             </li> -->
-            <!-- <li>
-                <a href="/tautan-aplikasi"
-                    class="{{ ($activePage ?? '') === 'tautan-aplikasi' ? 'text-orange-600 border-b-2' : 'hover:text-slate-800 border-transparent border-b-2' }} h-full block hover:border-b-2 py-2 uppercase">
-                    Tautan Aplikasi
-                </a>
-            </li> -->
-            <!-- <li>
-                <a href="https://ppid.karimunkab.go.id/" target="_blank"
-                    class="hover:text-slate-800 border-transparent border-b-2 h-full block hover:border-b-2 py-2 uppercase">
-                    PPID
-                </a>
-            </li> -->
         </ul>
     </div>
+
     <!-- menu pada tampilan mobile -->
     <div id="mobile-menu" x-cloak x-show="mobileOpen" x-transition @click.away="mobileOpen = false"
         class="block md:hidden shadow-lg bg-white p-2 absolute w-full rounded-b-lg border-t-1 border-slate-200 text-slate-600 grid divide-y divide-slate-400">
@@ -172,6 +156,17 @@
                 <path d="M6 11l6 -6" />
             </svg>
         </a>
+        <a href="/galeri" class="w-full text-lg font-base flex justify-between hover:bg-slate-100 p-2 group">
+            <span class="group-hover:text-slate-800">Galeri</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="h-8 w-8 rotate-45 group-hover:rotate-90 duration-200 text-slate-400 group-hover:text-slate-800">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 5l0 14" />
+                <path d="M18 11l-6 -6" />
+                <path d="M6 11l6 -6" />
+            </svg>
+        </a>
         <!-- <div class="p-2">
             <a href="javascript:void(0)"
                 class="w-full text-lg font-base flex justify-between hover:bg-slate-100  group">
@@ -189,37 +184,13 @@
                     </li>
                 </a>
                 <li class="p-1 hover:bg-slate-200">
-                    <a href="/nomor-penting">Nomor Penting</a>
+                    <a href="/nomor-penting">Pengumuman</a>
                 </li>
                 <li class="p-1 hover:bg-slate-200">
                     <a href="/arsip-dokumen">Arsip Dokumen</a>
                 </li>
             </ul>
         </div> -->
-
-        <!-- <a href="/tautan-aplikasi" class="w-full text-lg font-base flex justify-between hover:bg-slate-100 p-2 group">
-            <span class="group-hover:text-slate-800">Tautan Aplikasi</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                class="h-8 w-8 rotate-45 group-hover:rotate-90 duration-200 text-slate-400 group-hover:text-slate-800">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 5l0 14" />
-                <path d="M18 11l-6 -6" />
-                <path d="M6 11l6 -6" />
-            </svg>
-        </a>
-        <a href="https://ppid.karimunkab.go.id/" target="_blank"
-            class="w-full text-lg font-base flex justify-between hover:bg-slate-100 p-2 group">
-            <span class="group-hover:text-slate-800">PPID</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                class="h-8 w-8 rotate-45 group-hover:rotate-90 duration-200 text-slate-400 group-hover:text-slate-800">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 5l0 14" />
-                <path d="M18 11l-6 -6" />
-                <path d="M6 11l6 -6" />
-            </svg>
-        </a> -->
 
         <!-- button search -->
         <div class="bg-white w-full h-10 border border-slate-400 rounded-lg flex p-1 mt-4">

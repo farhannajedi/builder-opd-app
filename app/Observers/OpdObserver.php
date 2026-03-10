@@ -76,6 +76,13 @@ class OpdObserver
             'build'   => $corePublicPath . DIRECTORY_SEPARATOR . 'build', // Manifest.json ada di sini
         ];
 
+        $filesToCopy = [
+            'logo_kab.png',
+            'favicon-32x32.png',
+            'favicon-16x16.png',
+            'favicon.ico'
+        ];
+
         foreach ($foldersToLink as $linkName => $targetPath) {
             $shortcutPath = $targetPublic . DIRECTORY_SEPARATOR . $linkName;
 
@@ -104,6 +111,16 @@ class OpdObserver
                 } else {
                     Log::error("Gagal membuat symlink {$linkName}");
                 }
+            }
+        }
+
+        foreach ($filesToCopy as $fileName) {
+            $source = $corePublicPath . DIRECTORY_SEPARATOR . $fileName;
+            $destination = $targetPublic . DIRECTORY_SEPARATOR . $fileName;
+
+            if (File::exists($source)) {
+                // gunakan copy, bukan symlink untuk file-file ini
+                File::copy($source, $destination);
             }
         }
     }

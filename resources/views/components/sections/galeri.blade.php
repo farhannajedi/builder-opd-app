@@ -1,7 +1,7 @@
 @props(['galleries'])
 
 @php
-$galleries = $galleries->sortByDesc('published_at')->take(3);
+$galleries = $galleries->sortByDesc('id')->take(3);
 
 $opdName = $galleries->first()?->opd?->name ?? 'Instansi';
 @endphp
@@ -21,35 +21,41 @@ $opdName = $galleries->first()?->opd?->name ?? 'Instansi';
             <!-- daftar galleri -->
             <div class="flex flex-wrap justify-center gap-6">
                 @forelse ($galleries as $gal)
-                <div
-                    class="w-full sm:w-[48%] md:w-[30%] max-w-sm border border-gray-200 rounded-lg p-5 transition duration-300 hover:border-orange-300 bg-white flex flex-col h-full">
-                    <img src="{{ asset('storage/' . $gal->images) }}" alt="{{ $gal->title }}"
-                        class="w-full h-48 object-cover rounded-md mb-4">
+                <div wire:key="gal-{{ $gal->id }}"
+                    class="relative w-full sm:w-[48%] md:w-[30%] aspect-[9/16] overflow-hidden rounded-xl shadow-lg group transition duration-500 hover:scale-[1.02]">
 
-                    <h3 class="text-lg font-semibold text-gray-800 text-center mb-2">
-                        {{ $gal->title }}
-                    </h3>
+                    <img src="{{ url('storage/' . $gal->images) }}" alt="{{ $gal->title }}"
+                        class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-110">
 
-                    <p class="text-sm text-gray-600 text-center line-clamp-3 mb-3">
-                        {{ $gal->description }}
-                    </p>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
 
-                    <!-- status dan indikator link detail layanan -->
-                    <div class="flex justify-center gap-2">
-                        <a href="/galeri/{{ $gal->slug }}"
-                            class="bg-orange-600 text-white rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z" />
-                            </svg>
-                            Detail File
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-4">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"></path>
-                            </svg>
-                        </a>
+                    <div class="absolute inset-0 p-5 flex flex-col justify-end">
+                        <h3 class="text-lg font-semibold text-white text-center mb-2">
+                            {{ $gal->title }}
+                        </h3>
+
+                        <p class="text-sm text-gray-400 text-center line-clamp-3 mb-3">
+                            {{ $gal->description }}
+                        </p>
+
+                        <!-- status dan indikator link detail layanan -->
+                        <div class="flex justify-center gap-2">
+                            <a href="/galeri/{{ $gal->slug }}"
+                                class="bg-orange-600 text-white rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                    <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z" />
+                                </svg>
+                                Detail File
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"></path>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 @empty

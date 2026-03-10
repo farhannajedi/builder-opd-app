@@ -100,7 +100,7 @@ return [
     'key' => env('APP_KEY'),
 
     // agar asset resolve benar
-    'asset_url' => env('ASSET_URL'),
+    'asset_url' => env('ASSET_URL', null),
 
     'previous_keys' => [
         ...array_filter(
