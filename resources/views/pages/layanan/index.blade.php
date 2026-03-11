@@ -71,24 +71,12 @@ $opd?->id)->with('opd')->latest()->paginate(10);
                 </div>
 
                 @empty
-                <p class="col-span-3 text-center text-gray-500">
-                    Belum ada layanan tersedia.
-                </p>
+                <div
+                    class="col-span-full py-20 text-center bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
+                    <p class="text-slate-500 italic">Belum ada layanan yang disediakan.</p>
+                </div>
                 @endforelse
             </div>
-
-            <!-- <footer class="flex pt-4 items-center gap-4">
-                <div class="flex-grow border-b border-yellow-500"></div>
-                <a wire:navigate="" href="/layanan"
-                    class="inline-flex items-center gap-2 border border-slate-200 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white transition">
-                    Selengkapnya
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25">
-                        </path>
-                    </svg>
-                </a>
-            </footer> -->
         </div>
     </section>
 </div>

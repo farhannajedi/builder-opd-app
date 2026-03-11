@@ -66,9 +66,9 @@ $opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
                 </div>
 
                 @empty
-                <p class="col-span-3 text-center text-gray-500">
-                    Belum ada layanan tersedia.
-                </p>
+                <div class="w-full bg-gray-100 p-8 text-center rounded-lg text-gray-600">
+                    <p>Belum ada layanan tersedia.</p>
+                </div>
                 @endforelse
             </div>
 

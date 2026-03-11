@@ -10,19 +10,21 @@ $documents = App\Models\PlanningDocument::where('opd_id', $opd->id)->with('opd')
 @extends('layouts.app', ['activePage' => 'Arsip Dokumen'])
 
 @section('content')
-<div class="max-w-screen-lg mx-auto w-full">
-    <section class="max-w-screen-xl px-4 mx-auto w-full py-12 md:py-16">
+<div class="max-w-screen-lg mx-auto w-full pb-18">
+    <section class="max-w-screen-xl px-4 mx-auto w-full py-2 md:py-6">
 
         <!-- header halaman -->
-        <div class="pt-4 mb-10 border-b border-gray-300 pb-3">
-            <p class="text-2xl md:text-2xl font-medium text-slate-700">Arsip Dokumen Perencanaan</p>
+        <div class="pt-2 mb-10 border-gray-300 pb-3">
+            <p class="flex justify-center text-2xl font-bold text-gray-700 mb-2">Arsip Dokumen Perencanaan</p>
+            <div class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
+            </div>
         </div>
 
         <!-- container utama -->
         <div class="grid grid-cols-1 gap-10">
             <!-- list dokumen -->
-            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200">
-                <p class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-4">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-400">
+                <p class="flex justify-center text-2xl font-semibold text-gray-700 mb-6 border-b pb-4">
                     Dokumen Perencanaan
                 </p>
 
@@ -104,8 +106,9 @@ $documents = App\Models\PlanningDocument::where('opd_id', $opd->id)->with('opd')
                         </div>
                     </a>
                     @empty
-                    <div class="bg-gray-100 p-8 text-center rounded-lg text-gray-600">
-                        <p>Tidak ada dokumen perencanaan yang ditemukan saat ini.</p>
+                    <div
+                        class="col-span-full py-20 text-center bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
+                        <p class="text-slate-500 italic">Tidak ada dokumen perencanaan yang ditemukan saat ini.</p>
                     </div>
                     @endforelse
                 </div>

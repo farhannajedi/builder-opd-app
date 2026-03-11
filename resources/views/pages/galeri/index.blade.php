@@ -16,8 +16,10 @@ $galleries = Galleries::orderBy('created_at', 'desc')->get();
 @section('content')
 <section class="max-w-screen-lg px-4 mx-auto w-full py-10  md:text-left">
     <div class="mb-10">
-        <p class="text-4xl font-semibold text-slate-700 tracking-tight">Galeri Foto</p>
-        <p class="text-slate-500 mt-2">Kumpulan dokumentasi kegiatan</p>
+        <p class="flex justify-center text-4xl font-semibold text-slate-700 tracking-tight">Galeri Foto</p>
+        <div class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
+        </div>
+        <p class="flex justify-center text-slate-500 mt-2">Kumpulan dokumentasi kegiatan</p>
     </div>
 
     <!-- Grid 3 gambar di tampilan dekstop -->

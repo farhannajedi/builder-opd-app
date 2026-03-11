@@ -22,7 +22,7 @@ $opdName = $galleries->first()?->opd?->name ?? 'Instansi';
             <div class="flex flex-wrap justify-center gap-6">
                 @forelse ($galleries as $gal)
                 <div wire:key="gal-{{ $gal->id }}"
-                    class="relative w-full sm:w-[48%] md:w-[30%] aspect-[9/16] overflow-hidden rounded-xl shadow-lg group transition duration-500 hover:scale-[1.02]">
+                    class="relative w-full sm:w-[48%] md:w-[30%] aspect-[3/4] overflow-hidden rounded-xl shadow-lg group transition duration-500 hover:scale-[1.02]">
 
                     <img src="{{ url('storage/' . $gal->images) }}" alt="{{ $gal->title }}"
                         class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-110">
@@ -59,7 +59,9 @@ $opdName = $galleries->first()?->opd?->name ?? 'Instansi';
                     </div>
                 </div>
                 @empty
-                <p class="text-gray-500">Belum ada galeri tersedia.</p>
+                <div class="w-full bg-gray-100 p-8 text-center rounded-lg text-gray-600">
+                    <p>Belum ada Galeri yang dipublikasikan.</p>
+                </div>
                 @endforelse
             </div>
 

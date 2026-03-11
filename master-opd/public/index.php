@@ -1,57 +1,27 @@
 <?php
 
 use Dotenv\Dotenv;
-use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\Facades\Vite;
 
-// path web child
-$childPublicPath = __DIR__;
-$childRootPath = dirname($childPublicPath);
-$coreAppPath = realpath($childPublicPath . '/../../web-builder-app');
+require __DIR__ . '/../../web-builder-app/vendor/autoload.php';
 
-// autoload dari Core
-require $coreAppPath . '/vendor/autoload.php';
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+$childEnv = $dotenv->load();
 
-// load .env Child webnya
-if (file_exists($childRootPath . '/.env')) {
-    $dotenv = Dotenv::createImmutable($childRootPath);
-    $dotenv->load();
+$app = require_once __DIR__ . '/../../web-builder-app/bootstrap/app.php';
+
+// gunakan public core
+$app->usePublicPath(realpath(__DIR__ . '/../../web-builder-app/public'));
+
+if (!empty($childEnv['APP_ID'])) {
+    putenv("APP_ID={$childEnv['APP_ID']}");
+    $_ENV['APP_ID'] = $childEnv['APP_ID'];
+    $_SERVER['APP_ID'] = $childEnv['APP_ID'];
 }
 
-// booting Laravel
-$app = require $childRootPath . '/bootstrap/app.php';
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
-// Set Base Path ke Core, tapi Public Path ke Child
-$app->setBasePath($coreAppPath);
-$app->usePublicPath($childPublicPath);
+$response = $kernel->handle(
+    $request = Illuminate\Http\Request::capture()
+)->send();
 
-Facade::setFacadeApplication($app);
-
-// Konfigurasi Vite
-$app->booting(function () use ($childPublicPath) {
-    // paksa Vite mencari manifest secara absolut.
-    // laravel mencari di public_path(build/manifest.json)
-    // symlink 'build' di folder child mengarah ke core/public/build
-    Vite::useBuildDirectory('build');
-    Vite::useManifestFilename('.vite/manifest.json');
-
-    // pastikan Hot Reloading tidak kacau di local
-    if (file_exists($childPublicPath . '/hot')) {
-        unlink($childPublicPath . '/hot');
-    }
-
-    // Registrasi Folio Pages dari Master webny
-    $coreAppPath = realpath($childPublicPath . '/../../web-builder-app');
-    $folioPath = $coreAppPath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'pages';
-    if (class_exists(\Laravel\Folio\Folio::class) && is_dir($folioPath)) {
-        \Laravel\Folio\Folio::path($folioPath);
-    }
-});
-
-// jalankan Aplikasi
-$kernel = $app->make(Kernel::class);
-$response = $kernel->handle($request = Request::capture());
-$response->send();
 $kernel->terminate($request, $response);
