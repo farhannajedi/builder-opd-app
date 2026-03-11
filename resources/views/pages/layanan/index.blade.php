@@ -10,7 +10,7 @@ $services = App\Models\Service::with('opd')->whereNotNull('published_at')->lates
 <div class="max-w-screen-lg py-9 mx-auto w-full">
     <section class="max-w-screen-xl px-2 mx-auto w-full py-2 md:py-2">
         <!-- Card Utama -->
-        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-slate-200">
+        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-300">
             <div class="text-center mb-6">
                 <p class="flex justify-center text-xl font-semibold text-gray-700 mb-2 pb-2">
                     Layanan Tersedia

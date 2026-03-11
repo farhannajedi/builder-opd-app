@@ -18,7 +18,7 @@ $opd = Opd::find(env('APP_ID'));
     <title>{{ $title?? 'OPD' }}</title>
 
     <!-- Memuat semua aset yang didaftarkan di AppServiceProvider -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'], '../../web-builder-app')
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 

@@ -25,7 +25,7 @@ $opdName = $latestDocuments->first()?->opd?->name ?? 'Instansi';
 
                     <!-- link to detail halaman -->
                     <a href="/planning-dokumen/{{ $doc->slug }}"
-                        class="block border border-gray-200 rounded-lg p-5 transition duration-300 hover:border-orange-400 bg-white group"
+                        class="block border border-gray-300 rounded-lg p-5 transition duration-300 hover:border-orange-400 hover:shadow-xl bg-white group"
                         style="text-decoration: none;">
                         <div class="flex item-start justify-between gap-4">
                             <!-- detail dokumen -->

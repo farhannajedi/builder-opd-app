@@ -2,19 +2,16 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use Illuminate\Support\Str;
-use App\Models\NewsCategories;
-use Pages\DeleteNewsCategories;
-use Filament\Resources\Resource;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\NewsCategoriesResource\Pages;
-use App\Filament\Resources\NewsCategoriesResource\RelationManagers;
+use App\Models\NewsCategories;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class NewsCategoriesResource extends Resource
 {
@@ -43,11 +40,11 @@ class NewsCategoriesResource extends Resource
         return $form
             ->schema([
                 $opdField,
-                Forms\Components\Select::make('opd_id')
-                    ->label('OPD')
-                    ->relationship('opd', 'name')
-                    ->preload()
-                    ->dehydrated(),
+                // Forms\Components\Select::make('opd_id')
+                //     ->label('OPD')
+                //     ->relationship('opd', 'name')
+                //     ->preload()
+                //     ->dehydrated(),
                 // ->default(fn() => filament()->auth()->user()->opd_id)
                 // ->hidden(fn() => !filament()->auth()->user()->hasRole('super admin')),
                 //->options(
@@ -69,7 +66,14 @@ class NewsCategoriesResource extends Resource
                     ->placeholder('Akan otomatis terisi sesuai isi judul')
                     ->required()
                     ->disabled()
-                    ->dehydrated(),
+                    ->dehydrated()
+                    ->unique(
+                        table: NewsCategories::class,
+                        column: 'slug',
+                        ignoreRecord: true,
+                        modifyRuleUsing: fn($rule) =>
+                        $rule->where('opd_id', Auth::user()->opd_id)
+                    ),
             ]);
     }
 
@@ -77,7 +81,7 @@ class NewsCategoriesResource extends Resource
     {
         return $table
             // pemisahan data berdasarkan opd id
-            ->modifyQueryUsing(function (builder $query) {
+            ->modifyQueryUsing(function (Builder $query) {
                 $auth = Auth::user();
 
                 // jika super admin, maka tampilkan semua data

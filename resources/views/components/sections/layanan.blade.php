@@ -9,7 +9,7 @@ $opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
 <div class="w-full max-w-screen-lg bg-white mx-auto grid gap-6">
     <section class="w-full bg-whith py-10 md:py-10">
         <!-- Card Utama -->
-        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-200">
+        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-300">
             <div class="text-center mb-6">
                 <p class="flex justify-center text-xl font-semibold text-gray-700 mb-2 pb-2">
                     Layanan Tersedia
@@ -23,7 +23,7 @@ $opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
                 @forelse($latestServices as $service)
                 <!-- menampilkan items berada ditengah -->
                 <div
-                    class="w-full sm:w-[48%] md:w-[30%] max-w-sm border border-gray-200 rounded-lg p-5 transition duration-300 hover:border-orange-300 bg-white flex flex-col h-full">
+                    class="w-full sm:w-[48%] md:w-[30%] max-w-sm border border-gray-300 rounded-lg p-5 transition duration-300 hover:shadow-xl hover:border-orange-300 bg-white flex flex-col h-full">
                     <!-- Icon -->
                     <div class="flex justify-center mb-4">
                         <div class="bg-blue-100 rounded-lg p-3">

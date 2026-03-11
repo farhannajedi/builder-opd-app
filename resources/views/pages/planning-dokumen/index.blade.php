@@ -26,7 +26,7 @@ $documents = App\Models\PlanningDocument::with('opd')->latest()->paginate(10);
                     @forelse ($documents as $doc)
                     <!-- Link ke Detail Halaman -->
                     <a href="/planning-dokumen/{{ $doc->slug }}"
-                        class="block border border-slate-300 rounded-lg p-4 transition duration-300 hover:shadow-md hover:border-orange-200 bg-white group"
+                        class="block border border-gray-300 rounded-lg p-4 transition duration-300 hover:shadow-md hover:border-orange-200 bg-white group"
                         style="text-decoration: none;">
                         <div class="flex items-start justify-between gap-4">
                             <!-- icon dan detail dokumen -->

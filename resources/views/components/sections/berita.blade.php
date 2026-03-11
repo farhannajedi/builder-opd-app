@@ -51,7 +51,7 @@ $opdName = $latestNews->first()?->opd?->name ?? 'Instansi';
                     <p class="text-slate-400 mt-3 pb-3 text-sm font-normal line-clamp-2">
                         {!! Str::limit($first->deskripsi, 100) !!}
                     </p>
-                    <ul class="flex items-center gap-2 text-slate-400 text-sm mt-2">
+                    <ul class="flex border-t border-slate-300 mt-4 pt-3 items-center gap-2 text-slate-400 text-sm mt-2">
                         <li>
                             <span class="px-2 py-1 text-xs bg-orange-600 text-white rounded">{{ $categoryName }}</span>
                         </li>
@@ -97,7 +97,8 @@ $opdName = $latestNews->first()?->opd?->name ?? 'Instansi';
                     <h5 class="text-slate-400 mt-3 pb-3 text-sm font-normal line-clamp-2">
                         {!! Str::limit($item->deskripsi, 80) !!}
                     </h5>
-                    <ul class="flex items-center gap-2 text-slate-400 text-sm mt-2">
+                    <ul
+                        class="flex items-center mt-4 pt-3 border-t border-slate-300 gap-2 text-slate-400 text-sm mt-2 flex">
                         <li>
                             <span class="px-2 py-1 text-xs bg-orange-600 text-white rounded">{{ $categoryName }}</span>
                         </li>

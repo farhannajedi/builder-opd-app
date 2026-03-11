@@ -14,18 +14,18 @@ $galleries = Galleries::orderBy('created_at', 'desc')->get();
 @extends('layouts.app', ['activePage' => 'galeri'])
 
 @section('content')
-<section class="max-w-screen-lg px-4 mx-auto w-full py-10">
+<section class="max-w-screen-lg px-4 mx-auto w-full py-10  md:text-left">
     <div class="mb-10">
-        <p class="text-4xl font-semibold text-slate-800 tracking-tight">Galeri Foto</p>
-        <p class="text-slate-500 mt-2">Kumpulan dokumentasi kegiatan terbaru.</p>
+        <p class="text-4xl font-semibold text-slate-700 tracking-tight">Galeri Foto</p>
+        <p class="text-slate-500 mt-2">Kumpulan dokumentasi kegiatan</p>
     </div>
 
     <!-- Grid 3 gambar di tampilan dekstop -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         @forelse ($galleries as $gal)
         <!-- Link Detail yang membungkus seluruh gambar -->
-        <a href="{{ url('galeri/' . $gal->slug) }}"
-            class="group block bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+        <div
+            class="group block bg-white border border-slate-300 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
 
             <!-- Container Gambar dengan Rasio 4:3  -->
             <div class="relative aspect-video sm:aspect-[4/3] overflow-hidden bg-slate-100">
@@ -54,10 +54,10 @@ $galleries = Galleries::orderBy('created_at', 'desc')->get();
                     {{ $gal->title }}
                 </h3>
 
-                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-slate-400">
+                <div class="mt-4 pt-3 border-t border-slate-300 flex items-center justify-between text-slate-400">
                     <div class="flex items-center gap-1.5 text-xs">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 border-slate-200" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
@@ -67,10 +67,25 @@ $galleries = Galleries::orderBy('created_at', 'desc')->get();
                                     : $gal->created_at->isoFormat('D MMM Y') }}
                         </span>
                     </div>
-                    <span class="text-[10px] font-medium bg-slate-100 px-2 py-0.5 rounded-full uppercase">Detail</span>
+                    <div class="text-[10px] font-medium flex justify-center gap-2">
+                        <a href="{{ url('galeri/' . $gal->slug) }}"
+                            class="bg-orange-500 text-white rounded-lg px-2 py-0.5 text-[10px] font-medium flex items-center gap-1 hover:bg-orange-600 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z" />
+                            </svg>
+                            Detail File
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-3">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"></path>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </a>
+        </div>
 
         <!-- logika jika data kosong -->
         @empty

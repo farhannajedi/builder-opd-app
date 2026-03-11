@@ -46,13 +46,28 @@ class NewsResource extends Resource
             ->schema([
                 $opdField,
 
-                Forms\Components\Select::make('opd_id')
-                    ->label('OPD')
-                    ->relationship('opd', 'name')
-                    ->preload(),
+                // Forms\Components\Select::make('opd_id')
+                //     ->label('OPD')
+                //     ->relationship('opd', 'name')
+                //     ->preload(),
                 Forms\Components\Select::make('category_id')
                     ->label('Categori Berita')
-                    ->relationship(name: 'category', titleAttribute: 'title'),
+                    ->relationship(
+                        name: 'category',
+                        titleAttribute: 'title',
+                        modifyQueryUsing: function (Builder $query) {
+
+                            $auth = Auth::user();
+
+                            // jika super admin tampilkan semua
+                            if (is_null($auth->opd_id)) {
+                                return;
+                            }
+
+                            // admin opd hanya lihat kategori opd mereka
+                            $query->where('opd_id', $auth->opd_id);
+                        }
+                    ),
                 //->relationship('category', 'title'),
                 Forms\Components\TextInput::make('title')
                     ->label('Judul')

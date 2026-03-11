@@ -14,6 +14,11 @@ return Application::configure(basePath: $realBasePath)
         web: __DIR__ . '/../routes/web.php',
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
+        // Register folio
+        then: function () {
+            $path = __DIR__ . '/../resources/views/pages/';
+            \Laravel\Folio\Folio::path($path);
+        }
 
         // HAPUS SEMUA BLOK 'then: function () { ... }'
         // Biarkan Folio didaftarkan dan dijalankan oleh $app->register() di index.php child.

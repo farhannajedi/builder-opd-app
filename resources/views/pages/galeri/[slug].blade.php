@@ -35,7 +35,7 @@ $otherGalleries = Galleries::where('opd_id', $gallery->opd_id)
                     {{ $gallery->title }}
                 </h1>
 
-                <div class="flex flex-wrap items-center gap-4 text-slate-500 text-sm border-y border-slate-100 py-3">
+                <div class="flex flex-wrap items-center gap-4 text-slate-500 text-sm border-y border-slate-300 py-3">
                     <div class="flex items-center gap-2">
                         <span class="font-semibold text-orange-600">{{ $gallery->opd->name ?? 'Instansi' }}</span>
                     </div>

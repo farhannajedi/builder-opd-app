@@ -1,7 +1,7 @@
 @php
-use App\Models\Opd;
+//use App\Models\User;
 
-$opd = Opd::find(env('APP_ID'));
+//$opd = User::find(env('APP_ID'));
 
 $news = App\Models\News::orderBy('published_at', 'desc')->limit(4)->get();
 $documents = App\Models\PlanningDocument::orderBy('published_at', 'desc')->limit(4)->get();

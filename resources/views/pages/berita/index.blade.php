@@ -1,34 +1,39 @@
 @php
 use App\Models\News;
 use App\Models\NewsCategories;
+use App\Models\Opd;
 use Illuminate\Support\Str;
+
+$opdSlug = env('APP_ID');
+
+$opd = Opd::where('slug', $opdSlug)->first();
 
 // Jika diakses dari domain pusat (misal: localhost/utama), APP_ID kosong.
 // Jika diakses dari domain web child (misal: tp-pkk.test), APP_ID terisi dari .env child.
 
 // nantinya akan mengarahkan ke slug berdasarkan App id
-$slug = getenv('APP_ID');
+// $slug = getenv('APP_ID'); -->
 
 // where('opd_id' ,env('APP_ID')) -> untuk filter opd berdasarkan app_id
-if (!$slug) {
+// if (!$slug) {
 // TAMPILAN utama: Melihat berita dari semua OPD
-$otherNews = News::withoutGlobalScope('filterOPD')->with(['category', 'opd'])->latest()->paginate(9);
-$newsCategory = NewsCategories::limit(7)->get();
+$otherNews = News::where('opd_id', $opd->id)->with('category')->latest()->paginate(9);
+$newsCategory = NewsCategories::where('opd_id', $opd->id)->limit(7)->get();
 
 // $news = News::orderBy('published_by', 'desc')->paginate(9);
 // $newsCategory = NewsCategories::limit(7)->get();
 
-$opdName = "Semua Instansi";
-} else {
+// $opdName = "Semua Instansi";
+//} else {
 // TAMPILAN ANAK: Otomatis terfilter oleh Trait BelongsToOpd
-$otherNews = News::with(['category', 'opd'])->latest()->paginate(9);
+//$otherNews = News::with(['category', 'opd'])->latest()->paginate(9);
 
 // Ambil nama OPD secara dinamis untuk judul
-$opdName = $otherNews->first()?->opd?->name ?? 'Instansi';
-}
+$opdName = $opd->name ?? 'Instansi';
+//}
 
-// Untuk keperluan debug tampilan yang Anda buat tadi
-$currentAppId = $slug ?? 'Pusat (Global)';
+// Untuk keperluan debug tampilan
+//$currentAppId = $slug ?? 'Pusat (Global)';
 @endphp
 
 @extends('layouts.app', ['activePage' => 'berita'])
@@ -36,7 +41,6 @@ $currentAppId = $slug ?? 'Pusat (Global)';
 @section('content')
 <!-- debug content -->
 <!-- <div class="bg-gray-100 p-4 mb-4 text-xs font-mono">
-    <p>Current APP_ID (Slug): {{ $currentAppId }}</p>
     <p>Data OPD Ditemukan: {{ $opdName }}</p>
 </div> -->
 
