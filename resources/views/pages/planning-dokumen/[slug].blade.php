@@ -1,5 +1,5 @@
-use Illuminate\Support\Str;
 @php
+use Illuminate\Support\Str;
 
 $document = App\Models\PlanningDocument::with('opd')->where('slug', $slug)->firstOrFail();
 

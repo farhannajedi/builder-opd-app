@@ -12,7 +12,7 @@ $opd = Opd::where('slug', $opdSlug)->first();
 // Jika diakses dari domain web child (misal: tp-pkk.test), APP_ID terisi dari .env child.
 
 // nantinya akan mengarahkan ke slug berdasarkan App id
-// $slug = getenv('APP_ID'); -->
+// $slug = getenv('APP_ID');
 
 // where('opd_id' ,env('APP_ID')) -> untuk filter opd berdasarkan app_id
 // if (!$slug) {

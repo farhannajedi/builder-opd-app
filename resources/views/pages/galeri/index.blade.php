@@ -67,6 +67,8 @@ $galleries = Galleries::orderBy('created_at', 'desc')->get();
                                     : $gal->created_at->isoFormat('D MMM Y') }}
                         </span>
                     </div>
+
+                    <!-- link menuju detail file -->
                     <div class="text-[10px] font-medium flex justify-center gap-2">
                         <a href="{{ url('galeri/' . $gal->slug) }}"
                             class="bg-orange-500 text-white rounded-lg px-2 py-0.5 text-[10px] font-medium flex items-center gap-1 hover:bg-orange-600 transition">

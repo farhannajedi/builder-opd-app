@@ -26,7 +26,7 @@ $service = App\Models\Service::with('opd')->where('id', $id)->whereNotNull('crea
                 <span>
                     Dipublikasikan:
                     <strong>
-                        {{ $service->published_at->isoFormat('D MMMM Y') }}
+                        {{ $service->published_at?->isoFormat('D MMMM Y') }}
                     </strong>
                 </span>
 
@@ -41,9 +41,9 @@ $service = App\Models\Service::with('opd')->where('id', $id)->whereNotNull('crea
 
         <!-- Konten Deskripsi -->
         <div class="mt-4 mb-6 bg-white rounded-xl shadow border border-gray-200 p-6 md:p-8">
-            <article class="prose max-w-none">
+            <p class="prose max-w-none font-semibold">
                 {!! nl2br(e($service->description)) !!}
-            </article>
+            </p>
         </div>
 
         <!-- Tombol Kembali  -->

@@ -1,26 +1,31 @@
 @php
+$opdSlug = env('APP_ID'); // Ambil slug OPD dari environment variable
+
+$opd = App\Models\Opd::where('slug', $opdSlug)->first();
+
 // Ambil semua layanan yang sudah dipublish
-$services = App\Models\Service::with('opd')->whereNotNull('published_at')->latest()->paginate(10);
+$services = App\Models\Service::where('opd_id',
+$opd?->id)->with('opd')->latest()->paginate(10);
 @endphp
 
 @extends('layouts.app', ['activePage' => 'Layanan'])
 
 @section('content')
 <!-- halaman layanan -->
-<div class="max-w-screen-lg py-9 mx-auto w-full">
+<div class="max-w-screen-lg pb-18 py-2 mx-auto w-full">
     <section class="max-w-screen-xl px-2 mx-auto w-full py-2 md:py-2">
         <!-- Card Utama -->
-        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-300">
+        <div class="bg-white p-6 md:p-8 rounded-xl">
             <div class="text-center mb-6">
-                <p class="flex justify-center text-xl font-semibold text-gray-700 mb-2 pb-2">
+                <h5 class="flex justify-center text-2xl font-bold text-gray-700 mb-2 pb-4">
                     Layanan Tersedia
-                </p>
+                </h5>
                 <div class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
                 </div>
             </div>
 
             <!-- Grid Layanan -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+            <div class="flex pt-2 flex-wrap grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
                 @forelse($services as $service)
                 <div
                     class="w-full max-w-sm border border-slate-300 rounded-lg shadow-lg p-5 transition duration-300 hover:border-orange-300 bg-white flex flex-col h-full">
@@ -72,7 +77,7 @@ $services = App\Models\Service::with('opd')->whereNotNull('published_at')->lates
                 @endforelse
             </div>
 
-            <footer class="flex pt-4 items-center gap-4">
+            <!-- <footer class="flex pt-4 items-center gap-4">
                 <div class="flex-grow border-b border-yellow-500"></div>
                 <a wire:navigate="" href="/layanan"
                     class="inline-flex items-center gap-2 border border-slate-200 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white transition">
@@ -83,7 +88,7 @@ $services = App\Models\Service::with('opd')->whereNotNull('published_at')->lates
                         </path>
                     </svg>
                 </a>
-            </footer>
+            </footer> -->
         </div>
     </section>
 </div>
