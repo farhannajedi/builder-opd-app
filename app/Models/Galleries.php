@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
+use App\Models\Opd;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class Galleries extends Model
 {
@@ -28,6 +31,19 @@ class Galleries extends Model
                 $gallery->slug = Str::slug($gallery->title);
             }
         });
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        $user = Auth::user();
+
+        if ($user->opd_id !== null) {
+            $query->where('opd_id', $user->opd_id);
+        }
+
+        return $query;
     }
 
     public function opd()

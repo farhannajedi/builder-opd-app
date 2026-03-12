@@ -2,23 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use App\Models\HeroSection;
-use Filament\Resources\Resource;
-use Filament\Forms\FormsComponent;
-use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Repeater;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Forms\Components\FileUpload;
-use Filament\Tables\Columns\ToggleColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\HeroSectionResource\Pages;
-use App\Filament\Resources\HeroSectionResource\RelationManagers;
+use App\Models\HeroSection;
+use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class HeroSectionResource extends Resource
 {
@@ -47,14 +44,15 @@ class HeroSectionResource extends Resource
 
         return $form
             ->schema([
+                $opdField,
                 Section::make('Data Hero Section')
                     ->description('Atur judul, slogan, dan status aktif hero banner untuk OPD Anda.')
                     ->schema([
-                        Forms\Components\Select::make('opd_id')
-                            ->relationship('opd', 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                        // Forms\Components\Select::make('opd_id')
+                        //     ->relationship('opd', 'name')
+                        //     ->searchable()
+                        //     ->preload()
+                        //     ->required(),
                         Forms\Components\TextInput::make('title')
                             ->label('Judul')
                             ->required()
@@ -161,5 +159,19 @@ class HeroSectionResource extends Resource
             'create' => Pages\CreateHeroSection::route('/create'),
             'edit' => Pages\EditHeroSection::route('/{record}/edit'),
         ];
+    }
+
+    // pembatasan data berdasarkan opd id, agar admin opd hanya melihat data hero section miliknya, sedangkan super admin melihat semua data
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        $user = Auth::user();
+
+        if ($user->opd_id !== null) {
+            $query->where('opd_id', $user->opd_id);
+        }
+
+        return $query;
     }
 }

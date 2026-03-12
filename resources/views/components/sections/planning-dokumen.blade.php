@@ -12,8 +12,8 @@ $opdName = $latestDocuments->first()?->opd?->name ?? 'Instansi';
         <div class="grid grid-cols-1 gap-10">
             <!-- list dokuemen -->
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200">
-                <p class="flex justify-center text-xl font-semibold text-gray-700 mb-2 pb-2">
-                    <!-- border-b memberikan garis dibawah teks -->
+                <p class="flex justify-center text-2xl font-bold text-gray-700 mb-2 pb-2">
+                    <!-- notes: border-b itu border dibawah teks -->
                     Arsip Dokumen Perencanaan
                 <div
                     class="w-full md:w-l h-0.5 mx-auto bg-gradient-to-r from-transparent via-orange-500 to-transparent">

@@ -2,9 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Activities;
+use App\Models\Galleries;
+use App\Models\News;
+use App\Models\NewsCategories;
+use App\Models\OpdConfigs;
+use App\Models\PlanningDocument;
+use App\Models\Service;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
 
 class Opd extends Model
 {
@@ -55,5 +64,18 @@ class Opd extends Model
     public function document()
     {
         return $this->hasMany(PlanningDocument::class);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        $user = Auth::user();
+
+        if ($user->opd_id !== null) {
+            $query->where('opd_id', $user->opd_id);
+        }
+
+        return $query;
     }
 }

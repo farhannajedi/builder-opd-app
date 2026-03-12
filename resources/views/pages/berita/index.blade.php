@@ -17,8 +17,8 @@ $opd = Opd::where('slug', $opdSlug)->first();
 // where('opd_id' ,env('APP_ID')) -> untuk filter opd berdasarkan app_id
 // if (!$slug) {
 // TAMPILAN utama: Melihat berita dari semua OPD
-$otherNews = News::where('opd_id', $opd->id)->with('category')->latest()->paginate(9);
-$newsCategory = NewsCategories::where('opd_id', $opd->id)->limit(7)->get();
+$otherNews = News::where('opd_id', $opd?->id)->with('category')->latest()->paginate(9);
+$newsCategory = NewsCategories::where('opd_id', $opd?->id)->limit(7)->get();
 
 // $news = News::orderBy('published_by', 'desc')->paginate(9);
 // $newsCategory = NewsCategories::limit(7)->get();

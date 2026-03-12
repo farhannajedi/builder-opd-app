@@ -108,17 +108,17 @@ class NewsResource extends Resource
     {
         return $table
             // pemisahan data berdasarkan opd id
-            ->modifyQueryUsing(function (builder $query) {
-                $auth = Auth::user();
+            // ->modifyQueryUsing(function (builder $query) {
+            //     $auth = Auth::user();
 
-                // jika super admin, maka tampilkan semua data
-                if (is_null($auth->opd_id)) {
-                    return;
-                }
+            //     // jika super admin, maka tampilkan semua data
+            //     if (is_null($auth->opd_id)) {
+            //         return;
+            //     }
 
-                // admin opd
-                $query->where('opd_id', $auth->opd_id);
-            })
+            //     // admin opd
+            //     $query->where('opd_id', $auth->opd_id);
+            // })
             ->columns([
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('Nama OPD')
@@ -166,9 +166,17 @@ class NewsResource extends Resource
         ];
     }
 
+    // pembatasan data berdasarkan opd id, agar admin opd hanya melihat data hero section miliknya, sedangkan super admin melihat semua data
     public static function getEloquentQuery(): Builder
     {
-        // Mengizinkan Super Admin melihat semua data di tabel Filament
-        return parent::getEloquentQuery()->withoutGlobalScope('filterOPD');
+        $query = parent::getEloquentQuery();
+
+        $user = Auth::user();
+
+        if ($user->opd_id !== null) {
+            $query->where('opd_id', $user->opd_id);
+        }
+
+        return $query;
     }
 }

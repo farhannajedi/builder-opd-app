@@ -6,12 +6,12 @@ $galleries = $galleries->sortByDesc('id')->take(3);
 $opdName = $galleries->first()?->opd?->name ?? 'Instansi';
 @endphp
 
-<div class="w-full max-w-screen-lg px-4 bg-white mx-auto grid gap-6">
+<div class="w-full max-w-screen-lg px-4 bg-white mx-auto pb-22 grid gap-6">
     <section class="w-full bg-white py-10 md:py-10">
         <!-- card pembungkus utama -->
         <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-200">
             <div class="text-center mb-6">
-                <p class="flex justify-center text-xl font-semibold text-gray-700 mb-2 pb-2">
+                <p class="flex justify-center text-2xl font-bold text-gray-700 mb-2 pb-2">
                     Galleri Foto
                 </p>
                 <div class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">

@@ -2,45 +2,20 @@
 
 namespace App\Traits;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 trait BelongsToOpd
 {
-    /**
-     * Boot trait ini secara otomatis oleh Laravel.
-     */
-    protected static function bootBelongsToOpd()
+    public static function scopeForCurrentOpd(Builder $query): Builder
     {
-        // jangan jalan di model opd
-        if ((new static)->getTable() === 'opds') {
-            return;
+        $user = Auth::user();
+
+        // jika user memiliki opd_id maka filter
+        if ($user && $user->opd_id !== null) {
+            return $query->where('opd_id', $user->opd_id);
         }
 
-        // Otomatis membatasi data yang muncul di Web child (PUPR, PKK, dll)
-        $slug = getenv('APP_ID');
-        if ($slug) {
-            static::addGlobalScope('filterOPD', function (Builder $builder) use ($slug) {
-                // Mencari data yang memiliki relasi ke OPD dengan slug dari .env
-                $builder->whereHas('opd', function ($query) use ($slug) {
-                    $query->where('slug', $slug);
-                });
-            });
-        }
-
-        // Isi kolom opd_id otomatis saat Admin simpan data di halaman admin
-        static::creating(function ($model) {
-            if (auth::check() && auth::user()->opd_id) {
-                $model->opd_id = auth::user()->opd_id;
-            }
-        });
-    }
-
-    /**
-     * Relasi standar ke Model OPD
-     */
-    public function opd()
-    {
-        // return $this->belongsTo(\App\Models\Opd::class, 'opd_id');
+        return $query;
     }
 }

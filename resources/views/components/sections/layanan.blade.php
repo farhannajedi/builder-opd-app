@@ -11,7 +11,7 @@ $opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
         <!-- Card Utama -->
         <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-300">
             <div class="text-center mb-6">
-                <p class="flex justify-center text-xl font-semibold text-gray-700 mb-2 pb-2">
+                <p class="flex justify-center text-2xl font-bold text-gray-700 mb-2 pb-2">
                     Layanan Tersedia
                 </p>
                 <div class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
@@ -23,7 +23,7 @@ $opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
                 @forelse($latestServices as $service)
                 <!-- menampilkan items berada ditengah -->
                 <div
-                    class="w-full sm:w-[48%] md:w-[30%] max-w-sm border border-gray-300 rounded-lg p-5 transition duration-300 hover:shadow-xl hover:border-orange-300 bg-white flex flex-col h-full">
+                    class="w-full sm:w-[48%] md:w-[30%] max-w-sm border shadow-lg border-gray-300 rounded-lg p-5 transition duration-300 hover:shadow-xl hover:border-orange-300 bg-white flex flex-col h-full">
                     <!-- Icon -->
                     <div class="flex justify-center mb-4">
                         <div class="bg-blue-100 rounded-lg p-3">
@@ -37,14 +37,14 @@ $opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
                     </div>
 
                     <!-- Nama Layanan -->
-                    <h3 class="text-lg font-semibold text-gray-800 text-center mb-2">
+                    <h3 class="text-lg font-semibold text-gray-800 text-center mb-6">
                         {{ $service->name }}
                     </h3>
 
                     <!-- Deskripsi -->
-                    <p class="text-sm text-gray-600 text-center line-clamp-3 mb-4">
+                    <!-- <p class="text-sm text-gray-600 text-center line-clamp-3 mb-4">
                         {{ $service->description }}
-                    </p>
+                    </p> -->
 
                     <!-- status dan indikator link detail layanan -->
                     <div class="flex justify-center gap-2">

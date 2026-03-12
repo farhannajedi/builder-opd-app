@@ -81,17 +81,17 @@ class NewsCategoriesResource extends Resource
     {
         return $table
             // pemisahan data berdasarkan opd id
-            ->modifyQueryUsing(function (Builder $query) {
-                $auth = Auth::user();
+            // ->modifyQueryUsing(function (Builder $query) {
+            //     $auth = Auth::user();
 
-                // jika super admin, maka tampilkan semua data
-                if (is_null($auth->opd_id)) {
-                    return;
-                }
+            //     // jika super admin, maka tampilkan semua data
+            //     if (is_null($auth->opd_id)) {
+            //         return;
+            //     }
 
-                // jika admin opd
-                $query->where('opd_id', $auth->opd_id);
-            })
+            //     // jika admin opd
+            //     $query->where('opd_id', $auth->opd_id);
+            // })
             ->columns([
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('Nama OPD')
@@ -152,18 +152,17 @@ class NewsCategoriesResource extends Resource
         ];
     }
 
-    // hanya user tertentu yang dapat mengakses opd milik mereka masing-masing
-    // public static function getEloquentQuery(): Builder
-    // {
-    //     $user = filament()->auth()->user();
+    // pembatasan data berdasarkan opd id, agar admin opd hanya melihat data hero section miliknya, sedangkan super admin melihat semua data
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
 
-    //     // Superadmin bisa melihat semua
-    //     if ($user->is_superadmin) {
-    //         return parent::getEloquentQuery();
-    //     }
+        $user = Auth::user();
 
-    //     // admin opd hanya bisa melihat data opd mereka sendiri
-    //     return parent::getEloquentQuery()
-    //         ->where('opd_id', $user->opd_id);
-    // }
+        if ($user->opd_id !== null) {
+            $query->where('opd_id', $user->opd_id);
+        }
+
+        return $query;
+    }
 }

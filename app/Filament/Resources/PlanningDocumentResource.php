@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PlanningDocumentResource\Pages;
-use App\Filament\Resources\PlanningDocumentResource\RelationManagers;
-use Filament\Tables\Columns\TextColumn;
 
 class PlanningDocumentResource extends Resource
 {
@@ -45,10 +43,10 @@ class PlanningDocumentResource extends Resource
             ->schema([
                 $opdField,
                 // title, content, file
-                Forms\Components\Select::make('opd_id')
-                    ->label('OPD')
-                    ->relationship('opd', 'name')
-                    ->preload(),
+                // Forms\Components\Select::make('opd_id')
+                //     ->label('OPD')
+                //     ->relationship('opd', 'name')
+                //     ->preload(),
                 Forms\Components\Textarea::make('title')
                     ->label('Judul')
                     ->maxLength(250)
@@ -78,17 +76,17 @@ class PlanningDocumentResource extends Resource
     {
         return $table
             // pemisahan data berdasarkan opd id
-            ->modifyQueryUsing(function (builder $query) {
-                $auth = Auth::user();
+            // ->modifyQueryUsing(function (builder $query) {
+            //     $auth = Auth::user();
 
-                // jika super admin, maka tampilkan semua data
-                if (is_null($auth->opd_id)) {
-                    return;
-                }
+            //     // jika super admin, maka tampilkan semua data
+            //     if (is_null($auth->opd_id)) {
+            //         return;
+            //     }
 
-                // admin opd
-                $query->where('opd_id', $auth->opd_id);
-            })
+            //     // admin opd
+            //     $query->where('opd_id', $auth->opd_id);
+            // })
             ->columns([
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('Nama OPD')
@@ -128,5 +126,18 @@ class PlanningDocumentResource extends Resource
             'create' => Pages\CreatePlanningDocument::route('/create'),
             'edit' => Pages\EditPlanningDocument::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        $user = Auth::user();
+
+        if ($user->opd_id !== null) {
+            $query->where('opd_id', $user->opd_id);
+        }
+
+        return $query;
     }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Opd;
 use App\Models\HeroBanner;
+use App\Models\Opd;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class HeroSection extends Model
@@ -36,13 +37,16 @@ class HeroSection extends Model
     // jika disimpan data baru, data lama akan menjadi false / tidak aktif
     protected static function booted()
     {
-        static::saving(function ($hero) {
-            if ($hero->is_active) {
-                // Nonaktifkan hero section lainnya untuk OPD yang sama
-                static::where('opd_id', $hero->opd_id)
-                    ->where('id', '!=', $hero->id)
-                    ->update(['is_active' => false]);
-            }
-        });
+
+        $slug = getenv('APP_ID');
+
+        if ($slug) {
+            static::addGlobalScope('filterOPD', function (Builder $builder) use ($slug) {
+                // Mencari berita yang memiliki relasi ke tabel OPD dengan slug tertentu
+                $builder->whereHas('opd', function ($query) use ($slug) {
+                    $query->where('slug', $slug);
+                });
+            });
+        }
     }
 }

@@ -4,7 +4,7 @@ $opdSlug = env('APP_ID'); // Ambil slug OPD dari environment variable
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
 // Query untuk mengambil dokumen terbaru
-$documents = App\Models\PlanningDocument::where('opd_id', $opd->id)->with('opd')->latest()->paginate(10);
+$documents = App\Models\PlanningDocument::where('opd_id', $opd?->id)->with('opd')->latest()->paginate(10);
 @endphp
 
 @extends('layouts.app', ['activePage' => 'Arsip Dokumen'])
