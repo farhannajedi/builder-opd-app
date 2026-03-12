@@ -8,15 +8,11 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
-use App\Models\NewsCategories;
 use Filament\Resources\Resource;
-use Filament\Forms\FormsComponent;
 use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\NewsResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\NewsResource\RelationManagers;
+use Filament\Tables\Filters\SelectFilter;
 
 class NewsResource extends Resource
 {
@@ -137,7 +133,35 @@ class NewsResource extends Resource
                     ->date('d F Y')
             ])
             ->filters([
-                //
+                // filter berdasarkan opd
+                SelectFilter::make('opd_id')
+                    ->label('Filter OPD')
+                    ->relationship('opd', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)), // hanya tampilkan filter jika user adalah super admin
+
+                // filter berdasarkan kategori berita
+                SelectFilter::make('category_id')
+                    ->label('Filter Kategori')
+                    ->relationship(
+
+                        name: 'category',
+                        titleAttribute: 'title',
+                        modifyQueryUsing: function (Builder $query) {
+                            $auth = Auth::user();
+
+                            // jika role super admin tamilkan semuanya
+                            if (is_null($auth->opd_id)) {
+                                return;
+                            }
+
+                            // jika role admin opd mereka hanya melihat kategori mereka
+                            $query->where('opd_id', $auth->opd_id);
+                        }
+                    )
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

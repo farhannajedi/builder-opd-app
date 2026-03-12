@@ -1,9 +1,13 @@
 @props(['documents'])
 
 @php
-$latestDocuments = $documents->sortByDesc('published_at')->take(3);
 
-$opdName = $latestDocuments->first()?->opd?->name ?? 'Instansi';
+$opdSlug = env('APP_ID');
+$opd = App\Models\Opd::where('slug', $opdSlug)->first();
+
+$latestDocuments = $documents->where('opd_id', $opd->id)->sortByDesc('published_at')->take(3);
+
+$opdName = $opd?->name ?? 'Instansi';
 @endphp
 
 <div class="max-w-screen-lg mx-auto mb-9 w-full">

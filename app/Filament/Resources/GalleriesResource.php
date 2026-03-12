@@ -8,25 +8,11 @@ use Filament\Forms\Form;
 use App\Models\Galleries;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
-use Filament\Actions\EditAction;
 use Filament\Resources\Resource;
-use Filament\Actions\DeleteAction;
-use Filament\Forms\FormsComponent;
 use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\GalleriesResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\GalleriesResource\RelationManagers;
-use App\Filament\Resources\GalleriesResource\Pages\EditGalleries;
-use App\Filament\Resources\GalleriesResource\Pages\ListGalleries;
-use App\Filament\Resources\GalleriesResource\Pages\CreateGalleries;
+use Filament\Tables\Filters\SelectFilter;
 
 class GalleriesResource extends Resource
 {
@@ -110,7 +96,13 @@ class GalleriesResource extends Resource
                     ->label('Deskripsi'),
             ])
             ->filters([
-                //
+                // filter berdasarkan opd 
+                SelectFilter::make('opd_id')
+                    ->label('Filter OPD')
+                    ->relationship('opd', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)), // hanya tampil
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

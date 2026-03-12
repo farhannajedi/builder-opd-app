@@ -3,19 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ServiceResource\Pages;
-use App\Filament\Resources\ServiceResource\RelationManagers;
 use App\Models\Service;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Forms\FormsComponent;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 // use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ServiceResource extends Resource
 {
@@ -83,7 +81,13 @@ class ServiceResource extends Resource
                     ->label('Deskripsi'),
             ])
             ->filters([
-                //
+                // filter bersarkan opd
+                SelectFilter::make('opd_id')
+                    ->label('Filter OPD')
+                    ->relationship('opd', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)), // hanya tampilkan filter jika user adalah super admin
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -1,9 +1,13 @@
 @props(['services'])
 
 @php
-$latestServices = $services->sortByDesc('published_at')->take(5);
 
-$opdName = $latestServices->first()?->opd?->name ?? 'Instansi';
+$opdSlug = env('APP_ID');
+$opd = App\Models\Opd::where('slug', $opdSlug)->first();
+
+$latestServices = $services->where('opd_id', $opd->id)->sortByDesc('published_at')->take(5);
+
+$opdName = $opd?->name ?? 'Instansi';
 @endphp
 
 <div class="w-full max-w-screen-lg bg-white mx-auto grid gap-6">

@@ -1,9 +1,13 @@
 @props(['galleries'])
 
 @php
-$galleries = $galleries->sortByDesc('id')->take(3);
 
-$opdName = $galleries->first()?->opd?->name ?? 'Instansi';
+$opdSlug = env('APP_ID');
+$opd = App\Models\Opd::where('slug', $opdSlug)->first();
+
+$galleries = $galleries->where('opd_id', $opd->id)->sortByDesc('published_at')->take(3);
+
+$opdName = $opd?->name ?? 'Instansi';
 @endphp
 
 <div class="w-full max-w-screen-lg px-4 bg-white mx-auto pb-22 grid gap-6">

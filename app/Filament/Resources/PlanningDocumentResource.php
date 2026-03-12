@@ -9,10 +9,8 @@ use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use App\Models\PlanningDocument;
 use Filament\Resources\Resource;
-use Filament\Forms\FormsComponent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PlanningDocumentResource\Pages;
 
 class PlanningDocumentResource extends Resource

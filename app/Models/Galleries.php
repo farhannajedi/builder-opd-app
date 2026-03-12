@@ -50,4 +50,19 @@ class Galleries extends Model
     {
         return $this->belongsTo(Opd::class);
     }
+
+    // isi slug otomatis
+    protected static function booted()
+    {
+        $slug = getenv('APP_ID');
+
+        if ($slug) {
+            static::addGlobalScope('filterOPD', function (Builder $builder) use ($slug) {
+                // Mencari berita yang memiliki relasi ke tabel OPD dengan slug tertentu
+                $builder->whereHas('opd', function ($query) use ($slug) {
+                    $query->where('slug', $slug);
+                });
+            });
+        }
+    }
 }
