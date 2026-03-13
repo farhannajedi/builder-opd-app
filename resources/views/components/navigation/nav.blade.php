@@ -1,6 +1,15 @@
 @props(['activePage'])
 
-@php $cfg = $opdConfig ?? null; @endphp
+@php
+
+$opdSlug = env('APP_ID');
+
+$opd = \App\Models\Opd::where('slug', $opdSlug)->first();
+
+$opdConfigs = \App\Models\OpdConfigs::where('opd_id', $opd?->id)->first();
+
+@endphp
+
 <!-- menu navigasi -->
 <nav x-data="{ mobileOpen: false }" class="bg-white sticky top-0 z-50 shadow">
     <div class="max-w-screen-lg flex items-center justify-between mx-auto w-full py-4">

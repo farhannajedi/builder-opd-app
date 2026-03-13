@@ -32,6 +32,7 @@ class OpdConfigs extends Model
         return $this->belongsTo(Opd::class);
     }
 
+    // ditulis di filament
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();

@@ -33,6 +33,7 @@ class Galleries extends Model
         });
     }
 
+    // ditulis di filament
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();

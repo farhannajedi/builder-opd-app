@@ -66,6 +66,7 @@ class Opd extends Model
         return $this->hasMany(PlanningDocument::class);
     }
 
+    // ditulis di filament
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();

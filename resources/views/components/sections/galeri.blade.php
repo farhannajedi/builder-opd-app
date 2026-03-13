@@ -5,7 +5,7 @@
 $opdSlug = env('APP_ID');
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
-$galleries = $galleries->where('opd_id', $opd->id)->sortByDesc('published_at')->take(3);
+$galleries = $galleries->where('opd_id', $opd?->id)->sortByDesc('published_at')->take(3);
 
 $opdName = $opd?->name ?? 'Instansi';
 @endphp

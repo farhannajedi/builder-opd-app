@@ -15,7 +15,7 @@ class OpdConfigsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('super admin'); //$user->can('view_any_opd::configs');
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class OpdConfigsPolicy
      */
     public function view(User $user, OpdConfigs $opdConfigs): bool
     {
-        return $user->hasRole('super admin'); //$user->can('view_opd::configs');
+        return true; //$user->can('view_opd::configs');
     }
 
     /**
@@ -31,7 +31,7 @@ class OpdConfigsPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole('super admin'); // $user->can('create_opd::configs');
+        return true;
     }
 
     /**
@@ -39,7 +39,7 @@ class OpdConfigsPolicy
      */
     public function update(User $user, OpdConfigs $opdConfigs): bool
     {
-        return $user->hasRole('super admin'); // $user->can('update_opd::configs');
+        return true; // $user->can('update_opd::configs');
     }
 
     /**
@@ -47,7 +47,7 @@ class OpdConfigsPolicy
      */
     public function delete(User $user, OpdConfigs $opdConfigs): bool
     {
-        return $user->hasRole('super admin'); // $user->can('delete_opd::configs');
+        return true; // $user->can('delete_opd::configs');
     }
 
     /**
@@ -55,7 +55,7 @@ class OpdConfigsPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->hasRole('super admin'); // $user->can('{{ DeleteAny }}');
+        return true; // $user->can('{{ DeleteAny }}');
     }
 
     /**
@@ -63,7 +63,7 @@ class OpdConfigsPolicy
      */
     public function forceDelete(User $user, OpdConfigs $opdConfigs): bool
     {
-        return $user->hasRole('super admin'); // $user->can('{{ ForceDelete }}');
+        return true; // $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class OpdConfigsPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->hasRole('super admin'); // $user->can('{{ ForceDeleteAny }}');
+        return true; // $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class OpdConfigsPolicy
      */
     public function restore(User $user, OpdConfigs $opdConfigs): bool
     {
-        return $user->hasRole('super admin'); // $user->can('{{ Restore }}');
+        return true; // $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class OpdConfigsPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->hasRole('super admin'); // $user->can('{{ RestoreAny }}');
+        return true; // $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class OpdConfigsPolicy
      */
     public function replicate(User $user, OpdConfigs $opdConfigs): bool
     {
-        return $user->hasRole('super admin'); // $user->can('{{ Replicate }}');
+        return true; // $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class OpdConfigsPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->hasRole('super admin'); // $user->can('{{ Reorder }}');
+        return true; // $user->can('{{ Reorder }}');
     }
 }

@@ -37,6 +37,7 @@ class NewsCategories extends Model
         return $this->hasMany(News::class);
     }
 
+    // ditulis di filament
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();

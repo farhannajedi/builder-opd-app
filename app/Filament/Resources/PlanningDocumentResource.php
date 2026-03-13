@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use Illuminate\Support\Str;
-use App\Models\PlanningDocument;
-use Filament\Resources\Resource;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PlanningDocumentResource\Pages;
+use App\Models\PlanningDocument;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PlanningDocumentResource extends Resource
 {
@@ -98,7 +99,13 @@ class PlanningDocumentResource extends Resource
                     ->label('Deskripsi')
             ])
             ->filters([
-                //
+                // filter berdasarkan opd
+                SelectFilter::make('opd_id')
+                    ->label('Filter OPD')
+                    ->relationship('opd', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)), // hanya tampilkan filter jika user adalah super admin
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

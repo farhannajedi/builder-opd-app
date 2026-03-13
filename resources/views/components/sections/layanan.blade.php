@@ -5,7 +5,7 @@
 $opdSlug = env('APP_ID');
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
-$latestServices = $services->where('opd_id', $opd->id)->sortByDesc('published_at')->take(5);
+$latestServices = $services->where('opd_id', $opd?->id)->sortByDesc('published_at')->take(5);
 
 $opdName = $opd?->name ?? 'Instansi';
 @endphp

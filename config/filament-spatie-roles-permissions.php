@@ -1,5 +1,7 @@
 <?php
 
+use Althinect\FilamentSpatieRolesPermissions\Resources\PermissionResource;
+
 return [
 
     'resources' => [
@@ -16,7 +18,7 @@ return [
     'team_model' => \App\Models\Team::class,
 
     'scope_to_tenant' => true,
-    
+
     'scope_roles_to_tenant' => true,
     'scope_premissions_to_tenant' => false,
 
@@ -69,6 +71,7 @@ return [
         'permissions' => true,
         'users' => true,
         'roles' => true,
+        'opds' => true,
     ],
 
     /*
@@ -205,6 +208,7 @@ return [
 
         'excluded_policy_models' => [
             \App\Models\User::class,
+            \App\Models\Opd::class,
         ],
 
         /*
@@ -215,8 +219,10 @@ return [
         ],
 
         'user_model' => \App\Models\User::class,
+        'opd_model' => \App\Models\Opd::class,
 
         'user_model_class' => 'User',
+        'opd_model_class' => 'Opd',
 
         'policies_namespace' => 'App\Policies',
     ],

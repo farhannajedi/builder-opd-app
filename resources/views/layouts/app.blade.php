@@ -1,7 +1,12 @@
 @php
-use App\Models\Opd;
 
-$opd = Opd::find(env('APP_ID'));
+$opdSlug = env('APP_ID');
+$opd = \App\Models\Opd::where('slug', $opdSlug)->first();
+
+$opdConfigs = \App\Models\OpdConfigs::where('opd_id', $opd?->id)->first();
+
+$opdName = $opd?->name ?? 'Dinas Kabupaten Karimun';
+
 @endphp
 
 <!DOCTYPE html>
@@ -57,9 +62,10 @@ $opd = Opd::find(env('APP_ID'));
             <!-- section atas -->
             <div class="flex justify-between items-start gap-10 mb-14">
                 <div>
-                    <img src="{{ asset('assets/images/logo_kab.png') }}" class="w-28 mb-3 drop-shadow-xl" alt="">
-                    <p class="text-xl font-semibold text-white drop-shadow">Kabupaten Karimun</p>
-                    <p class="text-sm text-white-200 drop-shadow">Diskominfo</p>
+                    <img src="{{ $opdConfigs?->logo ? Storage::url($opdConfigs->logo) : asset('assets/images/logo_kab.png') }}"
+                        class="w-24 h-12 object-contain hover:scale-110 duration-200" alt="logo_opd">
+                    <p class="text-xl font-semibold text-white drop-shadow">{{ $opdName }}</p>
+                    <p class="text-sm text-white-200 drop-shadow">Kabupaten Karimun</p>
                 </div>
 
                 <!-- Kontak  -->
@@ -98,7 +104,7 @@ $opd = Opd::find(env('APP_ID'));
 
     <!-- Bar Copyright -->
     <div class="w-full bg-yellow-600 shadow py-1">
-        <p class="text-sm text-center font-medium text-yellow-800">Copyright &copy; 2025</p>
+        <p class="text-sm text-center font-medium text-yellow-800">{{$opdName}} &copy;</p>
     </div>
 
 

@@ -7,7 +7,7 @@ $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
 use Illuminate\Support\Str;
 
-$latestNews = $news->where('opd_id', $opd->id)->sortByDesc('published_at')->take(4);
+$latestNews = $news->where('opd_id', $opd?->id)->sortByDesc('published_at')->take(4);
 $opdName = $opd->name ?? 'Instansi';
 @endphp
 

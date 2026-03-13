@@ -2,18 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Form;
-use App\Models\OpdConfigs;
-use Filament\Tables\Table;
-use Filament\Resources\Resource;
-use Filament\Forms\FormsComponent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\OpdConfigsResource\Pages;
 use App\Filament\Resources\OpdConfigsResource\RelationManagers;
+use App\Models\OpdConfigs;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Forms\FormsComponent;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class OpdConfigsResource extends Resource implements HasShieldPermissions
 {
@@ -101,7 +103,13 @@ class OpdConfigsResource extends Resource implements HasShieldPermissions
                     ->dateTime('d M Y H:i'),
             ])
             ->filters([
-                //
+                // filter berdasarkan opd
+                SelectFilter::make('opd_id')
+                    ->label('Filter OPD')
+                    ->relationship('opd', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)), // hanya tampilkan filter jika user adalah super admin
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
