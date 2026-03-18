@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('announcement', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('opd_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->text('deskripsi');
+            $table->string('images');
+            $table->date('published_at')->nullable();
             $table->timestamps();
         });
     }
