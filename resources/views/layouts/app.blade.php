@@ -7,6 +7,26 @@ $opdConfigs = \App\Models\OpdConfigs::where('opd_id', $opd?->id)->first();
 
 $opdName = $opd?->name ?? 'Dinas Kabupaten Karimun';
 
+// link menuju sosial media opd
+$socialMedia = [
+[
+'url' => $opdConfigs?->facebook_url,
+'icon' => 'facebook'
+],
+[
+'url' => $opdConfigs?->instagram_url,
+'icon' => 'instagram'
+],
+[
+'url' => $opdConfigs?->tiktok_url,
+'icon' => 'tiktok'
+],
+[
+'url' => $opdConfigs?->youtube_url,
+'icon' => 'youtube'
+],
+];
+
 @endphp
 
 <!DOCTYPE html>
@@ -70,34 +90,41 @@ $opdName = $opd?->name ?? 'Dinas Kabupaten Karimun';
 
                 <!-- Kontak  -->
                 <div class="text-sm space-y-1">
-                    <p class="text-yellow-200 mb-1 font-medium">Hubungi Kami</p>
-                    <p>Jl. Jendral Sudirman No. ...</p>
-                    <p>Email: diskominfo@karimun.go.id</p>
-                    <p>Telp: (0777) xxxx</p>
+                    <h1 class="text-yellow-200 mb-1 text-xl font-bold">Hubungi Kami</h1>
+                    <p>{{ $opdConfigs?->address ?? 'Alamat belum ditambahkan!' }}</p>
+                    <p>Email: {{ $opdConfigs?->email ?? '-' }}</p>
+                    <p>Telp: {{ $opdConfigs?->phone ?? '-' }}</p>
                 </div>
 
                 <!-- Link Sosial Media  -->
-                <!-- <div class="text-sm space-y-1">
-                    <p class="text-yellow-200 mb-1 font-medium">Media Sosial</p>
-                    <div class="flex gap-4">
-                        <a href="#" target="_blank"
+                <div class="text-sm space-y-1">
+                    <p class="text-yellow-200 mb-1 text-xl font-bold">Media Sosial</p>
+
+                    <div class="flex gap-4 pt-2">
+
+                        @foreach($socialMedia as $socmed)
+
+                        @if(!empty($socmed['url']))
+                        <a href="{{ $socmed['url'] }}" target="_blank"
                             class="p-2 border-2 border-yellow-400 hover:bg-yellow-800 hover:text-white duration-200 rounded-lg">
+
+                            @if($socmed['icon'] === 'facebook')
                             <x-icons.facebook class="w-5 h-5" />
-                        </a>
-                        <a href="#" target="_blank"
-                            class="p-2 border-2 border-yellow-400 hover:bg-yellow-800 hover:text-white duration-200 rounded-lg">
+                            @elseif($socmed['icon'] === 'instagram')
                             <x-icons.instagram class="w-5 h-5" />
-                        </a>
-                        <a href="#" target="_blank"
-                            class="p-2 border-2 border-yellow-400 hover:bg-yellow-800 hover:text-white duration-200 rounded-lg">
+                            @elseif($socmed['icon'] === 'tiktok')
                             <x-icons.tiktok class="w-5 h-5" />
-                        </a>
-                        <a href="#" target="_blank"
-                            class="p-2 border-2 border-yellow-400 hover:bg-yellow-800 hover:text-white duration-200 rounded-lg">
+                            @elseif($socmed['icon'] === 'youtube')
                             <x-icons.youtube class="w-5 h-5" />
+                            @endif
+
                         </a>
+                        @endif
+
+                        @endforeach
+
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </footer>
