@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Models\Activities;
+use App\Models\Announcement;
 use App\Models\Galleries;
 use App\Models\News;
 use App\Models\NewsCategories;
 use App\Models\OpdConfigs;
 use App\Models\PlanningDocument;
+use App\Models\Profil;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -64,6 +66,16 @@ class Opd extends Model
     public function document()
     {
         return $this->hasMany(PlanningDocument::class);
+    }
+
+    public function announcement()
+    {
+        return $this->hasMany(Announcement::class);
+    }
+
+    public function profil()
+    {
+        return $this->hasMany(Profil::class);
     }
 
     // ditulis di filament

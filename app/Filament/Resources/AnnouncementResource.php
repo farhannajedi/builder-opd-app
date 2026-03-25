@@ -2,32 +2,31 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\AnnouncementResource\Pages;
+use App\Models\Announcement;
 use Filament\Forms;
-use Filament\Tables;
 use Filament\Forms\Form;
-use App\Models\Galleries;
-use Filament\Tables\Table;
-use Illuminate\Support\Str;
 use Filament\Resources\Resource;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\GalleriesResource\Pages;
+use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
-class GalleriesResource extends Resource
+class AnnouncementResource extends Resource
 {
-    protected static ?string $model = Galleries::class;
+    protected static ?string $model = Announcement::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Galeri';
-
     public static function form(Form $form): Form
     {
-        // ini adalah validasi, agar admin opd tidak dapat memilih opd, namun otomatis terisi berdasarkan user->opd id
+
+        // validasi admin opd
         $auth = Auth::user();
 
-        // Tentukan input untuk opd_id berdasarkan role user
+        // menentukan input opd_id berdasarkan role
         $opdField = is_null($auth->opd_id)
             ? Forms\Components\Select::make('opd_id')
             ->label('OPD')
@@ -41,9 +40,6 @@ class GalleriesResource extends Resource
         return $form
             ->schema([
                 $opdField,
-                // Forms\Components\Select::make('opd_id')
-                //     ->label('OPD')
-                //     ->relationship('opd', 'name'),
                 Forms\Components\TextInput::make('title')
                     ->label('Judul')
                     ->live(onBlur: true)
@@ -55,32 +51,20 @@ class GalleriesResource extends Resource
                     ->placeholder('Akan otomatis terisi sesuai isi judul')
                     ->readOnly()
                     ->required(),
+                Forms\Components\TextInput::make('deskripsi')
+                    ->label('Deskripsi')
+                    ->columnSpanFull()
+                    ->nullable(),
                 Forms\Components\FileUpload::make('images')
                     ->label('Gambar')
                     ->image()
                     ->nullable(),
-                Forms\Components\TextInput::make('description')
-                    ->label('Deskripsi')
-                    ->maxLength(5000)
-                    ->columnSpanFull(),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            // pemisahan data berdasarkan opd id
-            // ->modifyQueryUsing(function (builder $query) {
-            //     $auth = Auth::user();
-
-            //     // jika super admin, maka tampilkan semua data
-            //     if (is_null($auth->opd_id)) {
-            //         return;
-            //     }
-
-            //     // admin opd
-            //     $query->where('opd_id', $auth->opd_id);
-            // })
             ->columns([
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('Nama OPD')
@@ -96,7 +80,6 @@ class GalleriesResource extends Resource
                     ->label('Deskripsi'),
             ])
             ->filters([
-                // filter berdasarkan opd 
                 SelectFilter::make('opd_id')
                     ->label('Filter OPD')
                     ->relationship('opd', 'name')
@@ -125,13 +108,13 @@ class GalleriesResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListGalleries::route('/'),
-            'create' => Pages\CreateGalleries::route('/create'),
-            'edit' => Pages\EditGalleries::route('/{record}/edit'),
+            'index' => Pages\ListAnnouncements::route('/'),
+            'create' => Pages\CreateAnnouncement::route('/create'),
+            'edit' => Pages\EditAnnouncement::route('/{record}/edit'),
         ];
     }
 
-    // pembatasan data berdasarkan opd id, agar admin opd hanya melihat data hero section miliknya, sedangkan super admin melihat semua data
+    // pembatasan data berdasarkan opd id, hanya super admin yang bisa melihat
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();
