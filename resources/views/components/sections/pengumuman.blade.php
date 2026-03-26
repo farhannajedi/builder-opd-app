@@ -7,112 +7,86 @@ $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
 use Illuminate\Support\Str;
 
-$announcement = $announcement->where('opd_id', $opd?->id)->sortByDesc('published_at')->take(4);
+$announcements = $announcement->where('opd_id', $opd?->id)->sortByDesc('created_at')->take(4);
 $opdName = $opd->name ?? 'Intansi';
 @endphp
 
-<div class="w-full">
-    <div class="flex flex-col px-2 md:px-8 lg:px-9 mt-10">
-        <div class="bg-white p-2 rounded-xl">
-            <p class="flex justify-center text-2xl font-bold text-gray-700 mb-2 pb-2">
-                Pengumuman Terbaru
-            </p>
-            <div class="w-full h-0.5 mx-auto bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
+<!-- svg -->
+<!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
+    stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+</svg> -->
+
+<!-- bg latar -->
+<div class="w-full bg-gray-200 py-12">
+    <div class="flex flex-col px-4 md:px-8 lg:px-9">
+
+        <div class="flex items-center justify-center mb-8">
+            <div class="flex items-center gap-3">
+                <div class="text-[#ff6b6b]">
+                </div>
+                <h2 class="flex justify-center text-3xl font-black text-slate-900">Pengumuman</h2>
+                <div class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
+                </div>
+            </div>
+            <!-- <a href="/pengumuman"
+                class="flex items-center gap-2 px-5 py-2 bg-white border border-blue-400 text-blue-600 rounded-full hover:bg-blue-50 transition font-bold text-sm shadow-sm">
+                Lihat Semua
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a> -->
         </div>
 
-        @if($announcement->isNotEmpty())
-
-        @php
-        $first = $announcement->first();
-        // Cek jika gambar ada, jika tidak ada variabel ini akan null
-        $firstImage = $first->image ? url('storage/'.$first->image) : null;
-        @endphp
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mt-6">
-            <div class="lg:col-span-7">
-                <div
-                    class="relative p-5 rounded-2xl shadow-sm border border-slate-200 bg-white hover:shadow-lg transition h-full flex flex-col">
-                    <div
-                        class="bg-blue-600 text-white text-xs font-bold uppercase rounded-full w-fit px-4 py-1 absolute ml-2 mt-2 z-10">
-                        Penting
-                    </div>
-
-                    @if($firstImage)
-                    <div class="relative aspect-video overflow-hidden rounded-xl border border-slate-100 mb-4 group">
-                        <img src="{{ $firstImage }}" alt="{{ $first->title }}"
-                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    </div>
-                    @endif
-
-                    <div class="flex flex-col flex-grow">
-                        <a href="{{ url('pengumuman/' . $first->slug) }}"
-                            class="text-2xl font-extrabold text-slate-800 hover:text-blue-600 transition leading-tight">
-                            {{ $first->title }}
-                        </a>
-
-                        <p class="text-slate-500 leading-relaxed mt-3 flex-grow">
-                            {{ Str::limit(strip_tags($first->deskripsi), 150) }}
-                        </p>
-
-                        <div
-                            class="flex border-t border-slate-100 mt-5 pt-4 items-center justify-between text-slate-400 text-sm">
-                            <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-500" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                {{ $first->created_at->translatedFormat('d F Y') }}
-                            </div>
-                            <span
-                                class="text-xs bg-slate-100 px-3 py-1 rounded-full text-slate-600 font-medium">Pengumuman</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-5 flex flex-col gap-4">
-                <div class="flex items-center gap-3 mb-1">
-                    <h3 class="text-lg font-semibold text-slate-700">Lainnya</h3>
-                    <div class="flex-grow h-[2px] bg-blue-200 rounded"></div>
-                </div>
-
-                @foreach ($announcement->skip(1) as $item)
-                @php $itemImage = $item->image ? url('storage/'.$item->image) : null; @endphp
-
+        @if($announcements->isNotEmpty())
+        {{-- Grid 4 kolom sejajar --}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach ($announcements as $item)
+            <div class="group h-full">
                 <a href="/pengumuman/{{ $item->slug }}"
-                    class="flex flex-col sm:flex-row gap-4 border border-slate-200 p-4 rounded-xl hover:border-blue-300 bg-white transition group">
+                    class="relative flex flex-col p-8 h-full rounded-[2.5rem] shadow-sm border border-slate-100 bg-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
 
-                    @if($itemImage)
-                    <div class="sm:w-1/3 aspect-video sm:aspect-square overflow-hidden rounded-lg">
-                        <img src="{{ $itemImage }}" alt="{{ $item->title }}"
-                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <!-- garis aksen
+                    <div class="absolute left-0 top-8 bottom-8 w-1.5 bg-blue-500 rounded-r-full"></div> -->
+
+                    <div class="flex-grow">
+                        <div class="flex items-center mb-4">
+                            <span
+                                class="text-[11px] bg-blue-500 text-white font-black uppercase px-3 py-1 rounded-lg tracking-wider">
+                                PENGUMUMAN
+                            </span>
+                        </div>
+
+                        <h4
+                            class="text-[1.2rem] font-bold text-slate-800 group-hover:text-blue-600 leading-tight mb-4 transition-colors">
+                            {{ $item->title }}
+                        </h4>
+
+                        <p class="text-sm text-slate-500 line-clamp-4 leading-relaxed">
+                            {{ Str::limit(strip_tags($item->deskripsi), 120) }}
+                        </p>
                     </div>
-                    @endif
 
-                    <div class="{{ $itemImage ? 'sm:w-2/3' : 'w-full' }} flex flex-col justify-between">
-                        <div>
-                            <h4 class="font-bold text-slate-800 group-hover:text-blue-600 line-clamp-2 transition">
-                                {{ $item->title }}
-                            </h4>
-                            <p class="text-sm text-slate-500 mt-1 line-clamp-2">
-                                {{ Str::limit(strip_tags($item->deskripsi), 80) }}
-                            </p>
-                        </div>
-                        <div class="text-[10px] text-slate-400 mt-3 flex items-center gap-2">
-                            <span class="text-blue-500 font-bold uppercase">Info</span>
-                            <span>•</span>
-                            <span>{{ $item->created_at->diffForHumans() }}</span>
-                        </div>
+                    <!-- footer -->
+                    <div class="mt-6 pt-4 border-t border-slate-50 flex items-center gap-2 text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span class="text-xs font-medium">
+                            {{ $item->created_at?->isoFormat('D MMM YYYY') }}
+                        </span>
                     </div>
                 </a>
-                @endforeach
             </div>
+            @endforeach
         </div>
 
         @else
-
-        <div class="bg-white border border-slate-200 rounded-2xl p-12 text-center shadow-sm mt-6">
+        <div class="bg-white border border-slate-200 rounded-[2.5rem] p-12 text-center shadow-sm mt-6">
             <div class="flex flex-col items-center justify-center gap-4">
                 <div class="bg-blue-50 p-4 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-400" fill="none"
@@ -127,19 +101,9 @@ $opdName = $opd->name ?? 'Intansi';
                 </div>
             </div>
         </div>
-
         @endif
 
-        <footer class="flex pt-8 pb-10 items-center gap-4">
-            <div class="flex-grow border-b border-blue-200"></div>
-            <a href="/pengumuman"
-                class="inline-flex items-center gap-2 border border-blue-100 px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition shadow-md">
-                Lihat Semua
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                    stroke="currentColor" class="size-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
-                </svg>
-            </a>
-        </footer>
+        <!-- footer garis bawah -->
+        <div class="mt-12 w-full h-px bg-slate-200"></div>
     </div>
 </div>

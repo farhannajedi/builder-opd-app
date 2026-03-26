@@ -1,12 +1,13 @@
 @php
-//use App\Models\User;
+$opdSlug = env('APP_ID');
+$opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
-//$opd = User::find(env('APP_ID'));
+$opdId = $opd?->id;
 
 $announcement = App\Models\Announcement::orderBy('published_at', 'desc')->limit(4)->get();
 $news = App\Models\News::orderBy('published_at', 'desc')->limit(4)->get();
 $documents = App\Models\PlanningDocument::orderBy('published_at', 'desc')->limit(4)->get();
-$services = App\Models\Service::orderBy('published_at', 'desc')->limit(6)->get();
+$services = App\Models\Service::where('opd_id', $opdId)->orderBy('published_at', 'desc')->limit(6)->get();
 $galleries = App\Models\Galleries::orderBy('published_at', 'desc')->limit(6)->get();
 @endphp
 

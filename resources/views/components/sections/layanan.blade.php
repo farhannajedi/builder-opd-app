@@ -5,7 +5,7 @@
 $opdSlug = env('APP_ID');
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
-$latestServices = $services->where('opd_id', $opd?->id)->sortByDesc('published_at')->take(5);
+$latestServices = $services->take(4);
 
 $opdName = $opd?->name ?? 'Instansi';
 @endphp
@@ -46,9 +46,9 @@ $opdName = $opd?->name ?? 'Instansi';
                     </h3>
 
                     <!-- Deskripsi -->
-                    <!-- <p class="text-sm text-gray-600 text-center line-clamp-3 mb-4">
+                    <p class="text-sm text-gray-600 text-center line-clamp-3 mb-4">
                         {{ $service->description }}
-                    </p> -->
+                    </p>
 
                     <!-- status dan indikator link detail layanan -->
                     <div class="flex justify-center gap-2">

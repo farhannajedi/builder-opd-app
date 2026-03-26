@@ -1,4 +1,5 @@
 @php
+
 $opdSlug = env('APP_ID'); // Ambil slug OPD dari environment variable
 
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();

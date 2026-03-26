@@ -1,10 +1,17 @@
 @php
-use App\Models\NewsCategories;
 use App\Models\News;
+use App\Models\NewsCategories;
+use App\Models\Opd;
+use Illuminate\Support\Str;
 
-$categoryList = NewsCategories::get();
-$category = NewsCategories::where('slug', $category)->firstOrFail();
-$news = News::where('category_id', $category->id)->orderBy('published_at', 'desc')->paginate(9);
+//filter opd
+$opdSlug = env('APP_ID');
+$opd = Opd::where('slug', $opdSlug)->first();
+
+$categoryList = NewsCategories::where('opd_id', $opd?->id)->get();
+$category = NewsCategories::where('slug', $category)->where('opd_id', $opd?->id)->firstOrFail();
+$news = News::where('category_id', $category->id)->where('opd_id', $opd?->id)->orderBy('published_at',
+'desc')->paginate(9);
 @endphp
 
 @extends('layouts.app', ['activePage' => 'berita'])

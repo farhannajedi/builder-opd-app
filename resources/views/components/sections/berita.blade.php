@@ -50,7 +50,7 @@ $opdName = $opd->name ?? 'Instansi';
                     </div>
                     <!-- judul -->
                     <a href="{{ url('berita/' . $first?->slug) }}"
-                        class="text-2xl font-bold text-slate-700 hover:text-orange-600 transition">
+                        class="text-2xl font-extrabold text-slate-800 hover:text-orange-600 transition leading-tight">
                         {{ $first?->title }}
                     </a>
                     <!-- deskripsi -->
@@ -109,10 +109,10 @@ $opdName = $opd->name ?? 'Instansi';
                     </div>
                     <!-- konten -->
                     <div class="w-2/3">
-                        <p class="font-bold text-slate-700 hover:text-orange-600 line-clamp-2">
+                        <p class="font-extrabold text-slate-700 hover:text-orange-600 line-clamp-2">
                             {{ $item->title }}
                         </p>
-                        <p class="text-sm text-slate-400 mt-2 line-clamp-2">
+                        <p class="text-slate-500 leading-relaxed mt-3 flex-grow">
                             {!! Str::limit($item->deskripsi,80) !!}
                         </p>
                         <div class="flex items-center gap-2 text-xs text-slate-400 mt-3">
