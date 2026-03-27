@@ -24,10 +24,11 @@ $opdName = $opd->name ?? 'Intansi';
 
         <div class="flex items-center justify-center mb-8">
             <div class="flex items-center gap-3">
-                <div class="text-[#ff6b6b]">
-                </div>
-                <h2 class="flex justify-center text-3xl font-black text-slate-900">Pengumuman</h2>
-                <div class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
+                <div class="text-orange-500">
+                    <h2 class="flex justify-center text-3xl font-black text-slate-900">Pengumuman</h2>
+                    <div
+                        class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
+                    </div>
                 </div>
             </div>
             <!-- <a href="/pengumuman"
@@ -41,7 +42,7 @@ $opdName = $opd->name ?? 'Intansi';
         </div>
 
         @if($announcements->isNotEmpty())
-        {{-- Grid 4 kolom sejajar --}}
+        <!-- tampilan 4 kolom pengumuman sejajar -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach ($announcements as $item)
             <div class="group h-full">
@@ -54,13 +55,13 @@ $opdName = $opd->name ?? 'Intansi';
                     <div class="flex-grow">
                         <div class="flex items-center mb-4">
                             <span
-                                class="text-[11px] bg-blue-500 text-white font-black uppercase px-3 py-1 rounded-lg tracking-wider">
+                                class="text-[11px] bg-orange-500 text-white font-black uppercase px-3 py-1 rounded-lg tracking-wider">
                                 PENGUMUMAN
                             </span>
                         </div>
 
                         <h4
-                            class="text-[1.2rem] font-bold text-slate-800 group-hover:text-blue-600 leading-tight mb-4 transition-colors">
+                            class="text-[1.2rem] font-bold text-slate-800 group-hover:text-orange-600 leading-tight mb-4 transition-colors">
                             {{ $item->title }}
                         </h4>
 

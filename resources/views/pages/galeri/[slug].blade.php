@@ -12,7 +12,7 @@ $otherGalleries = Galleries::where('opd_id', $gallery->opd_id)
 ->get();
 @endphp
 
-@extends('layouts.app', ['activePage' => 'galeri'])
+@extends('layouts.app', ['activePage' => 'Detail Galeri'])
 
 @section('content')
 <section class="max-w-screen-lg px-4 mx-auto w-full py-12">

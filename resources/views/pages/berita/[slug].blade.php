@@ -16,7 +16,7 @@ $imagePath = asset('storage/' . $berita->images);
 
 @endphp
 
-@extends('layouts.app', ['activePage' => 'berita'])
+@extends('layouts.app', ['activePage' => 'detail berita'])
 
 @section('content')
 <div class="bg-gray-50 min-h-screen py-10 md:py-16">
