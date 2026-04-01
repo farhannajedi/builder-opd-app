@@ -107,14 +107,14 @@ $otherGalleries = Galleries::where('opd_id', $gallery->opd_id)
             </div>
 
             <!-- Box konten Info -->
-            <div class="bg-blue-600 rounded-2xl p-6 text-white shadow-xl shadow-blue-100">
+            <!-- <div class="bg-blue-600 rounded-2xl p-6 text-white shadow-xl shadow-blue-100">
                 <h4 class="font-bold mb-2">Butuh Informasi?</h4>
                 <p class="text-sm text-blue-100 mb-4">Hubungi admin {{ $gallery->opd->name }} untuk informasi lebih
                     lanjut mengenai kegiatan ini.</p>
                 <a href="{{ url('/kontak') }}"
                     class="block text-center bg-white text-blue-600 py-2 rounded-lg font-bold text-sm hover:bg-blue-50 transition-colors">Kontak
                     Kami</a>
-            </div>
+            </div> -->
         </div>
 
     </div>

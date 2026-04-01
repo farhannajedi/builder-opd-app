@@ -57,7 +57,9 @@ class GalleriesResource extends Resource
                     ->required(),
                 Forms\Components\FileUpload::make('images')
                     ->label('Gambar')
+                    ->directory('galeri/' . now()->isoFormat('Y-m-d'))
                     ->image()
+                    ->reorderable()
                     ->nullable(),
                 Forms\Components\TextInput::make('description')
                     ->label('Deskripsi')
@@ -70,17 +72,17 @@ class GalleriesResource extends Resource
     {
         return $table
             // pemisahan data berdasarkan opd id
-            // ->modifyQueryUsing(function (builder $query) {
-            //     $auth = Auth::user();
+            ->modifyQueryUsing(function (builder $query) {
+                $auth = Auth::user();
 
-            //     // jika super admin, maka tampilkan semua data
-            //     if (is_null($auth->opd_id)) {
-            //         return;
-            //     }
+                // jika super admin, maka tampilkan semua data
+                if (is_null($auth->opd_id)) {
+                    return;
+                }
 
-            //     // admin opd
-            //     $query->where('opd_id', $auth->opd_id);
-            // })
+                // admin opd
+                $query->where('opd_id', $auth->opd_id);
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('Nama OPD')

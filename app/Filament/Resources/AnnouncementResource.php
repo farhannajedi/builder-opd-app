@@ -51,13 +51,25 @@ class AnnouncementResource extends Resource
                     ->placeholder('Akan otomatis terisi sesuai isi judul')
                     ->readOnly()
                     ->required(),
-                Forms\Components\TextInput::make('deskripsi')
+                Forms\Components\RichEditor::make('deskripsi')
                     ->label('Deskripsi')
                     ->columnSpanFull()
                     ->nullable(),
                 Forms\Components\FileUpload::make('images')
                     ->label('Gambar')
                     ->image()
+                    ->directory(function () {
+                        $auth = Auth::user();
+
+                        if ($auth->opd_id) {
+                            // ambil slug
+                            $folderOpd = $auth->opd?->slug ?? 'opd-' . $auth->opd_id;
+                        } else {
+                            $folderOpd = 'Admin Kominfo';
+                        }
+
+                        return "Pengumuman/{$folderOpd}/" . now()->isoFormat('Y-m-d');
+                    })
                     ->nullable(),
             ]);
     }

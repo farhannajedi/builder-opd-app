@@ -90,7 +90,7 @@ class NewsResource extends Resource
                 Forms\Components\FileUpload::make('images')
                     ->label('Gambar')
                     ->image()
-                    ->directory('news/' . now()->format('Y-m'))
+                    ->directory('news/' . now()->format('Y-m-d'))
                     ->reorderable()
                     ->required(),
                 Forms\Components\DatePicker::make('published_at')

@@ -31,11 +31,11 @@ $opdName = $opd?->name ?? 'Instansi';
                     <!-- Icon -->
                     <div class="flex justify-center mb-4">
                         <div class="bg-blue-100 rounded-lg p-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-orange-600" viewBox="0 0 24 24"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z" />
+                                stroke-linejoin="round" class="lucide lucide-album-icon lucide-album">
+                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                                <polyline points="11 3 11 11 14 8 17 11 17 3" />
                             </svg>
                         </div>
                     </div>
@@ -54,12 +54,16 @@ $opdName = $opd?->name ?? 'Instansi';
                     <div class="flex justify-center gap-2">
                         <a href="/layanan/{{ $service->id }}"
                             class="bg-orange-600 text-white rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z" />
-                            </svg>
-                            Detail File
+                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-newspaper-icon lucide-newspaper">
+                                <path d="M15 18h-5" />
+                                <path d="M18 14h-8" />
+                                <path
+                                    d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2" />
+                                <rect width="8" height="4" x="10" y="6" rx="1" />
+                            </svg> -->
+                            Detail Layanan
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round"
