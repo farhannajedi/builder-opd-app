@@ -41,8 +41,7 @@ $opdName = $opd->name ?? 'Portal Resmi Instansi';
     <div class="max-w-screen-lg flex items-center justify-between mx-auto w-full py-3 px-4">
 
         <!-- logo -->
-        <div
-            class="flex items-center gap-3 md:gap-5 bg-slate-50/80 p-2 rounded-xl border border-slate-200/60 shadow-sm">
+        <div class="flex items-center gap-3">
             <a href="/" class="block">
                 <img src="{{ asset('assets/images/logo_kab.png') }}"
                     class="w-20 md:w-24 h-10 md:h-12 object-contain hover:scale-105 transition-transform duration-200"

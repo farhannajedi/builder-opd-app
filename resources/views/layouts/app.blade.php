@@ -57,13 +57,13 @@ $socialMedia = [
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+    body {
+        font-family: 'Inter', sans-serif;
+    }
 
-        [x-cloak] {
-            display: none !important;
-        }
+    [x-cloak] {
+        display: none !important;
+    }
     </style>
 </head>
 
@@ -89,8 +89,7 @@ $socialMedia = [
 
                 <!--identitas instansi dan logo-->
                 <div class="space-y-4">
-                    <div
-                        class="flex items-center gap-3 bg-slate-800/60 p-2.5 rounded-xl border border-slate-700/60 inline-flex">
+                    <div class="flex items-center gapp-3">
                         <img src="{{ $opdConfigs?->logo ? Storage::url($opdConfigs->logo) : asset('assets/images/logo_kab.png') }}"
                             class="w-16 h-10 object-contain" alt="logo_opd">
                         <div class="border-l border-slate-700 pl-3">
