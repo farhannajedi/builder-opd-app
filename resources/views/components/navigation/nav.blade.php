@@ -1,8 +1,9 @@
 @props(['activePage'])
 
-use Illuminate\Support\Facades\Date;
 
 @php
+use Illuminate\Support\Facades\Date;
+
 $opdSlug = env('APP_ID');
 $opd = \App\Models\Opd::where('slug', $opdSlug)->first();
 $opdConfigs = \App\Models\OpdConfigs::where('opd_id', $opd?->id)->first();
