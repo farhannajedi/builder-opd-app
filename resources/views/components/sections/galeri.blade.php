@@ -17,7 +17,7 @@ $opdName = $opd?->name ?? 'Instansi';
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-200">
                 <div class="text-center mb-6">
                     <p class="flex justify-center text-2xl font-bold text-gray-700 mb-2 pb-2">
-                        Galleri Foto
+                        Galeri Foto
                     </p>
                     <div
                         class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
@@ -68,7 +68,7 @@ $opdName = $opd?->name ?? 'Instansi';
                     </div>
                     @empty
                     <div class="w-full bg-gray-100 p-8 text-center rounded-lg text-gray-600">
-                        <p>Belum ada Galeri yang dipublikasikan.</p>
+                        <p>Belum ada Foto yang dipublikasikan.</p>
                     </div>
                     @endforelse
                 </div>

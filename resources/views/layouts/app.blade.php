@@ -1,5 +1,4 @@
 @php
-
 $opdSlug = env('APP_ID');
 $opd = \App\Models\Opd::where('slug', $opdSlug)->first();
 
@@ -7,30 +6,33 @@ $opdConfigs = \App\Models\OpdConfigs::where('opd_id', $opd?->id)->first();
 
 $opdName = $opd?->name ?? 'Dinas Kabupaten Karimun';
 
-// link menuju sosial media opd
+// Link sosial media OPD
 $socialMedia = [
 [
 'url' => $opdConfigs?->facebook_url,
-'icon' => 'facebook'
+'icon' => 'facebook',
+'name' => 'Facebook'
 ],
 [
 'url' => $opdConfigs?->instagram_url,
-'icon' => 'instagram'
+'icon' => 'instagram',
+'name' => 'Instagram'
 ],
 [
 'url' => $opdConfigs?->tiktok_url,
-'icon' => 'tiktok'
+'icon' => 'tiktok',
+'name' => 'TikTok'
 ],
 [
 'url' => $opdConfigs?->youtube_url,
-'icon' => 'youtube'
+'icon' => 'youtube',
+'name' => 'YouTube'
 ],
 ];
-
 @endphp
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
@@ -40,100 +42,132 @@ $socialMedia = [
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <title>{{ $title?? 'OPD' }}</title>
+    <title>{{ $title ?? 'Website Resmi ' . $opdName }}</title>
 
-    <!-- Memuat semua aset yang didaftarkan di AppServiceProvider -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'], '../../web-builder-app')
+    <!-- memuat semua aset yang didaftarkan di AppServiceProvider / Vite -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'], 'web-builder-app')
 
+    <!-- Fonts Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <!-- swiper js -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+
+    <!-- Swiper JS CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 </head>
 
-<body class="min-h-screen flex flex-col">
-    <!-- content navbar -->
-    <x-navigation.nav :activePage="$activePage" />
-    <main class="bg-white flex-1">
+<body
+    class="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased selection:bg-orange-500 selection:text-white">
 
+    <!--navbar-->
+    <x-navigation.nav :activePage="$activePage ?? ''" />
+    <!--content-->
+    <main class="bg-white flex-1 w-full">
         @yield('content')
-
     </main>
-    <footer class="w-full bg-yellow-600 text-yellow-50 pt-9 pb-5 relative overflow-hidden">
+    <!-- Footer Utama Portal Pemerintahan -->
+    <footer
+        class="w-full bg-slate-900 text-slate-300 pt-12 pb-8 relative overflow-hidden border-t-4 border-orange-200 shadow-lg">
+        <div
+            class="pointer-events-none select-none absolute -right-10 -bottom-10 text-[120px] font-black tracking-widest text-slate-800/40 uppercase leading-none hidden lg:block">
+            KARIMUN
+        </div>
 
-        <!-- teks background -->
-        <p class="pointer-events-none select-none absolute -left-4 top-2
-        text-[170px] font-black tracking-widest leading-none
-        bg-gradient-to-t from-yellow-200 via-yellow-800 to-yellow-800 bg-clip-text text-transparent opacity-40">
+        <div class="max-w-screen-lg mx-auto px-4 sm:px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 pb-10">
 
-        </p>
-        <p class="pointer-events-none select-none absolute -right-4 bottom-5
-        text-[150px] font-black tracking-widest leading-none
-        bg-gradient-to-b from-yellow-200 via-yellow-800 to-yellow-800 bg-clip-text text-transparent opacity-40">
-
-        </p>
-
-        <div class="max-w-screen-lg mx-auto px-4 relative z-10">
-
-            <!-- section atas -->
-            <div class="flex justify-between items-start gap-10 mb-14">
-                <div>
-                    <img src="{{ $opdConfigs?->logo ? Storage::url($opdConfigs->logo) : asset('assets/images/logo_kab.png') }}"
-                        class="w-24 h-12 object-contain hover:scale-110 duration-200" alt="logo_opd">
-                    <p class="text-xl font-semibold text-white drop-shadow">{{ $opdName }}</p>
-                    <p class="text-sm text-white-200 drop-shadow">Kabupaten Karimun</p>
-                </div>
-
-                <!-- Kontak  -->
-                <div class="text-sm space-y-1">
-                    <h1 class="text-yellow-200 mb-1 text-xl font-bold">Hubungi Kami</h1>
-                    <p>{{ $opdConfigs?->address ?? 'Alamat belum ditambahkan!' }}</p>
-                    <p>Email: {{ $opdConfigs?->email ?? '-' }}</p>
-                    <p>Telp: {{ $opdConfigs?->phone ?? '-' }}</p>
-                </div>
-
-                <!-- Link Sosial Media  -->
-                <div class="text-sm space-y-1">
-                    <p class="text-yellow-200 mb-1 text-xl font-bold">Media Sosial</p>
-
-                    <div class="flex gap-4 pt-2">
-
-                        @foreach($socialMedia as $socmed)
-
-                        @if(!empty($socmed['url']))
-                        <a href="{{ $socmed['url'] }}" target="_blank"
-                            class="p-2 border-2 border-yellow-400 hover:bg-yellow-800 hover:text-white duration-200 rounded-lg">
-
-                            @if($socmed['icon'] === 'facebook')
-                            <x-icons.facebook class="w-5 h-5" />
-                            @elseif($socmed['icon'] === 'instagram')
-                            <x-icons.instagram class="w-5 h-5" />
-                            @elseif($socmed['icon'] === 'tiktok')
-                            <x-icons.tiktok class="w-5 h-5" />
-                            @elseif($socmed['icon'] === 'youtube')
-                            <x-icons.youtube class="w-5 h-5" />
-                            @endif
-
-                        </a>
-                        @endif
-
-                        @endforeach
-
+                <!--identitas instansi dan logo-->
+                <div class="space-y-4">
+                    <div
+                        class="flex items-center gap-3 bg-slate-800/60 p-2.5 rounded-xl border border-slate-700/60 inline-flex">
+                        <img src="{{ $opdConfigs?->logo ? Storage::url($opdConfigs->logo) : asset('assets/images/logo_kab.png') }}"
+                            class="w-16 h-10 object-contain" alt="logo_opd">
+                        <div class="border-l border-slate-700 pl-3">
+                            <p class="text-xs font-bold text-orange-400 uppercase tracking-wider">Pemerintah Kabupaten
+                            </p>
+                            <p class="text-xs font-extrabold text-white">Karimun</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-white leading-snug">{{ $opdName }}</h2>
+                        <p class="text-xs text-slate-400 mt-1">Portal Pelayanan Publik & Informasi Resmi Pemerintah
+                            Daerah Kabupaten Karimun.</p>
                     </div>
                 </div>
+
+                <!--informasi kontak-->
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold text-orange-400 uppercase tracking-wider flex items-center gap-2">
+                        Hubungi Kami
+                    </h3>
+                    <div class="text-xs text-slate-300 space-y-2 leading-relaxed">
+                        <p class="flex items-start gap-2">
+                            <span class="text-slate-400 shrink-0">Alamat:</span>
+                            <span>{{ $opdConfigs?->address ?? 'Jl. Jend. Ahmad Yani No. 1, Kabupaten Karimun, Kepulauan Riau' }}</span>
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <span class="text-slate-400 shrink-0">Email:</span>
+                            <a href="mailto:{{ $opdConfigs?->email }}"
+                                class="text-slate-200 hover:text-orange-400 transition-colors">{{ $opdConfigs?->email ?? '-' }}</a>
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <span class="text-slate-400 shrink-0">Telepon:</span>
+                            <span>{{ $opdConfigs?->phone ?? '-' }}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!--media sosial-->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold text-orange-400 uppercase tracking-wider flex items-center gap-2">
+                        Media Sosial Resmi
+                    </h3>
+                    <p class="text-xs text-slate-400">Ikuti saluran komunikasi resmi kami untuk mendapatkan pembaruan
+                        informasi publik secara berkala.</p>
+
+                    <div class="flex flex-wrap gap-2.5 pt-1">
+                        @foreach($socialMedia as $socmed)
+                        @if(!empty($socmed['url']))
+                        <a href="{{ $socmed['url'] }}" target="_blank" rel="noopener noreferrer"
+                            title="{{ $socmed['name'] }}"
+                            class="p-2.5 bg-slate-800 hover:bg-orange-500 text-slate-300 hover:text-white border border-slate-700/80 rounded-xl duration-200 transition-all transform hover:-translate-y-0.5 shadow-sm">
+                            @if($socmed['icon'] === 'facebook')
+                            <x-icons.facebook class="w-4 h-4" />
+                            @elseif($socmed['icon'] === 'instagram')
+                            <x-icons.instagram class="w-4 h-4" />
+                            @elseif($socmed['icon'] === 'tiktok')
+                            <x-icons.tiktok class="w-4 h-4" />
+                            @elseif($socmed['icon'] === 'youtube')
+                            <x-icons.youtube class="w-4 h-4" />
+                            @endif
+                        </a>
+                        @endif
+                        @endforeach
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bar Copyright Bawah -->
+            <div
+                class="pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-400">
+                <p>&copy; {{ date('Y') }} <span class="text-slate-200 font-medium">{{ $opdName }}</span>. Hak Cipta
+                    Dilindungi.</p>
+                <p class="text-[11px] text-slate-500">Pemerintah Kabupaten Karimun</p>
             </div>
         </div>
     </footer>
-
-    <!-- Bar Copyright -->
-    <div class="w-full bg-yellow-600 shadow py-1">
-        <p class="text-sm text-center font-medium text-yellow-800">{{$opdName}} &copy;</p>
-    </div>
-
 
 </body>
 

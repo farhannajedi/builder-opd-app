@@ -1,102 +1,155 @@
 @php
-
 $opdSlug = env('APP_ID');
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
-$hero = App\Models\HeroSection::where('opd_id', $opd?->id)->with('banners')->where('is_active',
-true)->latest('published_at')->first();
+$hero = App\Models\HeroSection::where('opd_id', $opd?->id)
+->with('banners')
+->where('is_active', true)
+->latest('published_at')
+->first();
 
-$opdName = $opd->name ?? 'Instansi';
-
+$opdName = $opd->name ?? 'Instansi Pemerintah';
 @endphp
 
+<!-- CSS Swiper -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-<section class="relative w-full overflow-hidden bg-slate-900">
-    <!-- jika web child punya hero banner -->
+<!-- Kustomisasi Warna Paginasi -->
+<style>
+.heroSwiper .swiper-pagination-bullet {
+    background: #ffffff;
+    opacity: 0.6;
+    width: 10px;
+    height: 10px;
+    transition: all 0.3s ease;
+}
+
+.heroSwiper .swiper-pagination-bullet-active {
+    background: #f97316 !important;
+    /* warna orange-500 */
+    opacity: 1;
+    width: 28px;
+    border-radius: 9999px;
+}
+</style>
+
+<section class="relative w-full overflow-hidden bg-slate-950">
+
     @if($hero && $hero->banners->count() > 0)
-    <div class="swiper heroSwiper w-full">
+    <div class="swiper heroSwiper w-full h-[400px] sm:h-[500px] lg:h-[600px]">
         <div class="swiper-wrapper">
             @foreach($hero->banners as $banner)
+            <div class="swiper-slide relative w-full h-full">
+                <!-- Gambar Banner -->
+                <img src="{{ asset('storage/' . $banner->image_path) }}"
+                    class="w-full h-full object-cover object-center" alt="Hero Banner {{ $loop->iteration }}">
 
-            <div class="swiper-slide">
-                <img src="{{ asset('storage/' . $banner->image_path) }}" class="w-full h-auto" alt="Banner">
+                <!-- Overlay Gradien -->
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"></div>
             </div>
-
             @endforeach
-
         </div>
-        <div class="swiper-pagination"></div>
+
+        <!-- Tombol Navigasi Swiper -->
+        <div
+            class="swiper-button-prev !hidden sm:!flex !w-12 !h-12 !bg-slate-900/60 backdrop-blur-md !text-white rounded-full after:!text-lg hover:!bg-orange-500 transition-all border border-white/10 !left-6">
+        </div>
+        <div
+            class="swiper-button-next !hidden sm:!flex !w-12 !h-12 !bg-slate-900/60 backdrop-blur-md !text-white rounded-full after:!text-lg hover:!bg-orange-500 transition-all border border-white/10 !right-6">
+        </div>
+        <div class="swiper-pagination !bottom-6"></div>
     </div>
 
-    <!-- jika ada heronya, tapi gambarnya tidak ada -->
-
     @elseif($hero)
-    <div class="flex items-center justify-center py-32">
-        <div class="text-center text-white px-6">
-            <h1 class="text-4xl md:text-6xl font-black uppercase drop-shadow-lg">
+    <div class="relative py-24 lg:py-32 bg-slate-950 border-b border-slate-800/80 overflow-hidden">
+        <!-- Aksen Background Blur -->
+        <div
+            class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+
+        <div class="max-w-screen-lg mx-auto px-6 text-center relative z-10">
+            <!-- Badge Identitas Resmi -->
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-orange-400 text-xs font-semibold uppercase tracking-widest mb-6 shadow-inner">
+                <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                Portal Resmi Informasip
+            </div>
+
+            <h1
+                class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white drop-shadow-md leading-tight">
                 {{ $hero->title }}
             </h1>
-            <div class="w-32 h-1 bg-orange-500 mx-auto my-4"></div>
+
+            <div
+                class="w-24 h-1.5 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto my-6 rounded-full shadow-lg shadow-orange-500/30">
+            </div>
 
             @php
             $slogans = explode('|', $hero->subtitle);
             @endphp
 
-            @foreach($slogans as $slogan)
-
-            <p class="text-lg md:text-2xl font-semibold italic drop-shadow">
-                {{ trim($slogan) }}
-            </p>
-
-            @endforeach
-
+            <div class="space-y-2 max-w-2xl mx-auto">
+                @foreach($slogans as $slogan)
+                <p class="text-base sm:text-xl font-medium text-slate-300 italic">
+                    "{{ trim($slogan) }}"
+                </p>
+                @endforeach
+            </div>
         </div>
     </div>
 
-    <!-- jika tidak ada data hero -->
     @else
-    <div class="flex items-center justify-center py-32">
-        <div class="text-center text-white px-6">
-            <h1 class="text-4xl md:text-6xl font-black uppercase">
+    <div class="relative py-24 lg:py-32 bg-slate-950 border-b border-slate-800/80 overflow-hidden">
+        <div
+            class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+
+        <div class="max-w-screen-lg mx-auto px-6 text-center relative z-10">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-orange-400 text-xs font-semibold uppercase tracking-widest mb-6">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                Website Publik
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white drop-shadow-md">
                 Selamat Datang
             </h1>
-            <div class="w-32 h-1 bg-orange-500 mx-auto my-4"></div>
-            <p class="text-lg md:text-2xl italic">
-                Website Resmi {{ $opdName }}
+
+            <div
+                class="w-24 h-1.5 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto my-6 rounded-full shadow-lg shadow-orange-500/30">
+            </div>
+
+            <p class="text-lg sm:text-2xl font-medium text-slate-300 italic max-w-xl mx-auto">
+                Website Resmi <span class="text-white font-semibold">{{ $opdName }}</span>
             </p>
         </div>
     </div>
-
     @endif
 
 </section>
 
+<!-- Swiper Javascript -->
 @if($hero && $hero->banners->count() > 0)
-
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-
-        new window.Swiper(".heroSwiper", {
-
-            loop: true,
-            speed: 1000,
-
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false
-            },
-
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true
-            }
-
-        });
-
+document.addEventListener('DOMContentLoaded', function() {
+    new window.Swiper(".heroSwiper", {
+        loop: true,
+        speed: 1000,
+        autoplay: {
+            delay: 4500,
+            disableOnInteraction: false
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
     });
+});
 </script>
-
 @endif

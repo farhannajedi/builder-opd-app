@@ -1,14 +1,11 @@
 @php
-use App\Models\Galleries;
 
-$slug = getenv('APP_ID');
+$opdSlug = env('APP_ID'); // Ambil slug OPD dari environment variable
+
+$opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
 // Menggunakan logika deteksi domain
-if (!$slug) {
-$galleries = Galleries::withoutGlobalScope('filterOPD')->orderBy('created_at', 'desc')->get();
-} else {
-$galleries = Galleries::orderBy('created_at', 'desc')->get();
-}
+$galleries = App\Models\Galleries::where('opd_id', $opd?->id)->with('opd')->latest()->paginate(9);
 @endphp
 
 @extends('layouts.app', ['activePage' => 'galeri'])
@@ -94,7 +91,7 @@ $galleries = Galleries::orderBy('created_at', 'desc')->get();
         <!-- logika jika data kosong -->
         @empty
         <div class="col-span-full py-20 text-center bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-            <p class="text-slate-500 italic">Belum ada koleksi foto yang dipublikasikan.</p>
+            <p>Belum ada koleksi foto yang dipublikasikan.</p>
         </div>
         @endforelse
     </div>
