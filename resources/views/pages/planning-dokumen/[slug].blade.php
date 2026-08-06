@@ -1,5 +1,4 @@
 @php
-use Illuminate\Support\Str;
 
 $document = App\Models\PlanningDocument::with('opd')->where('slug', $slug)->firstOrFail();
 
@@ -14,7 +13,7 @@ $opdName = $document->opd->name ?? 'Instansi';
 <div class="bg-slate-50/60 min-h-screen py-10 md:py-16">
     <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- Navigasi Breadcrumb -->
+        <!-- Navigasi -->
         <nav class="flex items-center gap-2 mb-8 text-xs font-semibold text-slate-500 overflow-x-auto pb-2">
             <a href="{{ url('/') }}" class="hover:text-orange-600 transition-colors flex items-center gap-1 shrink-0">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -30,13 +29,13 @@ $opdName = $document->opd->name ?? 'Instansi';
             <span class="text-slate-800 font-bold truncate max-w-[200px] sm:max-w-xs">{{ $document->title }}</span>
         </nav>
 
-        <!-- Container Utama Detail Dokumen -->
+        <!-- Detail Dokumen -->
         <div class="space-y-8">
 
-            <!-- HEADER KARTU DOKUMEN -->
+            <!-- Header Dokumen -->
             <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm space-y-6">
 
-                <!-- Badge & Metadata -->
+                <!-- Metadata -->
                 <div class="space-y-4">
                     <div class="flex flex-wrap items-center gap-2">
                         <span
@@ -55,7 +54,7 @@ $opdName = $document->opd->name ?? 'Instansi';
                     </div>
 
                     <!-- Judul Utama Dokumen -->
-                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 leading-tight tracking-tight">
+                    <h1 class="text-xl sm:text-3xl lg:text-2xl font-black text-slate-900 leading-tight tracking-tight">
                         {{ $document->title }}
                     </h1>
 
@@ -85,7 +84,7 @@ $opdName = $document->opd->name ?? 'Instansi';
                     </div>
                 </div>
 
-                <!-- Tombol Aksi Kiri & Kanan (Kembali / Unduh) -->
+                <!-- Tombol Aksi -->
                 <div
                     class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <a href="{{ url('/planning-dokumen') }}"
@@ -124,7 +123,7 @@ $opdName = $document->opd->name ?? 'Instansi';
 
             </div>
 
-            <!-- ISI KONTEN DESKRIPSI DOKUMEN (Jika Ada) -->
+            <!-- Deskripsi Dokumen -->
             @if ($document->content)
             <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm">
                 <h2
@@ -141,7 +140,7 @@ $opdName = $document->opd->name ?? 'Instansi';
             </div>
             @endif
 
-            <!-- PRATINJAU DOKUMEN (DOCUMENT VIEWER) -->
+            <!-- Melihat Detail Dokumen -->
             @if ($document->file)
             <div class="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
                 <div
@@ -181,13 +180,11 @@ $opdName = $document->opd->name ?? 'Instansi';
                 </div>
             </div>
             @endif
-
         </div>
-
     </div>
 </div>
 
-<!-- Script Salin Tautan (Aman HTTP/HTTPS) -->
+<!-- Script Salin Tautan -->
 <script>
     function copyDocUrl(url) {
         if (navigator.clipboard && window.isSecureContext) {
