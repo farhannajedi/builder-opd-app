@@ -8,7 +8,7 @@ $latestGalleries = $galleries->where('opd_id', $opd?->id)->sortByDesc('published
 $opdName = $opd?->name ?? 'Instansi';
 @endphp
 
-<section class="w-full bg-slate-50/60 py-16 border-b border-slate-200/80">
+<section class="w-full bg-slate-100/70 py-16 border-y border-slate-200/80">
     <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Wrapper Kartu Utama -->
         <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm">

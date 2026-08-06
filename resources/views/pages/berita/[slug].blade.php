@@ -16,7 +16,7 @@ $otherNews = App\Models\News::where('opd_id', $berita->opd_id)
 $imagePath = asset('storage/' . $berita->images);
 @endphp
 
-@extends('layouts.app', ['activePage' => 'detail berita'])
+@extends('layouts.app', ['activePage' => 'berita'])
 
 @section('content')
 <div class="bg-slate-50/60 min-h-screen py-10 md:py-16">
