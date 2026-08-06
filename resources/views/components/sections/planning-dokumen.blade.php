@@ -1,131 +1,159 @@
 @props(['documents'])
 
 @php
-
 $opdSlug = env('APP_ID');
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
 $latestDocuments = $documents->where('opd_id', $opd?->id)->sortByDesc('published_at')->take(3);
-
 $opdName = $opd?->name ?? 'Instansi';
 @endphp
 
-<div class="w-full bg-gray-200 py-8">
-    <div class="flex flex-col px-4 md:px-8 lg:px-9">
-        <div class="max-w-screen-lg mx-auto mb-9 w-full">
-            <section class="max-w-screen-xl px-2 mx-auto w-full py-2 md:py-2">
-                <!-- konten container utama -->
-                <div class="grid grid-cols-1 gap-10">
-                    <!-- list dokuemen -->
-                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200">
-                        <p class="flex justify-center text-2xl font-bold text-gray-700 mb-2 pb-2">
-                            <!-- notes: border-b itu border dibawah teks -->
-                            Arsip Dokumen Perencanaan
-                        <div
-                            class="w-full md:w-l h-0.5 mx-auto bg-gradient-to-r from-transparent via-orange-500 to-transparent">
-                        </div>
-                        </p>
+<section class="w-full bg-slate-50/60 py-16 border-b border-slate-200/80">
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                        <div class="space-y-4 mt-4">
-                            @forelse($latestDocuments as $doc)
+        <!-- Wrapper Kartu Utama -->
+        <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm">
 
-                            <!-- link to detail halaman -->
-                            <a href="/planning-dokumen/{{ $doc->slug }}"
-                                class="block border border-gray-300 rounded-lg p-5 transition duration-300 hover:border-orange-400 hover:shadow-xl bg-white group"
-                                style="text-decoration: none;">
-                                <div class="flex item-start justify-between gap-4">
-                                    <!-- detail dokumen -->
-                                    <div class="flex items-start gap-4 flex-grow">
-                                        <!-- icon file statis -->
-                                        <div class="bg-blue-100 rounded-lg p-3 flex-none">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="lucide lucide-scroll-text-icon lucide-scroll-text">
-                                                <path d="M15 12h-5" />
-                                                <path d="M15 8h-5" />
-                                                <path d="M19 17V5a2 2 0 0 0-2-2H4" />
-                                                <path
-                                                    d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" />
-                                            </svg>
-                                        </div>
+            <!-- Header Seksi Dokumen -->
+            <div
+                class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4 border-b border-slate-100 pb-6">
+                <div>
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 border border-orange-200/80 text-orange-600 text-[11px] font-extrabold uppercase tracking-widest mb-2">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Transparansi Publik
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                        Arsip Dokumen Perencanaan
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                        Dokumen perencanaan, laporan kinerja, dan arsip resmi {{ $opdName }}
+                    </p>
+                </div>
 
-                                        <!-- detail dokumen -->
-                                        <div class="flex-grow space-y-1">
-                                            <p
-                                                class="text-lg font-bold text-gray-800 line-clamp-2 group-hover:text-orange-600 transition duration-150">
-                                                {{ $doc->title }}
-                                            </p>
+                <!-- Tombol Selengkapnya (Desktop Header) -->
+                <a href="/planning-dokumen" wire:navigate
+                    class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-orange-500 text-white text-xs font-bold shadow-sm transition-all duration-200 group">
+                    <span>Lihat Semua Dokumen</span>
+                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
 
-                                            <!-- metadata -->
-                                            <div class="flex flex-wrap text-sm text-gray-500 gap-x-4 gap-y-1 mt-1">
-                                                <!-- tanggal diupload -->
-                                                <div class="flex items-center gap-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 stroke-[1.5]"
-                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                    </svg>
-                                                    <span>{{ $doc->created_at->isoFormat('D MMMM Y') }}</span>
-                                                </div>
+            <!-- Daftar Dokumen (Grid/List) -->
+            <div class="space-y-4">
+                @forelse($latestDocuments as $doc)
+                <a href="/planning-dokumen/{{ $doc->slug }}"
+                    class="group block p-5 rounded-2xl border border-slate-200/80 bg-white hover:border-orange-300 hover:shadow-lg transition-all duration-300">
 
-                                                <!-- nama OPD -->
-                                                <div class="flex items-center gap-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 stroke-[1.5]"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                                        <circle cx="12" cy="7" r="4" />
-                                                    </svg>
-                                                    <span>{{ $doc->opd->name ?? 'OPD Tidak Diketahui' }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+                        <!-- Bagian Kiri: Ikon & Detail Dokumen -->
+                        <div class="flex items-start gap-4 flex-grow">
+
+                            <!-- Ikon Dokumen Bervariasi -->
+                            <div
+                                class="p-3.5 bg-orange-50 text-orange-600 border border-orange-100 rounded-2xl flex-none group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                            </div>
+
+                            <!-- Detail Judul & Metadata -->
+                            <div class="space-y-1.5 flex-grow">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span
+                                        class="inline-block text-[10px] font-black text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                        PDF / DOKUMEN
+                                    </span>
+                                </div>
+
+                                <h3
+                                    class="text-base sm:text-lg font-bold text-slate-800 group-hover:text-orange-600 transition-colors duration-200 line-clamp-2 leading-snug">
+                                    {{ $doc->title }}
+                                </h3>
+
+                                <div
+                                    class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-400 font-medium">
+                                    <!-- Tanggal Rilis -->
+                                    <div class="flex items-center gap-1.5">
+                                        <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        <span>{{ $doc->created_at?->isoFormat('D MMMM YYYY') ?? now()->isoFormat('D MMMM YYYY') }}</span>
                                     </div>
 
-                                    <!-- status dan indikator link -->
-                                    <div class="flex-none flex items-center gap-2">
-                                        <div
-                                            class="bg-orange-600 text-white rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-1">
-                                            <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z" />
-                                            </svg> -->
-                                            Detail File
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="size-4">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"></path>
-                                            </svg>
-                                        </div>
+                                    <span class="text-slate-300">•</span>
+
+                                    <!-- Instansi Terkait -->
+                                    <div class="flex items-center gap-1.5">
+                                        <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V11m0 0V7" />
+                                        </svg>
+                                        <span>{{ $doc->opd->name ?? $opdName }}</span>
                                     </div>
                                 </div>
-                            </a>
-
-                            <!-- jika menggunakan forelse harus ada logika apabila data kosong -->
-                            @empty
-                            <div class="bg-gray-100 p-8 text-center rounded-lg text-gray-600">
-                                <p>Belum ada dokumen perencanaan yang dipublikasikan saat ini.</p>
                             </div>
-                            @endforelse
+
                         </div>
-                        <footer class="flex pt-4 items-center gap-4">
-                            <div class="flex-grow border-b border-yellow-500"></div>
-                            <a wire:navigate="" href="/planning-dokumen"
-                                class="inline-flex items-center gap-2 border border-slate-200 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white transition">
-                                Selengkapnya
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="size-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25">
-                                    </path>
+
+                        <!-- Bagian Kanan: Tombol Indikator File -->
+                        <div class="flex-none self-end sm:self-center pt-2 sm:pt-0">
+                            <span
+                                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-orange-50 group-hover:bg-orange-500 text-orange-600 group-hover:text-white font-bold text-xs transition-all duration-300 border border-orange-200/60 group-hover:border-orange-500 shadow-sm">
+                                <span>Detail File</span>
+                                <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
-                            </a>
-                        </footer>
+                            </span>
+                        </div>
+
+                    </div>
+                </a>
+                @empty
+                <!-- State Jika Dokumen Kosong -->
+                <div class="bg-slate-50 border border-slate-200/80 p-8 text-center rounded-2xl">
+                    <div class="flex flex-col items-center justify-center gap-2">
+                        <div class="p-3 bg-orange-50 rounded-full text-orange-500 mb-1">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-bold text-slate-700">Belum Ada Dokumen Perencanaan</p>
+                        <p class="text-xs text-slate-400">Saat ini belum ada dokumen perencanaan yang dipublikasikan
+                            oleh {{ $opdName }}.</p>
                     </div>
                 </div>
-            </section>
+                @endforelse
+            </div>
+
+            <!-- Tombol Selengkapnya (Mobile Bottom) -->
+            <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-center sm:hidden">
+                <a href="/planning-dokumen" wire:navigate
+                    class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-md shadow-orange-500/20 w-full">
+                    <span>Lihat Seluruh Arsip Dokumen</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+
         </div>
+
     </div>
-</div>
+</section>
