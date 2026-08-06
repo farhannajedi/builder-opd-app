@@ -1,97 +1,124 @@
 @props(['services'])
 
 @php
-
 $opdSlug = env('APP_ID');
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
 $latestServices = $services->take(4);
-
 $opdName = $opd?->name ?? 'Instansi';
 @endphp
 
-<div class="w-full max-w-screen-lg bg-white mx-auto grid gap-6">
-    <section class="w-full bg-whith py-10 md:py-10">
-        <!-- Card Utama -->
-        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-300">
-            <div class="text-center mb-6">
-                <p class="flex justify-center text-2xl font-bold text-gray-700 mb-2 pb-2">
-                    Layanan Tersedia
-                </p>
-                <div class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
+<section class="w-full bg-slate-50/60 py-16 border-b border-slate-200/80">
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Wrapper Kartu Utama -->
+        <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm">
+
+            <!-- Header Seksi Layanan -->
+            <div
+                class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4 border-b border-slate-100 pb-6">
+                <div>
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 border border-orange-200/80 text-orange-600 text-[11px] font-extrabold uppercase tracking-widest mb-2">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        Layanan {{ $opdName }}
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                        Layanan Publik
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                        Portal akses fasilitas dan layanan digital resmi dari {{ $opdName }}
+                    </p>
                 </div>
+
+                <!-- Tombol Selengkapnya (Desktop Header) -->
+                <a href="/layanan" wire:navigate
+                    class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-orange-500 text-white text-xs font-bold shadow-sm transition-all duration-200 group">
+                    <span>Lihat Semua Layanan</span>
+                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
             </div>
 
-            <!-- Grid Layanan -->
-            <div class="flex flex-wrap justify-center gap-6">
+            <!-- Grid Kartu Layanan (4 Kolom Simetris) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @forelse($latestServices as $service)
-                <!-- menampilkan items berada ditengah -->
                 <div
-                    class="w-full sm:w-[48%] md:w-[30%] max-w-sm border shadow-lg border-gray-300 rounded-lg p-5 transition duration-300 hover:shadow-xl hover:border-orange-300 bg-white flex flex-col h-full">
-                    <!-- Icon -->
-                    <div class="flex justify-center mb-4">
-                        <div class="bg-blue-100 rounded-lg p-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-album-icon lucide-album">
-                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-                                <polyline points="11 3 11 11 14 8 17 11 17 3" />
+                    class="group relative flex flex-col justify-between p-6 bg-white rounded-2xl border border-slate-200/80 hover:border-orange-300 hover:shadow-xl transition-all duration-300">
+
+                    <div>
+                        <!-- Ikon Layanan -->
+                        <div
+                            class="mb-5 inline-flex p-3.5 bg-orange-50 text-orange-600 border border-orange-100 rounded-2xl group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors duration-300 shadow-sm">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9.75 17L9 20l-1 1h6l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                         </div>
+
+                        <!-- Nama Layanan -->
+                        <h3
+                            class="text-base sm:text-lg font-bold text-slate-800 group-hover:text-orange-600 transition-colors leading-snug line-clamp-2 mb-2">
+                            {{ $service->name }}
+                        </h3>
+
+                        <!-- Deskripsi Singkat -->
+                        <p class="text-xs text-slate-500 leading-relaxed line-clamp-3 mb-6">
+                            {{ $service->description }}
+                        </p>
                     </div>
 
-                    <!-- Nama Layanan -->
-                    <h3 class="text-lg font-semibold text-gray-800 text-center mb-6">
-                        {{ $service->name }}
-                    </h3>
-
-                    <!-- Deskripsi -->
-                    <p class="text-sm text-gray-600 text-center line-clamp-3 mb-4">
-                        {{ $service->description }}
-                    </p>
-
-                    <!-- status dan indikator link detail layanan -->
-                    <div class="flex justify-center gap-2">
+                    <!-- Tombol Aksi Kapsul -->
+                    <div class="pt-4 border-t border-slate-100">
                         <a href="/layanan/{{ $service->id }}"
-                            class="bg-orange-600 text-white rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-1">
-                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-newspaper-icon lucide-newspaper">
-                                <path d="M15 18h-5" />
-                                <path d="M18 14h-8" />
-                                <path
-                                    d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2" />
-                                <rect width="8" height="4" x="10" y="6" rx="1" />
-                            </svg> -->
-                            Detail Layanan
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-4">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"></path>
+                            class="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200 shadow-sm">
+                            <span>Akses Layanan</span>
+                            <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
                         </a>
                     </div>
-                </div>
 
+                </div>
                 @empty
-                <div class="w-full bg-gray-100 p-8 text-center rounded-lg text-gray-600">
-                    <p>Belum ada layanan tersedia.</p>
+                <!-- State Jika Data Kosong -->
+                <div class="col-span-full bg-slate-50 border border-slate-200/80 p-10 text-center rounded-2xl">
+                    <div class="flex flex-col items-center justify-center gap-2">
+                        <div class="p-3 bg-orange-50 rounded-full text-orange-500 mb-1">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-bold text-slate-700">Belum Ada Layanan Tersedia</p>
+                        <p class="text-xs text-slate-400">Saat ini belum ada aplikasi atau fasilitas layanan publik yang
+                            terdaftar dari {{ $opdName }}.</p>
+                    </div>
                 </div>
                 @endforelse
             </div>
 
-            <footer class="flex pt-4 items-center gap-4">
-                <div class="flex-grow border-b border-yellow-500"></div>
-                <a wire:navigate="" href="/layanan"
-                    class="inline-flex items-center gap-2 border border-slate-200 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white transition">
-                    Selengkapnya
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25">
-                        </path>
+            <!-- Tombol Selengkapnya (Mobile Bottom) -->
+            <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-center sm:hidden">
+                <a href="/layanan" wire:navigate
+                    class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-md shadow-orange-500/20 w-full">
+                    <span>Lihat Seluruh Layanan</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                 </a>
-            </footer>
+            </div>
+
         </div>
-    </section>
-</div>
+
+    </div>
+</section>

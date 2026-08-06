@@ -1,93 +1,137 @@
 @props(['galleries'])
 
 @php
-
 $opdSlug = env('APP_ID');
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
-$galleries = $galleries->where('opd_id', $opd?->id)->sortByDesc('published_at')->take(3);
-
+$latestGalleries = $galleries->where('opd_id', $opd?->id)->sortByDesc('published_at')->take(3);
 $opdName = $opd?->name ?? 'Instansi';
 @endphp
 
-<div class="w-full bg-gray-200 py-10">
-    <div class="max-w-screen-lg mx-auto px-4">
-        <section class="w-full">
-            <!-- card pembungkus utama -->
-            <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-200">
-                <div class="text-center mb-6">
-                    <p class="flex justify-center text-2xl font-bold text-gray-700 mb-2 pb-2">
-                        Galeri Foto
-                    </p>
+<section class="w-full bg-slate-50/60 py-16 border-b border-slate-200/80">
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Wrapper Kartu Utama -->
+        <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm">
+            <!-- Header Galeri -->
+            <div
+                class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4 border-b border-slate-100 pb-6">
+                <div>
                     <div
-                        class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 border border-orange-200/80 text-orange-600 text-[11px] font-extrabold uppercase tracking-widest mb-2">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Dokumentasi Kegiatan
                     </div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                        Galeri Foto Resmi
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                        Kumpulan dokumentasi foto program dan kegiatan terbaru dari {{ $opdName }}
+                    </p>
                 </div>
 
-                <!-- daftar galleri -->
-                <div class="flex flex-wrap justify-center gap-6">
-                    @forelse ($galleries as $gal)
-                    <div wire:key="gal-{{ $gal->id }}"
-                        class="relative w-full sm:w-[48%] md:w-[30%] aspect-[3/4] overflow-hidden rounded-xl shadow-lg group transition duration-500 hover:scale-[1.02]">
+                <!-- Tombol Selengkapnya -->
+                <a href="/galeri" wire:navigate
+                    class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-orange-500 text-white text-xs font-bold shadow-sm transition-all duration-200 group">
+                    <span>Lihat Seluruh Galeri</span>
+                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Grid Galeri Foto -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                @forelse ($latestGalleries as $gal)
+                <div wire:key="gal-{{ $gal->id }}"
+                    class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white hover:border-orange-300 hover:shadow-xl transition-all duration-300">
+
+                    <!-- Gambar -->
+                    <div class="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
+                        <!-- Badge Tanggal -->
+                        <span
+                            class="absolute top-3 right-3 z-10 px-2.5 py-1 bg-slate-900/80 backdrop-blur-md text-white border border-white/20 text-[10px] font-semibold rounded-lg shadow-sm">
+                            {{ $gal->created_at?->isoFormat('D MMM YYYY') ?? now()->isoFormat('D MMM YYYY') }}
+                        </span>
 
                         <img src="{{ url('storage/' . $gal->images) }}" alt="{{ $gal->title }}"
-                            class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
 
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                        <!-- Gradien -->
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity">
+                        </div>
+                    </div>
 
-                        <div class="absolute inset-0 p-5 flex flex-col justify-end">
-                            <h3 class="text-lg font-semibold text-white text-center mb-2">
+                    <!-- Konten Informasi -->
+                    <div class="p-5 flex flex-col justify-between flex-grow">
+                        <div>
+                            <h3
+                                class="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors leading-snug line-clamp-1 mb-2">
                                 {{ $gal->title }}
                             </h3>
 
-                            <p class="text-sm text-gray-400 text-center line-clamp-3 mb-3">
+                            <p class="text-xs text-slate-500 leading-relaxed line-clamp-2 mb-4">
                                 {{ $gal->description }}
                             </p>
+                        </div>
 
-                            <!-- status dan indikator link detail layanan -->
-                            <div class="flex justify-center gap-2">
-                                <a href="/galeri/{{ $gal->slug }}"
-                                    class="bg-orange-600 text-white rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-book-image-icon lucide-book-image">
-                                        <path d="m20 13.7-2.1-2.1a2 2 0 0 0-2.8 0L9.7 17" />
-                                        <path
-                                            d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
-                                        <circle cx="10" cy="8" r="2" />
+                        <!-- Tombol Detail -->
+                        <div class="pt-3 border-t border-slate-100">
+                            <a href="/galeri/{{ $gal->slug }}"
+                                class="inline-flex items-center justify-between w-full px-4 py-2 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200">
+                                <span class="flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                        <circle cx="12" cy="13" r="3" />
                                     </svg>
-                                    Detail Galeri
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="size-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"></path>
-                                    </svg>
-                                </a>
-                            </div>
+                                    Lihat Foto
+                                </span>
+                                <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
-                    @empty
-                    <div class="w-full bg-gray-100 p-8 text-center rounded-lg text-gray-600">
-                        <p>Belum ada Foto yang dipublikasikan.</p>
-                    </div>
-                    @endforelse
-                </div>
 
-                <!-- indikator link panah ke daftar galeri -->
-                <footer class="flex pt-4 items-center gap-4">
-                    <div class="flex-grow border-b border-yellow-500"></div>
-                    <a wire:navigate="" href="/galeri"
-                        class="inline-flex items-center gap-2 border border-slate-200 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white transition">
-                        Selengkapnya
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25">
-                            </path>
-                        </svg>
-                    </a>
-                </footer>
+                </div>
+                @empty
+                <!-- Jika Data Galeri Kosong -->
+                <div class="col-span-full bg-slate-50 border border-slate-200/80 p-10 text-center rounded-2xl">
+                    <div class="flex flex-col items-center justify-center gap-2">
+                        <div class="p-3 bg-orange-50 rounded-full text-orange-500 mb-1">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-bold text-slate-700">Belum Ada Foto Dipublikasikan</p>
+                        <p class="text-xs text-slate-400">Saat ini belum ada album galeri kegiatan yang diterbitkan oleh
+                            {{ $opdName }}.
+                        </p>
+                    </div>
+                </div>
+                @endforelse
             </div>
-        </section>
+
+            <!-- Tombol Selengkapnya -->
+            <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-center sm:hidden">
+                <a href="/galeri" wire:navigate
+                    class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-md shadow-orange-500/20 w-full">
+                    <span>Lihat Seluruh Galeri Foto</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
     </div>
-</div>
+</section>

@@ -10,11 +10,10 @@ $announcements = $announcement->where('opd_id', $opd?->id)->sortByDesc('created_
 $opdName = $opd->name ?? 'Instansi';
 @endphp
 
-<!-- Container Utama Seksi Pengumuman -->
+<!-- Container Utama -->
 <section class="w-full bg-slate-100/70 py-16 border-y border-slate-200/80">
     <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        <!-- Header Seksi Pengumuman -->
+        <!-- Header Pengumuman -->
         <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
             <div>
                 <div
@@ -34,7 +33,7 @@ $opdName = $opd->name ?? 'Instansi';
                 </p>
             </div>
 
-            <!-- Tombol Lihat Semua -->
+            <!-- Lihat Semua -->
             <a href="/pengumuman"
                 class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 hover:border-orange-500 text-slate-700 hover:text-orange-600 rounded-full transition-all duration-200 font-bold text-xs shadow-sm hover:shadow-md self-start sm:self-auto">
                 <span>Lihat Semua Pengumuman</span>
@@ -45,7 +44,7 @@ $opdName = $opd->name ?? 'Instansi';
             </a>
         </div>
 
-        <!-- Grid Kartu Pengumuman -->
+        <!-- Grid Pengumuman -->
         @if($announcements->isNotEmpty())
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach ($announcements as $item)
@@ -53,13 +52,13 @@ $opdName = $opd->name ?? 'Instansi';
                 <a href="/pengumuman/{{ $item->slug }}"
                     class="relative flex flex-col p-6 h-full rounded-2xl shadow-sm border border-slate-200/80 bg-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group-hover:border-orange-200">
 
-                    <!-- Garis Aksen Warna Atas Saat Hover -->
+                    <!-- Saat Hover -->
                     <div
                         class="absolute top-0 left-0 right-0 h-1 bg-slate-200 group-hover:bg-orange-500 transition-colors duration-300">
                     </div>
 
                     <div class="flex-grow pt-2">
-                        <!-- Badge Kategori & Ikon -->
+                        <!-- Kategori -->
                         <div class="flex items-center gap-1.5 mb-3">
                             <span
                                 class="text-[10px] bg-orange-50 text-orange-600 border border-orange-200 font-bold uppercase px-2.5 py-0.5 rounded-md tracking-wider">
@@ -73,13 +72,13 @@ $opdName = $opd->name ?? 'Instansi';
                             {{ $item->title }}
                         </h3>
 
-                        <!-- Potongan Deskripsi -->
+                        <!-- Deskripsi -->
                         <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed">
                             {{ Str::limit(strip_tags($item->deskripsi), 110) }}
                         </p>
                     </div>
 
-                    <!-- Footer Kartu: Tanggal Diterbitkan -->
+                    <!-- Tanggal Diterbitkan -->
                     <div class="mt-6 pt-3 border-t border-slate-100 flex items-center justify-between text-slate-400">
                         <div class="flex items-center gap-1.5 text-slate-400">
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +91,6 @@ $opdName = $opd->name ?? 'Instansi';
                                 {{ $item->created_at?->isoFormat('D MMM YYYY') }}
                             </span>
                         </div>
-
                         <span
                             class="text-xs font-bold text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5">
                             Baca
@@ -102,13 +100,12 @@ $opdName = $opd->name ?? 'Instansi';
                             </svg>
                         </span>
                     </div>
-
                 </a>
             </div>
             @endforeach
         </div>
 
-        <!-- Tampilan Jika Pengumuman Masih Kosong -->
+        <!-- Jika Pengumuman Kosong -->
         @else
         <div class="bg-white border border-slate-200/80 rounded-2xl p-10 text-center shadow-sm">
             <div class="flex flex-col items-center justify-center gap-3">
@@ -122,11 +119,11 @@ $opdName = $opd->name ?? 'Instansi';
                 <div>
                     <h3 class="text-base font-bold text-slate-800">Belum Ada Pengumuman</h3>
                     <p class="text-xs text-slate-500 mt-1">Saat ini belum ada pengumuman resmi yang diterbitkan oleh
-                        {{ $opdName }}.</p>
+                        {{ $opdName }}.
+                    </p>
                 </div>
             </div>
         </div>
         @endif
-
     </div>
 </section>
