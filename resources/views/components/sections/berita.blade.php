@@ -44,7 +44,7 @@ $opdName = $opd->name ?? 'Instansi';
         @php
         $first = $latestNews->first();
         $firstImage = $first?->images ? url('storage/'.$first->images) : asset('images/default-news.jpg');
-        $categoryName = $first?->category?->title ?? 'Kegiatan Pimpinan';
+        $categoryName = $first?->category?->title ?? 'Informasi Terkini';
         @endphp
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -68,11 +68,20 @@ $opdName = $opd->name ?? 'Instansi';
                         <!-- Detail Konten Berita Utama -->
                         <div class="flex flex-col justify-between py-1 px-1 sm:px-2 space-y-4">
                             <div>
+                                <!-- badge kategori berita -->
+                                @if($first?->category)
+                                <a href="{{ url('berita/kategori/' . $first->category->slug) }}"
+                                    class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-rose-50 text-rose-600 border border-rose-100 text-xs font-bold mb-3 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all duration-200">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500 group-hover:bg-white"></span>
+                                    {{ $categoryName }}
+                                </a>
+                                @else
                                 <div
                                     class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-rose-50 text-rose-600 border border-rose-100 text-xs font-bold mb-3">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>>
                                     {{ $categoryName }}
                                 </div>
+                                @endif
 
                                 <!-- Judul Berita Utama -->
                                 <a href="{{ url('berita/' . $first?->slug) }}" class="block group/title">
@@ -100,7 +109,7 @@ $opdName = $opd->name ?? 'Instansi';
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <span class="text-slate-700 font-bold">{{ $first?->author_name ?? 'Admin' }}</span>
+                                    <span class="text-slate-700 font-bold">{{ $first?->opd?->name ?? 'Admin' }}</span>
                                 </div>
 
                                 <span class="text-sky-400">•</span>
