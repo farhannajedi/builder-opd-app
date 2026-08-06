@@ -89,8 +89,9 @@ $imagePath = asset('storage/' . $berita->images);
 
                 <!-- Gambar Utama -->
                 <div
-                    class="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-slate-100 border border-slate-200/80 shadow-sm">
-                    <img src="{{ $imagePath }}" alt="{{ $berita->title }}" class="w-full h-full object-cover">
+                    class="w-full overflow-hidden rounded-2xl bg-slate-100/80 border border-slate-200/80 shadow-sm flex items-center justify-center p-1 sm:p-2">
+                    <img src="{{ $imagePath }}" alt="{{ $berita->title }}"
+                        class="w-full h-auto max-h-[600px] object-contain rounded-xl mx-auto">
                 </div>
 
                 <!-- Isi Berita -->
