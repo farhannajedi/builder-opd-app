@@ -13,10 +13,10 @@ $opdName = $opd?->name ?? 'Instansi';
 <div class="w-full bg-slate-50/60 py-12 min-h-screen">
     <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- Wrapper Kartu Utama -->
+        <!-- Wrapper Utama -->
         <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm space-y-8">
 
-            <!-- Header Seksi Dokumen -->
+            <!-- Header Dokumen -->
             <div class="border-b border-slate-100 pb-6">
                 <div
                     class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 border border-orange-200/80 text-orange-600 text-[11px] font-extrabold uppercase tracking-widest mb-2">
@@ -26,7 +26,7 @@ $opdName = $opd?->name ?? 'Instansi';
                     </svg>
                     Transparansi Publik & Open Data
                 </div>
-                <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+                <h1 class="text-xl sm:text-3xl lg:text-2xl font-black text-slate-900 tracking-tight">
                     Arsip Dokumen Perencanaan
                 </h1>
                 <p class="text-xs sm:text-sm text-slate-500 mt-1">
@@ -34,14 +34,14 @@ $opdName = $opd?->name ?? 'Instansi';
                 </p>
             </div>
 
-            <!-- Grid Kartu Dokumen (2 Kolom di Desktop) -->
+            <!-- Grid Kartu Dokumen -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 @forelse ($documents as $doc)
                 <div
                     class="group relative flex flex-col justify-between p-6 bg-white rounded-2xl border border-slate-200/80 hover:border-orange-300 hover:shadow-xl transition-all duration-300">
 
                     <div>
-                        <!-- Header Kartu: Ikon & Badge Tipe File -->
+                        <!-- Badge Tipe File -->
                         <div class="flex items-center justify-between gap-3 mb-4">
                             <div
                                 class="p-3.5 bg-orange-50 text-orange-600 border border-orange-100 rounded-2xl group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors duration-300 shadow-sm">
@@ -65,7 +65,7 @@ $opdName = $opd?->name ?? 'Instansi';
                             </h2>
                         </a>
 
-                        <!-- Metadata (Tanggal Upload & OPD) -->
+                        <!-- Metadata -->
                         <div
                             class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-400 font-medium mb-6">
                             <div class="flex items-center gap-1.5">
@@ -90,7 +90,7 @@ $opdName = $opd?->name ?? 'Instansi';
                         </div>
                     </div>
 
-                    <!-- Footer Aksi: Tombol Detail File -->
+                    <!-- Tombol Detail File -->
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
                         <a href="/planning-dokumen/{{ $doc->slug }}"
                             class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200 shadow-sm">
@@ -105,7 +105,7 @@ $opdName = $opd?->name ?? 'Instansi';
 
                 </div>
                 @empty
-                <!-- State Jika Dokumen Kosong -->
+                <!-- Jika Dokumen Kosong -->
                 <div class="col-span-full bg-slate-50 border border-slate-200/80 p-12 text-center rounded-2xl">
                     <div class="flex flex-col items-center justify-center gap-3">
                         <div class="p-4 bg-orange-50 rounded-full text-orange-500 border border-orange-100">
@@ -130,9 +130,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 {{ $documents->links() }}
             </div>
             @endif
-
         </div>
-
     </div>
 </div>
 @endsection
