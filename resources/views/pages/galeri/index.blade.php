@@ -1,99 +1,135 @@
 @php
-
-$opdSlug = env('APP_ID'); // Ambil slug OPD dari environment variable
-
+$opdSlug = env('APP_ID');
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
-// Menggunakan logika deteksi domain
 $galleries = App\Models\Galleries::where('opd_id', $opd?->id)->with('opd')->latest()->paginate(9);
+$opdName = $opd?->name ?? 'Instansi';
 @endphp
 
 @extends('layouts.app', ['activePage' => 'galeri'])
 
 @section('content')
-<section class="max-w-screen-lg px-4 mx-auto w-full py-10  md:text-left">
-    <div class="mb-10">
-        <p class="flex justify-center text-4xl font-semibold text-slate-700 tracking-tight">Galeri Foto</p>
-        <div class="w-full h-0.5 mx-auto mt-2 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
-        </div>
-        <p class="flex justify-center text-slate-500 mt-2">Kumpulan dokumentasi kegiatan</p>
-    </div>
-
-    <!-- Grid 3 gambar di tampilan dekstop -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        @forelse ($galleries as $gal)
-        <!-- Link Detail yang membungkus seluruh gambar -->
+<div class="w-full bg-slate-50/60 py-10 min-h-screen">
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <!-- Header Banner -->
         <div
-            class="group block bg-white border border-slate-300 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-
-            <!-- Container Gambar dengan Rasio 4:3  -->
-            <div class="relative aspect-video sm:aspect-[4/3] overflow-hidden bg-slate-100">
-                <img src="{{ asset('storage/' . $gal->images) }}" alt="{{ $gal->title }}"
-                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-
-                <!-- Overlay saat cursor diarahkan ke gambar  -->
+            class="relative overflow-hidden bg-slate-900 text-white rounded-3xl p-8 sm:p-12 shadow-lg border border-slate-800">
+            <div
+                class="absolute -right-10 -bottom-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
+            </div>
+            <div class="relative z-10 max-w-3xl space-y-3">
                 <div
-                    class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-10 w-10 text-white opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-300"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-[9px] font-extrabold uppercase tracking-widest">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
+                    Media & Dokumentasi Publik
                 </div>
+                <h1 class="text-xl sm:text-2xl font-black tracking-tight leading-tight">
+                    Galeri Foto {{ $opdName }}
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    Arsip dokumentasi visual liputan program kerja, kunjungan dinas, dan kegiatan kemasyarakatan dari
+                    {{ $opdName }}.
+                </p>
+            </div>
+        </div>
+
+        <!-- Daftar Galeri -->
+        <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm space-y-8">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
+                <div class="flex items-center gap-2 text-slate-800 font-bold text-sm">
+                    <span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span>
+                    <span>Koleksi Album Foto Resmi</span>
+                </div>
+                <span class="text-xs font-semibold text-slate-400">
+                    Total {{ $galleries->total() }} Foto Diterbitkan
+                </span>
             </div>
 
-            <!-- Konten Teks Detail -->
-            <div class="p-4">
-                <p class="text-xs font-bold text-orange-600 uppercase tracking-wider mb-1">
-                    {{ $gal->opd->name ?? 'Instansi' }}
-                </p>
-                <h3
-                    class="text-lg font-bold text-slate-800 line-clamp-2 leading-snug group-hover:text-blue-600 transition-colors">
-                    {{ $gal->title }}
-                </h3>
+            <!-- Grid Foto -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                @forelse ($galleries as $gal)
+                <div
+                    class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white hover:border-orange-300 hover:shadow-xl transition-all duration-300">
+                    <div>
+                        <!-- Gambar Visual -->
+                        <div class="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
+                            <span
+                                class="absolute top-3 right-3 z-10 px-2.5 py-1 bg-slate-900/80 backdrop-blur-md text-white border border-white/20 text-[10px] font-semibold rounded-lg shadow-sm">
+                                {{ $gal->published_at ? \Carbon\Carbon::parse($gal->published_at)->isoFormat('D MMM Y') : $gal->created_at->isoFormat('D MMM Y') }}
+                            </span>
 
-                <div class="mt-4 pt-3 border-t border-slate-300 flex items-center justify-between text-slate-400">
-                    <div class="flex items-center gap-1.5 text-xs">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 border-slate-200" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <span>
-                            {{ $gal->published_at 
-                                    ? \Carbon\Carbon::parse($gal->published_at)->isoFormat('D MMM Y')
-                                    : $gal->created_at->isoFormat('D MMM Y') }}
-                        </span>
+                            <img src="{{ asset('storage/' . $gal->images) }}" alt="{{ $gal->title }}"
+                                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity">
+                            </div>
+                        </div>
+
+                        <!-- Detail Deskripsi Teks -->
+                        <div class="p-5">
+                            <span
+                                class="block text-[10px] font-extrabold text-orange-600 uppercase tracking-wider mb-1.5">
+                                {{ $gal->opd->name ?? $opdName }}
+                            </span>
+
+                            <a href="{{ url('galeri/' . $gal->slug) }}" class="block group/title">
+                                <h3
+                                    class="text-base font-bold text-slate-800 group-hover/title:text-orange-600 transition-colors leading-snug line-clamp-2">
+                                    {{ $gal->title }}
+                                </h3>
+                            </a>
+                        </div>
                     </div>
 
-                    <!-- link menuju detail file -->
-                    <div class="text-[10px] font-medium flex justify-center gap-2">
+                    <!-- Tombol Detail -->
+                    <div class="p-5 pt-0">
                         <a href="{{ url('galeri/' . $gal->slug) }}"
-                            class="bg-orange-500 text-white rounded-lg px-2 py-0.5 text-[10px] font-medium flex items-center gap-1 hover:bg-orange-600 transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z" />
+                            class="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200 shadow-sm">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <circle cx="12" cy="13" r="3" />
                             </svg>
-                            Detail File
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-3">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"></path>
+                            <span>Detail Album Foto</span>
+                            <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
                         </a>
                     </div>
                 </div>
+                @empty
+                <!-- Jika Galeri Kosong -->
+                <div class="col-span-full bg-slate-50 border border-slate-200/80 p-12 text-center rounded-2xl">
+                    <div class="flex flex-col items-center justify-center gap-3">
+                        <div class="p-4 bg-orange-50 rounded-full text-orange-500 border border-orange-100">
+                            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800">Belum Ada Koleksi Foto Diterbitkan</h3>
+                            <p class="text-xs text-slate-500 mt-1">Saat ini belum ada dokumentasi album foto yang
+                                dipublikasikan oleh {{ $opdName }}.</p>
+                        </div>
+                    </div>
+                </div>
+                @endforelse
             </div>
-        </div>
 
-        <!-- logika jika data kosong -->
-        @empty
-        <div class="col-span-full py-20 text-center bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-            <p>Belum ada koleksi foto yang dipublikasikan.</p>
+            <!-- Paginasi Galeri -->
+            @if ($galleries->hasPages())
+            <div class="pt-8 border-t border-slate-100">
+                {{ $galleries->links() }}
+            </div>
+            @endif
         </div>
-        @endforelse
     </div>
-</section>
+</div>
 @endsection
