@@ -81,7 +81,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 <div
                     class="group flex flex-col justify-between bg-white rounded-2xl border border-slate-200/80 hover:border-orange-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
                     <div>
-                        <!-- Thumbnail Foto Berita dengan Badge Kategori -->
+                        <!-- Thumbnail Foto Berita -->
                         <div class="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
                             <span
                                 class="absolute top-3 left-3 z-10 px-3 py-1 bg-rose-500 text-white text-[10px] font-bold uppercase tracking-wider rounded-lg shadow-sm">
@@ -106,7 +106,7 @@ $opdName = $opd?->name ?? 'Instansi';
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
-                                <span>{{ $item->published_at?->isoFormat('D MMMM YYYY') ?? now()->isoFormat('D MMMM YYYY') }}</span>
+                                <span>{{ $item->published_at?->locale('id')->isoFormat('D MMMM YYYY') ?? now()->locale('id')->isoFormat('D MMMM YYYY') }}</span>
                             </div>
 
                             <!-- Judul Berita -->

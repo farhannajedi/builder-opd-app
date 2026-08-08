@@ -6,7 +6,7 @@ $announcements = App\Models\announcement::where('opd_id', $opd?->id)->with('opd'
 $opdName = $opd?->name ?? 'Instansi';
 @endphp
 
-@extends('layouts.app', ['activePage' => 'Pengumuman'])
+@extends('layouts.app', ['activePage' => 'pengumuman'])
 
 @section('content')
 <div class="w-full bg-slate-50/60 py-10 min-h-screen">
@@ -87,7 +87,7 @@ $opdName = $opd?->name ?? 'Instansi';
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
-                                <span>{{ $item->created_at?->isoFormat('D MMMM YYYY') ?? now()->isoFormat('D MMMM YYYY') }}</span>
+                                <span>{{ $item->created_at?->locale('id')->isoFormat('D MMMM YYYY') ?? now()->locale('id')->isoFormat('D MMMM YYYY') }}</span>
                             </div>
 
                             <span class="text-slate-300">•</span>

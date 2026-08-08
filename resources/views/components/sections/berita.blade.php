@@ -120,13 +120,11 @@ $opdName = $opd->name ?? 'Instansi';
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                     </svg>
-                                    <span>{{ $first?->published_at?->isoFormat('D MMMM YYYY') ?? now()->isoFormat('D MMMM YYYY') }}</span>
+                                    <span>{{ $first?->published_at?->locale('id')->isoFormat('D MMMM YYYY') ?? now()->locale('id')->isoFormat('D MMMM YYYY') }}</span>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -144,7 +142,7 @@ $opdName = $opd->name ?? 'Instansi';
                         </div>
                     </div>
 
-                    <!-- Daftar 4 Berita -->
+                    <!-- Daftar Berita -->
                     <div class="divide-y divide-slate-100">
                         @foreach ($latestNews->skip(1)->take(4) as $item)
                         <a href="/berita/{{ $item->slug }}"
@@ -153,55 +151,65 @@ $opdName = $opd->name ?? 'Instansi';
                                 class="text-sm font-bold text-slate-800 group-hover:text-sky-600 leading-snug line-clamp-2 transition-colors mb-2">
                                 {{ $item->title }}
                             </h4>
+
+                            <!-- Deskripsi Singkat -->
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3 font-normal">
+                                {{ strip_tags($item?->deskripsi) }}
+                            </p>
+
                             <div class="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
                                 <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <span>{{ $item->published_at?->isoFormat('D MMMM YYYY') ?? now()->isoFormat('D MMMM YYYY') }}</span>
+                                <span>{{ $item->published_at?->locale('id')->isoFormat('D MMMM YYYY') ?? now()->locale('id')->isoFormat('D MMMM YYYY') }}</span>
+
+                                <div
+                                    class="flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-rose-50 text-rose-600 border border-rose-100 text-xs -bold hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all duration-200">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500 group-hover:bg-white"></span>
+                                    {{ $categoryName }}
+                                </div>
                             </div>
                         </a>
-                        @endforeach
                     </div>
-
-                </div>
-            </div>
-            @endif
-
-        </div>
-
-        <!-- Apabila Berita Kosong -->
-        @else
-        <div class="bg-white border border-slate-200/80 rounded-2xl p-12 text-center shadow-sm">
-            <div class="flex flex-col items-center justify-center gap-3">
-                <div class="bg-orange-50 p-4 rounded-full border border-orange-100">
-                    <svg class="h-8 w-8 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-base font-bold text-slate-800">Belum Ada Berita Diterbitkan</h3>
-                    <p class="text-xs text-slate-500 mt-1">Saat ini belum ada artikel berita yang dipublikasikan oleh
-                        {{ $opdName }}.
-                    </p>
+                    </a>
+                    @endforeach
                 </div>
             </div>
         </div>
         @endif
+    </div>
 
-        <!-- Tombol Selengkapnya (Tampilan Mobile) -->
-        <div class="mt-8 flex items-center justify-center sm:hidden">
-            <a href="/berita"
-                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-xs shadow-lg shadow-orange-500/20 transition-all w-full justify-center">
-                <span>Lihat Seluruh Berita</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <!-- Apabila Berita Kosong -->
+    @else
+    <div class="bg-white border border-slate-200/80 rounded-2xl p-12 text-center shadow-sm">
+        <div class="flex flex-col items-center justify-center gap-3">
+            <div class="bg-orange-50 p-4 rounded-full border border-orange-100">
+                <svg class="h-8 w-8 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                 </svg>
-            </a>
+            </div>
+            <div>
+                <h3 class="text-base font-bold text-slate-800">Belum Ada Berita Diterbitkan</h3>
+                <p class="text-xs text-slate-500 mt-1">Saat ini belum ada artikel berita yang dipublikasikan oleh
+                    {{ $opdName }}.
+                </p>
+            </div>
         </div>
+    </div>
+    @endif
 
+    <!-- Tombol Selengkapnya -->
+    <div class="mt-8 flex items-center justify-center sm:hidden">
+        <a href="/berita"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-xs shadow-lg shadow-orange-500/20 transition-all w-full justify-center">
+            <span>Lihat Seluruh Berita</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+        </a>
+    </div>
     </div>
 </section>

@@ -82,7 +82,7 @@ $imagePath = asset('storage/' . $berita->images);
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            <span>{{ $berita->published_at ? $berita->published_at->isoFormat('D MMMM YYYY') : $berita->created_at->isoFormat('D MMMM YYYY') }}</span>
+                            <span>{{ $berita->published_at ? $berita->published_at->locale('id')->isoFormat('D MMMM YYYY') : $berita->created_at->locale('id')->isoFormat('D MMMM YYYY') }}</span>
                         </div>
                     </div>
                 </div>
@@ -193,13 +193,18 @@ $imagePath = asset('storage/' . $berita->images);
                                     {{ $item->title }}
                                 </h3>
 
+                                <!-- Deskripsi Singkat -->
+                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3 font-normal">
+                                    {{ strip_tags($item?->deskripsi) }}
+                                </p>
+
                                 <div class="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium mt-2">
                                     <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <span>{{ $item->created_at->diffForHumans() }}</span>
+                                    <span>{{ $item->published_at ? $berita->published_at->locale('id')->isoFormat('D MMMM YYYY') : $item->created_at->locale('id')->isoFormat('D MMMM YYYY') }}</span>
                                 </div>
                             </div>
                         </a>

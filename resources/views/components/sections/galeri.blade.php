@@ -55,13 +55,11 @@ $opdName = $opd?->name ?? 'Instansi';
                         <!-- Badge Tanggal -->
                         <span
                             class="absolute top-3 right-3 z-10 px-2.5 py-1 bg-slate-900/80 backdrop-blur-md text-white border border-white/20 text-[10px] font-semibold rounded-lg shadow-sm">
-                            {{ $gal->created_at?->isoFormat('D MMM YYYY') ?? now()->isoFormat('D MMM YYYY') }}
+                            {{ $gal->created_at?->locale('id')->isoFormat('D MMM YYYY') ?? now()->locale('id')->isoFormat('D MMM YYYY') }}
                         </span>
 
                         <img src="{{ url('storage/' . $gal->images) }}" alt="{{ $gal->title }}"
                             class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-
-                        <!-- Gradien -->
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity">
                         </div>
@@ -100,7 +98,6 @@ $opdName = $opd?->name ?? 'Instansi';
                             </a>
                         </div>
                     </div>
-
                 </div>
                 @empty
                 <!-- Jika Data Galeri Kosong -->

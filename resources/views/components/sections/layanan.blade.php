@@ -13,7 +13,6 @@ $opdName = $opd?->name ?? 'Instansi';
 
         <!-- Wrapper Kartu Utama -->
         <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm">
-
             <!-- Header Seksi Layanan -->
             <div
                 class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4 border-b border-slate-100 pb-6">
@@ -86,10 +85,9 @@ $opdName = $opd?->name ?? 'Instansi';
                             </svg>
                         </a>
                     </div>
-
                 </div>
                 @empty
-                <!-- State Jika Data Kosong -->
+                <!-- Jika Data Kosong -->
                 <div class="col-span-full bg-slate-50 border border-slate-200/80 p-10 text-center rounded-2xl">
                     <div class="flex flex-col items-center justify-center gap-2">
                         <div class="p-3 bg-orange-50 rounded-full text-orange-500 mb-1">
@@ -106,7 +104,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 @endforelse
             </div>
 
-            <!-- Tombol Selengkapnya (Mobile Bottom) -->
+            <!-- Tombol Selengkapnya -->
             <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-center sm:hidden">
                 <a href="/layanan" wire:navigate
                     class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-md shadow-orange-500/20 w-full">
@@ -117,8 +115,6 @@ $opdName = $opd?->name ?? 'Instansi';
                     </svg>
                 </a>
             </div>
-
         </div>
-
     </div>
 </section>

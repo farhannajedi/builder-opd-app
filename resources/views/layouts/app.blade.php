@@ -80,7 +80,7 @@ $socialMedia = [
     <footer
         class="w-full bg-slate-900 text-slate-300 pt-12 pb-8 relative overflow-hidden border-t-4 border-orange-200 shadow-lg">
         <div
-            class="pointer-events-none select-none absolute -right-10 -bottom-10 text-[120px] font-black tracking-widest text-slate-800/40 uppercase leading-none hidden lg:block">
+            class="pointer-events-none select-none absolute -right-2 -bottom-2 text-[120px] font-black tracking-widest text-slate-800/40 uppercase leading-none hidden lg:block">
             KARIMUN
         </div>
 

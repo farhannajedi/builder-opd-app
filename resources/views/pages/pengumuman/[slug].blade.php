@@ -16,7 +16,7 @@ $opdName = $announcement->opd->name ?? 'Instansi';
 $announcement->increment('views');
 @endphp
 
-@extends('layouts.app', ['activePage' => 'Detail Pengumuman'])
+@extends('layouts.app', ['activePage' => 'pengumuman'])
 
 @section('content')
 <div class="bg-slate-50/60 min-h-screen py-10 md:py-16">
@@ -36,10 +36,10 @@ $announcement->increment('views');
             <span class="text-slate-800 font-bold truncate max-w-[200px] sm:max-w-xs">{{ $announcement->title }}</span>
         </nav>
 
-        <!-- Grid Utama (Kiri: Konten Utama, Kanan: Sidebar) -->
+        <!-- Grid Utama -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-            <!-- KONTEN UTAMA PENGUMUMAN (Col-Span 8) -->
+            <!-- Konten Utama -->
             <article
                 class="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm space-y-6">
 
@@ -98,7 +98,7 @@ $announcement->increment('views');
                     </div>
                 </div>
 
-                <!-- TAMPILAN GAMBAR LAMPIRAN (Proporsional & Mengikuti Asli) -->
+                <!-- Tampilan Gambar -->
                 @if($announcement->images || $announcement->image)
                 <div
                     class="w-full overflow-hidden rounded-2xl bg-slate-100/80 border border-slate-200/80 shadow-sm flex items-center justify-center p-1 sm:p-2">
@@ -115,7 +115,7 @@ $announcement->increment('views');
                     </p>
                 </div>
 
-                <!-- Footer Aksi: Tombol Kembali & Bagikan -->
+                <!-- Tombol Kembali & Bagikan -->
                 <div
                     class="pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <a href="{{ url('/pengumuman') }}"
@@ -139,7 +139,7 @@ $announcement->increment('views');
 
             </article>
 
-            <!-- SIDEBAR: PENGUMUMAN LAINNYA (Col-Span 4) -->
+            <!-- Pengumuman Lainnya -->
             <aside class="lg:col-span-4 space-y-6 sticky top-24">
                 <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm">
 
@@ -159,7 +159,7 @@ $announcement->increment('views');
                             class="group block p-4 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:border-orange-200 hover:shadow-md transition-all duration-300 space-y-2">
 
                             <span class="text-[10px] font-black text-orange-600 uppercase tracking-wider block">
-                                {{ $item->created_at?->isoFormat('D MMMM YYYY') }}
+                                {{ $item->created_at?->locale('id')->isoFormat('D MMMM YYYY') }}
                             </span>
 
                             <h3
@@ -177,16 +177,13 @@ $announcement->increment('views');
                         </div>
                         @endforelse
                     </div>
-
                 </div>
             </aside>
-
         </div>
-
     </div>
 </div>
 
-<!-- Script Salin Tautan (Aman HTTP/HTTPS) -->
+<!-- Salin Tautan -->
 <script>
     function copyNoticeUrl(url) {
         if (navigator.clipboard && window.isSecureContext) {

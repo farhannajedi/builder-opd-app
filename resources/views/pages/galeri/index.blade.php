@@ -58,7 +58,7 @@ $opdName = $opd?->name ?? 'Instansi';
                         <div class="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
                             <span
                                 class="absolute top-3 right-3 z-10 px-2.5 py-1 bg-slate-900/80 backdrop-blur-md text-white border border-white/20 text-[10px] font-semibold rounded-lg shadow-sm">
-                                {{ $gal->published_at ? \Carbon\Carbon::parse($gal->published_at)->isoFormat('D MMM Y') : $gal->created_at->isoFormat('D MMM Y') }}
+                                {{ $gal->published_at ? \Carbon\Carbon::parse($gal->published_at)->locale('id')->isoFormat('D MMM Y') : $gal->created_at->isoFormat('D MMM Y') }}
                             </span>
 
                             <img src="{{ asset('storage/' . $gal->images) }}" alt="{{ $gal->title }}"

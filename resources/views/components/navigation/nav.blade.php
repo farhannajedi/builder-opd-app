@@ -112,6 +112,12 @@ $opdName = $opd->name ?? 'Portal Resmi Instansi';
                 </a>
             </li>
             <li>
+                <a href="/pengumuman"
+                    class="{{ ($activePage ?? '') === 'pengumuman' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
+                    Pengumuman
+                </a>
+            </li>
+            <li>
                 <a href="/berita"
                     class="{{ ($activePage ?? '') === 'berita' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
                     Berita
@@ -135,7 +141,7 @@ $opdName = $opd->name ?? 'Portal Resmi Instansi';
                     Galeri
                 </a>
             </li>
-            <li class="group relative">
+            <!-- <li class="group relative">
                 <a href="javascript:void(0)"
                     class="{{ ($activePage ?? '') === 'informasi-publik' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} border-b-2 py-3 px-3 flex items-center gap-1 transition-all duration-200">
                     <span>Informasi Publik</span>
@@ -150,7 +156,7 @@ $opdName = $opd->name ?? 'Portal Resmi Instansi';
                         </div>
                     </a>
                 </div>
-            </li>
+            </li> -->
         </ul>
     </div>
 
