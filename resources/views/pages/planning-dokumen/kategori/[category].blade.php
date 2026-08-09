@@ -6,12 +6,12 @@ use App\Models\Opd;
 $opdSlug = env('APP_ID');
 $opd = Opd::where('slug', $opdSlug)->first();
 
-// Ambil data kategori aktif berdasarkan slug
+// Mengambil data kategori aktif berdasarkan slug
 $activeCategory = PlanningDocumentCategory::where('slug', $category)
 ->where('opd_id', $opd?->id)
 ->firstOrFail();
 
-// Ambil seluruh daftar kategori untuk navigasi tab filter
+// Mengambil seluruh daftar kategori untuk navigasi tab filter
 $categoryList = PlanningDocumentCategory::where('opd_id', $opd?->id)->get();
 
 // Query dokumen yang sesuai dengan kategori aktif
@@ -30,13 +30,12 @@ $opdName = $opd?->name ?? 'Instansi';
 <div class="w-full bg-slate-50/60 py-10 min-h-screen">
     <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-        <!-- HEADER BANNER KATEGORI SPESIFIK -->
+        <!-- Header Kategori -->
         <div
             class="relative overflow-hidden bg-slate-900 text-white rounded-3xl p-8 sm:p-12 shadow-lg border border-slate-800">
             <div
                 class="absolute -right-10 -bottom-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
             </div>
-
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div class="space-y-3 max-w-2xl">
                     <div
@@ -47,11 +46,9 @@ $opdName = $opd?->name ?? 'Instansi';
                         </svg>
                         Klasifikasi Dokumen Perencanaan
                     </div>
-
                     <h1 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
                         {{ $activeCategory->title }}
                     </h1>
-
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
                         Menampilkan seluruh arsip dokumen resmi dalam kategori <span
                             class="text-orange-400 font-bold">{{ $activeCategory->title }}</span> yang dipublikasikan
@@ -73,12 +70,11 @@ $opdName = $opd?->name ?? 'Instansi';
             </div>
         </div>
 
-        <!-- WRAPPER UTAMA KONTEN -->
+        <!-- Wrapper Utama -->
         <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm space-y-6">
-
             <!-- Filter Kategori Lain & Total Hasil -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
-                <!-- Navigasi Kategori Pills -->
+                <!-- Navigasi Kategori -->
                 <div class="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0">
                     <a href="{{ url('/planning-dokumen') }}"
                         class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200">
@@ -97,14 +93,14 @@ $opdName = $opd?->name ?? 'Instansi';
                 </span>
             </div>
 
-            <!-- TATA LETAK HORIZONTAL STRIP DOKUMEN -->
+            <!-- Tata Letak Kategori Dokumen -->
             <div class="space-y-4">
                 @forelse ($documents as $doc)
                 <div
                     class="group relative bg-white rounded-2xl border border-slate-200/80 hover:border-orange-300 hover:shadow-lg transition-all duration-300 p-5 sm:p-6">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
 
-                        <!-- Bagian Kiri: Ikon & Detail -->
+                        <!-- Ikon & Detail -->
                         <div class="flex items-start gap-4 flex-grow min-w-0">
                             <div
                                 class="p-3.5 bg-orange-50 text-orange-600 border border-orange-100 rounded-2xl flex-none group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors duration-300 shadow-sm">
@@ -156,7 +152,7 @@ $opdName = $opd?->name ?? 'Instansi';
                             </div>
                         </div>
 
-                        <!-- Bagian Kanan: Tombol Aksi -->
+                        <!-- Tombol Aksi -->
                         <div
                             class="flex-none self-end md:self-center w-full md:w-auto pt-3 md:pt-0 border-t md:border-t-0 border-slate-100">
                             <a href="/planning-dokumen/{{ $doc->slug }}"
@@ -169,11 +165,10 @@ $opdName = $opd?->name ?? 'Instansi';
                                 </svg>
                             </a>
                         </div>
-
                     </div>
                 </div>
                 @empty
-                <!-- State Jika Dokumen Kosong -->
+                <!-- Jika Dokumen Kosong -->
                 <div class="bg-slate-50 border border-slate-200/80 p-12 text-center rounded-2xl">
                     <div class="flex flex-col items-center justify-center gap-3">
                         <div class="p-4 bg-orange-50 rounded-full text-orange-500 border border-orange-100">
@@ -199,9 +194,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 {{ $documents->links() }}
             </div>
             @endif
-
         </div>
-
     </div>
 </div>
 @endsection

@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PlanningDocumentCategoryResource\Pages;
-use App\Filament\Resources\PlanningDocumentCategoryResource\RelationManagers;
 use App\Models\PlanningDocumentCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -11,7 +10,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class PlanningDocumentCategoryResource extends Resource
@@ -44,23 +42,21 @@ class PlanningDocumentCategoryResource extends Resource
         return $form
             ->schema([
                 $opdField,
-                Forms\Components\Card::make()->schema([
-                    Forms\Components\TextInput::make('title')
-                        ->label('Judul')
-                        ->placeholder('Contoh: Rencana Kerja')
-                        ->live(onBlur: true)
-                        ->maxLength(250)
-                        ->afterStateUpdated(function ($state, callable $set) {
-                            $set('slug', \Illuminate\Support\Str::slug($state));
-                        }) // mengisi kolom slug sesuai dengan isian kolom title
-                        ->required(),
+                Forms\Components\TextInput::make('title')
+                    ->label('Judul')
+                    ->placeholder('Contoh: Rencana Kerja')
+                    ->live(onBlur: true)
+                    ->maxLength(250)
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $set('slug', \Illuminate\Support\Str::slug($state));
+                    }) // mengisi kolom slug sesuai dengan isian kolom title
+                    ->required(),
 
-                    Forms\Components\TextInput::make('slug')
-                        ->label('Slug URL')
-                        ->required()
-                        ->readOnly()
-                        ->maxLength(255),
-                ])->columns(2),
+                Forms\Components\TextInput::make('slug')
+                    ->label('Slug URL')
+                    ->required()
+                    ->readOnly()
+                    ->maxLength(255),
             ]);
     }
 
