@@ -21,4 +21,9 @@ class PlanningDocument extends Model
     {
         return $this->belongsTo(Opd::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(PlanningDocumentCategory::class, 'category_id');
+    }
 }

@@ -34,6 +34,7 @@ class PlanningDocumentResource extends Resource
             ->relationship('opd', 'name')
             ->searchable()
             ->preload()
+            ->reactive()
             ->required()
             : Forms\Components\Hidden::make('opd_id')
             ->default($auth->opd_id);
@@ -46,6 +47,19 @@ class PlanningDocumentResource extends Resource
                 //     ->label('OPD')
                 //     ->relationship('opd', 'name')
                 //     ->preload(),
+                Forms\Components\Select::make('category_id')
+                    ->relationship(
+                        'category',
+                        'title',
+                        fn($query, Forms\Get $get) =>
+                        // Menyaring kategori sesuai OPD yang dipilih (opsional)
+                        $query->when($get('opd_id'), fn($q, $opdId) => $q->where('opd_id', $opdId))
+                    )
+                    ->label('Kategori Dokumen')
+                    ->placeholder('Pilih Kategori')
+                    ->searchable()
+                    ->preload()
+                    ->nullable(),
                 Forms\Components\Textarea::make('title')
                     ->label('Judul')
                     ->maxLength(250)
