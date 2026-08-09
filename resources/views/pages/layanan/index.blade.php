@@ -13,7 +13,7 @@ $opdName = $opd?->name ?? 'Instansi';
 <div class="w-full bg-slate-50/60 py-10 min-h-screen">
     <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- HEADER BANNER TEMATIK (Membedakan dengan Beranda) -->
+        <!-- Header -->
         <div class="relative overflow-hidden bg-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-lg">
             <div
                 class="absolute -right-10 -bottom-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
@@ -37,17 +37,17 @@ $opdName = $opd?->name ?? 'Instansi';
             </div>
         </div>
 
-        <!-- WRAPPER UTAMA DAFTAR LAYANAN -->
+        <!-- Daftar Layanan -->
         <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm space-y-8">
 
-            <!-- Grid Layanan Gaya Landscape (Berbeda dengan Beranda) -->
+            <!-- Grid Layanan -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($services as $service)
                 <div
                     class="group relative flex flex-col justify-between p-6 bg-white rounded-2xl border border-slate-200/80 hover:border-orange-300 hover:shadow-xl transition-all duration-300">
 
                     <div>
-                        <!-- Header Kartu: Ikon & Badge Status -->
+                        <!-- Ikon & Badge Status -->
                         <div class="flex items-start justify-between gap-4 mb-5">
                             <div
                                 class="p-3.5 bg-orange-50 text-orange-600 border border-orange-100 rounded-2xl group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors duration-300 shadow-sm">
@@ -72,13 +72,13 @@ $opdName = $opd?->name ?? 'Instansi';
                             </h2>
                         </a>
 
-                        <!-- Deskripsi Singkat -->
+                        <!-- Deskripsi -->
                         <p class="text-xs text-slate-500 leading-relaxed line-clamp-3 mb-6">
                             {{ $service->description }}
                         </p>
                     </div>
 
-                    <!-- Footer Aksi: Tombol Kapsul -->
+                    <!-- Tombol Aksi -->
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
                         <a href="/layanan/{{ $service->id }}"
                             class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200 shadow-sm">
@@ -90,10 +90,9 @@ $opdName = $opd?->name ?? 'Instansi';
                             </svg>
                         </a>
                     </div>
-
                 </div>
                 @empty
-                <!-- State Jika Data Layanan Kosong -->
+                <!-- Jika Data Layanan Kosong -->
                 <div class="col-span-full bg-slate-50 border border-slate-200/80 p-12 text-center rounded-2xl">
                     <div class="flex flex-col items-center justify-center gap-3">
                         <div class="p-4 bg-orange-50 rounded-full text-orange-500 border border-orange-100">
@@ -112,15 +111,13 @@ $opdName = $opd?->name ?? 'Instansi';
                 @endforelse
             </div>
 
-            <!-- Paginasi Layanan Modern -->
+            <!-- Paginasi Layanan -->
             @if ($services->hasPages())
             <div class="pt-8 border-t border-slate-100">
                 {{ $services->links() }}
             </div>
             @endif
-
         </div>
-
     </div>
 </div>
 @endsection

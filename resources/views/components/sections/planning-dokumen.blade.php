@@ -1,10 +1,10 @@
 @props(['documents'])
 
 @php
-$opdSlug = env('APP_ID');
-$opd = App\Models\Opd::where('slug', $opdSlug)->first();
+use App\Models\Opd;
 
-$latestDocuments = $documents->where('opd_id', $opd?->id)->sortByDesc('published_at')->take(3);
+$opdSlug = env('APP_ID');
+$opd = Opd::where('slug', $opdSlug)->first();
 $opdName = $opd?->name ?? 'Instansi';
 @endphp
 
@@ -45,7 +45,8 @@ $opdName = $opd?->name ?? 'Instansi';
 
             <!-- Daftar Dokumen -->
             <div class="space-y-4">
-                @forelse($latestDocuments as $doc)
+                {{-- Langsung iterasi variabel $documents yang dikirim dari controller / beranda.blade.php --}}
+                @forelse($documents as $doc)
                 <a href="/planning-dokumen/{{ $doc->slug }}"
                     class="group block p-5 rounded-2xl border border-slate-200/80 bg-white hover:border-orange-300 hover:shadow-lg transition-all duration-300">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -64,7 +65,7 @@ $opdName = $opd?->name ?? 'Instansi';
                                 <div class="flex flex-wrap items-center gap-2">
                                     <span
                                         class="inline-block text-[10px] font-black text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                                        PDF / DOKUMEN
+                                        {{ $doc->category->title ?? 'PDF / DOKUMEN' }}
                                     </span>
                                 </div>
                                 <h3
@@ -80,7 +81,7 @@ $opdName = $opd?->name ?? 'Instansi';
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                         </svg>
-                                        <span>{{ $doc->created_at?->locale('id')->isoFormat('D MMMM YYYY') ?? now()->locale('id')->isoFormat('D MMMM YYYY') }}</span>
+                                        <span>{{ $doc->created_at?->locale('id')->isoFormat('D MMMM YYYY') ?? '-' }}</span>
                                     </div>
                                     <span class="text-slate-300">•</span>
                                     <!-- Instansi Terkait -->
@@ -95,6 +96,7 @@ $opdName = $opd?->name ?? 'Instansi';
                                 </div>
                             </div>
                         </div>
+
                         <!-- Tombol Indikator File -->
                         <div class="flex-none self-end sm:self-center pt-2 sm:pt-0">
                             <span

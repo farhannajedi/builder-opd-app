@@ -1,16 +1,19 @@
 @props(['galleries'])
 
 @php
-$opdSlug = env('APP_ID');
-$opd = App\Models\Opd::where('slug', $opdSlug)->first();
+use App\Models\Opd;
 
-$latestGalleries = $galleries->where('opd_id', $opd?->id)->sortByDesc('published_at')->take(3);
+$opdSlug = env('APP_ID');
+$opd = Opd::where('slug', $opdSlug)->first();
 $opdName = $opd?->name ?? 'Instansi';
+
+// Gunakan langsung variabel $galleries yang dikirim dari beranda.blade.php
+$latestGalleries = $galleries;
 @endphp
 
 <section class="w-full bg-slate-100/70 py-16 border-y border-slate-200/80">
     <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Wrapper Kartu Utama -->
+        <!-- Wrapper Utama -->
         <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm">
             <!-- Header Galeri -->
             <div
@@ -44,7 +47,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 </a>
             </div>
 
-            <!-- Grid Galeri Foto -->
+            <!-- Galeri Foto -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @forelse ($latestGalleries as $gal)
                 <div wire:key="gal-{{ $gal->id }}"
@@ -58,7 +61,7 @@ $opdName = $opd?->name ?? 'Instansi';
                             {{ $gal->created_at?->locale('id')->isoFormat('D MMM YYYY') ?? now()->locale('id')->isoFormat('D MMM YYYY') }}
                         </span>
 
-                        <img src="{{ url('storage/' . $gal->images) }}" alt="{{ $gal->title }}"
+                        <img src="{{ asset('storage/' . $gal->images) }}" alt="{{ $gal->title }}"
                             class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity">
@@ -74,11 +77,11 @@ $opdName = $opd?->name ?? 'Instansi';
                             </h3>
 
                             <p class="text-xs text-slate-500 leading-relaxed line-clamp-2 mb-4">
-                                {{ $gal->description }}
+                                {{ strip_tags($gal->description) }}
                             </p>
                         </div>
 
-                        <!-- Tombol Detail -->
+                        <!-- Detail -->
                         <div class="pt-3 border-t border-slate-100">
                             <a href="/galeri/{{ $gal->slug }}"
                                 class="inline-flex items-center justify-between w-full px-4 py-2 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200">

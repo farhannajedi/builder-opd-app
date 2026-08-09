@@ -2,7 +2,7 @@
 $opdSlug = env('APP_ID');
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
-$otherNews = App\Models\News::where('opd_id', $opd?->id)->with('category')->latest()->paginate(9);
+$otherNews = App\Models\News::where('opd_id', $opd?->id)->with('category', 'opd')->latest()->paginate(9);
 $newsCategory = App\Models\NewsCategories::where('opd_id', $opd?->id)->limit(7)->get();
 
 $opdName = $opd->name ?? 'Instansi';

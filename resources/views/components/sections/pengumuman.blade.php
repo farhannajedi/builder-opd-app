@@ -5,9 +5,10 @@ use Illuminate\Support\Str;
 
 $opdSlug = env('APP_ID');
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
+$opdName = $opd?->name ?? 'Instansi';
 
-$announcements = $announcement->where('opd_id', $opd?->id)->sortByDesc('created_at')->take(4);
-$opdName = $opd->name ?? 'Instansi';
+// Menggunakan data $announcement yang dikirim dari index.blade.php
+$announcements = $announcement;
 @endphp
 
 <!-- Container Utama -->
@@ -45,20 +46,18 @@ $opdName = $opd->name ?? 'Instansi';
         </div>
 
         <!-- Grid Pengumuman -->
-        @if($announcements->isNotEmpty())
+        @if($announcements && $announcements->isNotEmpty())
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach ($announcements as $item)
             <div class="group h-full">
                 <a href="/pengumuman/{{ $item->slug }}"
                     class="relative flex flex-col p-6 h-full rounded-2xl shadow-sm border border-slate-200/80 bg-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group-hover:border-orange-200">
 
-                    <!-- Saat Hover -->
                     <div
                         class="absolute top-0 left-0 right-0 h-1 bg-slate-200 group-hover:bg-orange-500 transition-colors duration-300">
                     </div>
 
                     <div class="flex-grow pt-2">
-                        <!-- Kategori -->
                         <div class="flex items-center gap-1.5 mb-3">
                             <span
                                 class="text-[10px] bg-orange-50 text-orange-600 border border-orange-200 font-bold uppercase px-2.5 py-0.5 rounded-md tracking-wider">
@@ -66,19 +65,16 @@ $opdName = $opd->name ?? 'Instansi';
                             </span>
                         </div>
 
-                        <!-- Judul Pengumuman -->
                         <h3
                             class="text-base font-bold text-slate-800 group-hover:text-orange-600 leading-snug mb-3 transition-colors line-clamp-2">
                             {{ $item->title }}
                         </h3>
 
-                        <!-- Deskripsi -->
                         <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed">
                             {{ Str::limit(strip_tags($item->deskripsi), 110) }}
                         </p>
                     </div>
 
-                    <!-- Tanggal Diterbitkan -->
                     <div class="mt-6 pt-3 border-t border-slate-100 flex items-center justify-between text-slate-400">
                         <div class="flex items-center gap-1.5 text-slate-400">
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -104,8 +100,6 @@ $opdName = $opd->name ?? 'Instansi';
             </div>
             @endforeach
         </div>
-
-        <!-- Jika Pengumuman Kosong -->
         @else
         <div class="bg-white border border-slate-200/80 rounded-2xl p-10 text-center shadow-sm">
             <div class="flex flex-col items-center justify-center gap-3">

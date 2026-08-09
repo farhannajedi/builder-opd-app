@@ -1,11 +1,14 @@
 @props(['services'])
 
 @php
-$opdSlug = env('APP_ID');
-$opd = App\Models\Opd::where('slug', $opdSlug)->first();
+use App\Models\Opd;
 
-$latestServices = $services->take(4);
+$opdSlug = env('APP_ID');
+$opd = Opd::where('slug', $opdSlug)->first();
 $opdName = $opd?->name ?? 'Instansi';
+
+// Gunakan langsung variabel $services yang dikirimkan dari beranda.blade.php
+$latestServices = $services;
 @endphp
 
 <section class="w-full bg-slate-50/60 py-16 border-b border-slate-200/80">
@@ -33,7 +36,7 @@ $opdName = $opd?->name ?? 'Instansi';
                     </p>
                 </div>
 
-                <!-- Tombol Selengkapnya (Desktop Header) -->
+                <!-- Tombol Selengkapnya -->
                 <a href="/layanan" wire:navigate
                     class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-orange-500 text-white text-xs font-bold shadow-sm transition-all duration-200 group">
                     <span>Lihat Semua Layanan</span>
@@ -45,7 +48,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 </a>
             </div>
 
-            <!-- Grid Kartu Layanan (4 Kolom Simetris) -->
+            <!-- Grid Layanan -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @forelse($latestServices as $service)
                 <div
@@ -67,13 +70,13 @@ $opdName = $opd?->name ?? 'Instansi';
                             {{ $service->name }}
                         </h3>
 
-                        <!-- Deskripsi Singkat -->
+                        <!-- Deskripsi -->
                         <p class="text-xs text-slate-500 leading-relaxed line-clamp-3 mb-6">
-                            {{ $service->description }}
+                            {{ strip_tags($service->description) }}
                         </p>
                     </div>
 
-                    <!-- Tombol Aksi Kapsul -->
+                    <!-- Tombol Aksi -->
                     <div class="pt-4 border-t border-slate-100">
                         <a href="/layanan/{{ $service->id }}"
                             class="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200 shadow-sm">
@@ -97,8 +100,8 @@ $opdName = $opd?->name ?? 'Instansi';
                             </svg>
                         </div>
                         <p class="text-sm font-bold text-slate-700">Belum Ada Layanan Tersedia</p>
-                        <p class="text-xs text-slate-400">Saat ini belum ada aplikasi atau fasilitas layanan publik yang
-                            terdaftar dari {{ $opdName }}.</p>
+                        <p class="text-xs text-slate-400">Saat ini belum ada fasilitas layanan publik yang terdaftar
+                            dari {{ $opdName }}.</p>
                     </div>
                 </div>
                 @endforelse
