@@ -70,7 +70,8 @@ class HeroSectionResource extends Resource
                             ->label('slogan/subjudul')
                             ->helperText('Pisahkan dengan (|)')
                             ->nullable()
-                            ->maxLength(500),
+                            ->maxLength(500)
+                            ->columnSpanFull(),
                         Forms\Components\Toggle::make('is_active')
                             ->label('Aktifkan Hero Banner')
                             ->helperText('Pastikan hanya satu hero section yang diaktifkan untuk setiap OPD')
@@ -111,12 +112,16 @@ class HeroSectionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('OPD')
+                    ->badge()
+                    ->color('info')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Judul')
+                    ->label('Judul Utama')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->wrap(),
                 ImageColumn::make('banners.image_path')
                     ->label('Banner Utama')
                     ->circular()
@@ -124,15 +129,19 @@ class HeroSectionResource extends Resource
                     ->limit(4),
                 ToggleColumn::make('is_active')
                     ->label('Aktif'),
-                Tables\Columns\TextColumn::make('published_at')
-                    ->label('Tanggal Publikasi')
-                    ->date('d F Y')
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Tanggal Buat')
+                    ->dateTime('d M Y')
                     ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('opd_id')
                     ->relationship('opd', 'name')
-                    ->label('Filter per OPD'),
+                    ->label('Filter per OPD')
+                    ->searchable()
+                    ->preload()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -164,7 +173,7 @@ class HeroSectionResource extends Resource
     // pembatasan data berdasarkan opd id, agar admin opd hanya melihat data hero section miliknya, sedangkan super admin melihat semua data
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()->with(['opd', 'banners']);
 
         $user = Auth::user();
 

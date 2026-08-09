@@ -4,16 +4,15 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
-use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-// use Illuminate\Container\Attributes\Auth;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ServiceResource extends Resource
 {
@@ -23,71 +22,87 @@ class ServiceResource extends Resource
 
     protected static ?string $navigationLabel = 'Layanan OPD';
 
+    protected static ?string $navigationGroup = 'Layanan Publik';
+
     public static function form(Form $form): Form
     {
-        // ini adalah validasi, agar admin opd tidak dapat memilih opd, namun otomatis terisi berdasarkan user->opd id
         $auth = Auth::user();
 
-        // Tentukan input untuk opd_id berdasarkan role user
+        // Tentukan input opd_id berdasarkan role user
         $opdField = is_null($auth->opd_id)
             ? Forms\Components\Select::make('opd_id')
-            ->label('OPD')
+            ->label('OPD / Instansi')
             ->relationship('opd', 'name')
             ->searchable()
             ->preload()
             ->required()
+            ->columnSpanFull()
             : Forms\Components\Hidden::make('opd_id')
             ->default($auth->opd_id);
 
         return $form
             ->schema([
-                // tambahkan ini
-                $opdField,
+                Forms\Components\Section::make('Informasi Layanan Publik')
+                    ->description('Kelola daftar layanan publik yang disediakan oleh OPD / Instansi.')
+                    ->schema([
+                        $opdField,
 
-                Forms\Components\TextInput::make('name')
-                    ->label('Nama')
-                    ->required(),
-                Forms\Components\TextInput::make('description')
-                    ->label('Deskripsi')
-                    ->maxLength(5000)
-                    ->columnSpanFull(),
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nama Layanan')
+                            ->placeholder('Contoh: Layanan Permohonan Informasi Publik (PPID)')
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+
+                        Forms\Components\Textarea::make('description')
+                            ->label('Deskripsi / Persyaratan Layanan')
+                            ->placeholder('Tuliskan rincian persyaratan atau deskripsi singkat layanan...')
+                            ->rows(4)
+                            ->maxLength(5000)
+                            ->columnSpanFull()
+                            ->nullable(),
+                    ])->columns(2),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            // pemisahan data berdasarkan opd id
-            // ->modifyQueryUsing(function (builder $query) {
-            //     $auth = Auth::user();
-
-            //     // jika super admin, maka tampilkan semua data
-            //     if (is_null($auth->opd_id)) {
-            //         return;
-            //     }
-
-            //     // admin opd
-            //     $query->where('opd_id', $auth->opd_id);
-            // })
             ->columns([
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Layanan')
+                    ->sortable()
+                    ->searchable()
+                    ->weight('bold')
+                    ->wrap(),
+
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('Nama OPD')
+                    ->badge()
+                    ->color('info')
                     ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Nama')
-                    ->searchable(),
+                    ->searchable()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
+
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Deskripsi'),
+                    ->label('Deskripsi')
+                    ->formatStateUsing(fn($state) => Str::limit(strip_tags($state), 60))
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Dibuat Pada')
+                    ->dateTime('d M Y H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                // filter bersarkan opd
                 SelectFilter::make('opd_id')
                     ->label('Filter OPD')
                     ->relationship('opd', 'name')
                     ->searchable()
                     ->preload()
-                    ->visible(fn() => is_null(Auth::user()->opd_id)), // hanya tampilkan filter jika user adalah super admin
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -116,14 +131,14 @@ class ServiceResource extends Resource
         ];
     }
 
-    // pembatasan data berdasarkan opd id, agar admin opd hanya melihat data hero section miliknya, sedangkan super admin melihat semua data
+    // pembatasan data berdasarkan opd id, agar admin opd hanya melihat data layanan miliknya, sedangkan super admin melihat semua data
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()->with(['opd']);
 
         $user = Auth::user();
 
-        if ($user->opd_id !== null) {
+        if ($user && $user->opd_id !== null) {
             $query->where('opd_id', $user->opd_id);
         }
 

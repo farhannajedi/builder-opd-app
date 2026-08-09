@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\OpdResource\Pages;
-use App\Filament\Resources\OpdResource\RelationManagers;
 use App\Models\Opd;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
@@ -13,7 +12,6 @@ use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -23,31 +21,48 @@ class OpdResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
-    protected static ?string $navigationLabel = 'OPD';
+    protected static ?string $navigationLabel = 'OPD / Instansi';
 
     protected static ?string $navigationGroup = 'Manajemen Sistem';
-
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('Nama OPD')
-                    ->required()
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(fn($state, callable $set) => $set('slug', \Illuminate\Support\Str::slug($state))),
-                Forms\Components\TextInput::make('slug')
-                    ->label('slug')
-                    ->required()
-                    ->unique()
-                    ->disabled()
-                    ->dehydrated(),
-                Forms\Components\TextInput::make('domain')
-                    ->label('domain')
-                    ->helperText('note : Domain digunakan sebagai subdomain website'),
-                Forms\Components\TextInput::make('description')
-                    ->label('Deskripsi'),
+                Forms\Components\Section::make('Informasi Instansi / OPD')
+                    ->description('Kelola data induk instansi, slug URL, dan subdomain portal.')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nama OPD')
+                            ->placeholder('Contoh: Dinas Komunikasi dan Informatika')
+                            ->required()
+                            ->maxLength(255)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state))),
+
+                        Forms\Components\TextInput::make('slug')
+                            ->label('Slug URL')
+                            ->placeholder('Akan otomatis terisi sesuai Nama OPD')
+                            ->required()
+                            ->readOnly()
+                            ->dehydrated()
+                            ->unique(table: Opd::class, column: 'slug', ignoreRecord: true),
+
+                        Forms\Components\TextInput::make('domain')
+                            ->label('Subdomain')
+                            ->placeholder('Contoh: diskominfo')
+                            ->helperText('Catatan: Subdomain yang digunakan untuk mengakses portal instansi ini.')
+                            ->maxLength(255)
+                            ->nullable(),
+
+                        Forms\Components\Textarea::make('description')
+                            ->label('Deskripsi / Tugas Fungsi')
+                            ->placeholder('Tuliskan ringkasan fungsi OPD...')
+                            ->rows(3)
+                            ->maxLength(1000)
+                            ->columnSpanFull()
+                            ->nullable(),
+                    ])->columns(2),
             ]);
     }
 
@@ -58,26 +73,45 @@ class OpdResource extends Resource implements HasShieldPermissions
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama OPD')
                     ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->label('slug')
                     ->sortable()
+                    ->weight('bold')
+                    ->wrap(),
+
+                Tables\Columns\TextColumn::make('slug')
+                    ->label('Slug')
+                    ->sortable()
+                    ->badge()
+                    ->color('gray')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('domain')
                     ->label('Subdomain')
+                    ->badge()
+                    ->color('info')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->placeholder('Tanpa Subdomain'),
+
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Deskripsi'),
+                    ->label('Deskripsi')
+                    ->formatStateUsing(fn($state) => Str::limit(strip_tags($state), 50))
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Dibuat Pada')
+                    ->dateTime('d M Y H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                // filter bersarkan opd
-                SelectFilter::make('opd_id')
+                // Filter berdasarkan ID OPD 
+                SelectFilter::make('id')
                     ->label('Filter OPD')
                     ->options(Opd::pluck('name', 'id'))
                     ->searchable()
                     ->preload()
-                    ->visible(fn() => is_null(Auth::user()->opd_id)), // hanya tampilkan filter jika user adalah super admin
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -106,7 +140,6 @@ class OpdResource extends Resource implements HasShieldPermissions
         ];
     }
 
-    // permission apa aja yang dapat dilakukan oleh user akan diatur disini
     public static function getPermissionPrefixes(): array
     {
         return [
@@ -118,16 +151,16 @@ class OpdResource extends Resource implements HasShieldPermissions
         ];
     }
 
-    // hanya user tertentu yang dapat mengakses opd milik mereka masing-masing
+    // Admin OPD hanya melihat data instansinya sendiri
     public static function getEloquentQuery(): Builder
     {
-        $user = filament()->auth()->user();
+        $query = parent::getEloquentQuery();
+        $user = Auth::user();
 
-        if ($user && $user->opd_id) {
-            return parent::getEloquentQuery()
-                ->where('opd_id', $user->opd_id);
+        if ($user && $user->opd_id !== null) {
+            $query->where('id', $user->opd_id);
         }
 
-        return parent::getEloquentQuery();
+        return $query;
     }
 }

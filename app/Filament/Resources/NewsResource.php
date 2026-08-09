@@ -6,6 +6,7 @@ use Filament\Forms;
 use App\Models\News;
 use Filament\Tables;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
@@ -22,9 +23,10 @@ class NewsResource extends Resource
 
     protected static ?string $navigationLabel = 'Berita';
 
+    protected static ?string $navigationGroup = 'Manajemen Berita';
+
     public static function form(Form $form): Form
     {
-        // ini adalah validasi, agar admin opd tidak dapat memilih opd, namun otomatis terisi berdasarkan user->opd id
         $auth = Auth::user();
 
         // Tentukan input untuk opd_id berdasarkan role user
@@ -35,6 +37,7 @@ class NewsResource extends Resource
             ->searchable()
             ->preload()
             ->required()
+            ->live() // Menjadikan live agar dropdown kategori di bawah langsung reaktif menyaring berdasarkan OPD ini
             : Forms\Components\Hidden::make('opd_id')
             ->default($auth->opd_id);
 
@@ -42,44 +45,44 @@ class NewsResource extends Resource
             ->schema([
                 $opdField,
 
-                // Forms\Components\Select::make('opd_id')
-                //     ->label('OPD')
-                //     ->relationship('opd', 'name')
-                //     ->preload(),
                 Forms\Components\Select::make('category_id')
-                    ->label('Categori Berita')
+                    ->label('Kategori Berita')
                     ->relationship(
                         name: 'category',
                         titleAttribute: 'title',
-                        modifyQueryUsing: function (Builder $query) {
-
-                            $auth = Auth::user();
-
-                            // jika super admin tampilkan semua
-                            if (is_null($auth->opd_id)) {
-                                return;
+                        modifyQueryUsing: function (Builder $query, Get $get) use ($auth) {
+                            // Jika Admin OPD, saring berdasarkan OPD
+                            if (!is_null($auth->opd_id)) {
+                                return $query->where('opd_id', $auth->opd_id);
                             }
 
-                            // admin opd hanya lihat kategori opd mereka
-                            $query->where('opd_id', $auth->opd_id);
+                            // Jika Super Admin, saring kategori berdasarkan OPD yang sedang dipilih di form
+                            $selectedOpdId = $get('opd_id');
+                            if ($selectedOpdId) {
+                                return $query->where('opd_id', $selectedOpdId);
+                            }
+                            return $query;
                         }
-                    ),
-                //->relationship('category', 'title'),
+                    )
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+
                 Forms\Components\TextInput::make('title')
                     ->label('Judul')
                     ->live(onBlur: true)
-                    ->afterStateUpdated(function ($state, callable $set) {
-                        $set('slug', Str::slug($state));
-                    }) // mengisi kolom slug sesuai dengan isian kolom title
+                    ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state)))
                     ->required(),
+
                 Forms\Components\TextInput::make('slug')
-                    ->label('slug')
-                    ->placeholder('Akan otomatis terisi sesuai isi judul')
+                    ->label('Slug')
+                    ->placeholder('Akan otomatis terisi sesuai judul')
                     ->readOnly()
                     ->required(),
+
                 Forms\Components\RichEditor::make('deskripsi')
                     ->label('Konten')
-                    ->maxLength(5000)
+                    ->maxLength(65535)
                     ->disableToolbarButtons([
                         'attachFiles',
                         'blockquote',
@@ -87,12 +90,13 @@ class NewsResource extends Resource
                     ])
                     ->required()
                     ->columnSpanFull(),
+
                 Forms\Components\FileUpload::make('images')
                     ->label('Gambar')
                     ->image()
                     ->directory('news/' . now()->format('Y-m-d'))
-                    ->reorderable()
                     ->required(),
+
                 Forms\Components\DatePicker::make('published_at')
                     ->label('Tanggal Publikasi')
                     ->displayFormat('d F Y')
@@ -103,60 +107,65 @@ class NewsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            // pemisahan data berdasarkan opd id
-            // ->modifyQueryUsing(function (builder $query) {
-            //     $auth = Auth::user();
-
-            //     // jika super admin, maka tampilkan semua data
-            //     if (is_null($auth->opd_id)) {
-            //         return;
-            //     }
-
-            //     // admin opd
-            //     $query->where('opd_id', $auth->opd_id);
-            // })
             ->columns([
-                Tables\Columns\TextColumn::make('opd.name')
-                    ->label('Nama OPD')
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('category.title')
-                    ->label('Categori Berita')
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('images')
+                    ->label('Gambar')
+                    ->square(),
+
                 Tables\Columns\TextColumn::make('title')
                     ->label('Judul')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->wrap()
+                    ->limit(50),
+
+                Tables\Columns\TextColumn::make('category.title')
+                    ->label('Kategori')
+                    ->badge()
+                    ->color('warning')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('opd.name')
+                    ->label('Nama OPD')
+                    ->badge()
+                    ->color('info')
+                    ->sortable()
+                    ->searchable()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
+
+                // Deskripsi 
                 Tables\Columns\TextColumn::make('deskripsi')
-                    ->label('Deskripsi'),
+                    ->label('Deskripsi')
+                    ->formatStateUsing(fn($state) => Str::limit(strip_tags($state), 60))
+                    ->toggleable(isToggledHiddenByDefault: true), // Sembunyikan secara default
+
                 Tables\Columns\TextColumn::make('published_at')
                     ->label('Publikasi')
-                    ->date('d F Y')
+                    ->date('d M Y')
+                    ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                // filter berdasarkan opd
                 SelectFilter::make('opd_id')
                     ->label('Filter OPD')
                     ->relationship('opd', 'name')
                     ->searchable()
                     ->preload()
-                    ->visible(fn() => is_null(Auth::user()->opd_id)), // hanya tampilkan filter jika user adalah super admin
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
 
-                // filter berdasarkan kategori berita
                 SelectFilter::make('category_id')
                     ->label('Filter Kategori')
                     ->relationship(
-
                         name: 'category',
                         titleAttribute: 'title',
                         modifyQueryUsing: function (Builder $query) {
                             $auth = Auth::user();
 
-                            // jika role super admin tamilkan semuanya
                             if (is_null($auth->opd_id)) {
                                 return;
                             }
 
-                            // jika role admin opd mereka hanya melihat kategori mereka
                             $query->where('opd_id', $auth->opd_id);
                         }
                     )
@@ -193,7 +202,7 @@ class NewsResource extends Resource
     // pembatasan data berdasarkan opd id, agar admin opd hanya melihat data hero section miliknya, sedangkan super admin melihat semua data
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()->with(['opd', 'category']);
 
         $user = Auth::user();
 

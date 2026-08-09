@@ -22,6 +22,8 @@ class NewsCategoriesResource extends Resource
 
     protected static ?string $navigationLabel = 'Kategori Berita';
 
+    protected static ?string $navigationGroup = 'Manajemen Berita';
+
     public static function form(Form $form): Form
     {
         // ini adalah validasi, agar admin opd tidak dapat memilih opd, namun otomatis terisi berdasarkan user->opd id
@@ -56,12 +58,11 @@ class NewsCategoriesResource extends Resource
                 // ->disabled(!filament()->auth()->user()->hasRole('admin BPKAD')),
                 Forms\Components\TextInput::make('title')
                     ->label('Nama Kategori Berita')
-                    ->placeholder('Masukkan nama kategori untuk berita anda....')
+                    ->placeholder('Masukkan nama kategori...')
                     ->live(onBlur: true)
-                    ->afterStateUpdated(function ($state, callable $set) {
-                        $set('slug', Str::slug($state));
-                    }) // mengisi kolom slug sesuai dengan isian kolom title
-                    ->required(),
+                    ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state)))
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('slug')
                     ->label('Slug')
                     ->placeholder('Akan otomatis terisi sesuai isi judul')
@@ -96,21 +97,29 @@ class NewsCategoriesResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('Nama OPD')
+                    ->badge()
+                    ->color('info')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Kategori')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->weight('bold'),
                 Tables\Columns\TextColumn::make('slug')
-                    ->label('slug')
+                    ->label('Slug')
                     ->sortable()
                     ->copyable()
+                    ->badge()
+                    ->color('gray')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat Pada')
-                    ->dateTime('d M Y'),
+                    ->dateTime('d M Y H:i')
+                    ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 // filter berdasarkan opd
                 SelectFilter::make('opd_id')
@@ -162,7 +171,7 @@ class NewsCategoriesResource extends Resource
     // pembatasan data berdasarkan opd id, agar admin opd hanya melihat data hero section miliknya, sedangkan super admin melihat semua data
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()->with(['opd']);
 
         $user = Auth::user();
 

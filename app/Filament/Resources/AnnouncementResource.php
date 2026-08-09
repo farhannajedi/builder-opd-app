@@ -6,6 +6,7 @@ use App\Filament\Resources\AnnouncementResource\Pages;
 use App\Models\Announcement;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
@@ -19,6 +20,8 @@ class AnnouncementResource extends Resource
     protected static ?string $model = Announcement::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationLabel = 'Pengumuman';
 
     public static function form(Form $form): Form
     {
@@ -58,17 +61,17 @@ class AnnouncementResource extends Resource
                 Forms\Components\FileUpload::make('images')
                     ->label('Gambar')
                     ->image()
-                    ->directory(function () {
-                        $auth = Auth::user();
-
+                    ->directory(function (Get $get) use ($auth) {
+                        // Jika Admin OPD, gunakan OPD mereka
                         if ($auth->opd_id) {
-                            // ambil slug
                             $folderOpd = $auth->opd?->slug ?? 'opd-' . $auth->opd_id;
                         } else {
-                            $folderOpd = 'Admin Kominfo';
+                            // Jika Super Admin, ambil OPD yang dipilih di form (jika ada)
+                            $selectedOpdId = $get('opd_id');
+                            $folderOpd = $selectedOpdId ? 'opd-' . $selectedOpdId : 'Admin-Kominfo';
                         }
 
-                        return "Pengumuman/{$folderOpd}/" . now()->isoFormat('Y-m-d');
+                        return "Pengumuman/{$folderOpd}/" . now()->format('Y-m-d');
                     })
                     ->nullable(),
             ]);
@@ -80,17 +83,31 @@ class AnnouncementResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('Nama OPD')
+                    ->badge()
+                    ->color('info')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Judul')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->wrap()
+                    ->limit(50),
                 Tables\Columns\ImageColumn::make('images')
                     ->label('Gambar')
+                    ->square()
                     ->disk('public'),
                 Tables\Columns\TextColumn::make('deskripsi')
-                    ->label('Deskripsi'),
+                    ->label('Deskripsi')
+                    ->formatStateUsing(fn($state) => Str::limit(strip_tags($state), 60))
+                    ->toggleable(isToggledHiddenByDefault: true), // Sembunyikan secara default dari tabel
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Tanggal Rilis')
+                    ->dateTime('d M Y')
+                    ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('opd_id')
                     ->label('Filter OPD')
@@ -129,7 +146,7 @@ class AnnouncementResource extends Resource
     // pembatasan data berdasarkan opd id, hanya super admin yang bisa melihat
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()->with(['opd']);
 
         $user = Auth::user();
 

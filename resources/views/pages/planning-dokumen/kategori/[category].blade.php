@@ -39,14 +39,14 @@ $opdName = $opd?->name ?? 'Instansi';
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div class="space-y-3 max-w-2xl">
                     <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-[11px] font-extrabold uppercase tracking-widest">
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-[9px] font-extrabold uppercase tracking-widest">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                         </svg>
                         Klasifikasi Dokumen Perencanaan
                     </div>
-                    <h1 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
+                    <h1 class="text-xl sm:text-2xl font-black tracking-tight leading-tight">
                         {{ $activeCategory->title }}
                     </h1>
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">

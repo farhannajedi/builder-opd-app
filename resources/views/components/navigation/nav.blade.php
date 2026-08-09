@@ -11,6 +11,8 @@ $opdName = $opd->name ?? 'Portal Resmi Instansi';
 
 // Ambil kategori dokumen perencanaan
 $docCategories = App\Models\PlanningDocumentCategory::where('opd_id', $opd?->id)->get();
+// Kategori berita
+$newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
 @endphp
 
 <!-- Container Navigasi Utama -->
@@ -120,11 +122,53 @@ $docCategories = App\Models\PlanningDocumentCategory::where('opd_id', $opd?->id)
                     Pengumuman
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="/berita"
                     class="{{ ($activePage ?? '') === 'berita' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
                     Berita
                 </a>
+            </li> -->
+            <li class="group relative">
+                <!-- Tombol Utama Menu -->
+                <a href="javascript:void(0)"
+                    class="{{ ($activePage ?? '') === 'berita' || ($activePage ?? '') === 'Berita' || ($activePage ?? '') === 'Berita' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} border-b-2 py-3 px-3 flex items-center gap-1 transition-all duration-200">
+                    <span>Berita</span>
+                    <x-icons.chevron-down class="h-4 w-4 stroke-2 group-hover:rotate-180 duration-300" />
+                </a>
+                <!-- Dropdown Menu -->
+                <div
+                    class="hidden group-hover:block bg-white p-2 min-w-60 w-max rounded-2xl shadow-xl border border-slate-100 absolute top-full left-0 z-50 transition-all duration-200 space-y-1">
+                    <!-- Menu Utama Semua Dokumen -->
+                    <a href="{{ url('/berita') }}" class="block">
+                        <div
+                            class="hover:bg-orange-50 hover:text-orange-600 p-2.5 rounded-xl text-xs font-semibold text-slate-700 transition-colors flex items-center gap-2">
+                            <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span>Semua Berita</span>
+                        </div>
+                    </a>
+
+                    <!-- Pembatas jika ada kategori -->
+                    @if($newsCategories->isNotEmpty())
+                    <div class="my-1 border-t border-slate-100"></div>
+                    <div class="px-2.5 pt-1 pb-0.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                        Kategori Berita
+                    </div>
+
+                    <!-- Loop Kategori Dokumen Perencanaan secara Dinamis -->
+                    @foreach ($newsCategories as $cat)
+                    <a href="{{ url('/berita/kategori/' . $cat->slug) }}" class="block">
+                        <div
+                            class="hover:bg-orange-50 hover:text-orange-600 p-2.5 rounded-xl text-xs font-medium text-slate-600 transition-colors flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                            <span>{{ $cat->title }}</span>
+                        </div>
+                    </a>
+                    @endforeach
+                    @endif
+                </div>
             </li>
             <!-- <li>
                 <a href="/planning-dokumen"
@@ -151,8 +195,7 @@ $docCategories = App\Models\PlanningDocumentCategory::where('opd_id', $opd?->id)
                     <span>Arsip Dokumen</span>
                     <x-icons.chevron-down class="h-4 w-4 stroke-2 group-hover:rotate-180 duration-300" />
                 </a>
-
-                <!-- Sub Menu Dropdown -->
+                <!-- Dropdown Menu -->
                 <div
                     class="hidden group-hover:block bg-white p-2 min-w-60 w-max rounded-2xl shadow-xl border border-slate-100 absolute top-full left-0 z-50 transition-all duration-200 space-y-1">
                     <!-- Menu Utama Semua Dokumen -->
@@ -167,7 +210,7 @@ $docCategories = App\Models\PlanningDocumentCategory::where('opd_id', $opd?->id)
                         </div>
                     </a>
 
-                    <!-- Pembatas / Separator jika ada kategori -->
+                    <!-- Pembatas jika ada kategori -->
                     @if($docCategories->isNotEmpty())
                     <div class="my-1 border-t border-slate-100"></div>
                     <div class="px-2.5 pt-1 pb-0.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
@@ -185,7 +228,6 @@ $docCategories = App\Models\PlanningDocumentCategory::where('opd_id', $opd?->id)
                     </a>
                     @endforeach
                     @endif
-
                 </div>
             </li>
         </ul>
@@ -194,7 +236,6 @@ $docCategories = App\Models\PlanningDocumentCategory::where('opd_id', $opd?->id)
     <!-- Menu Navigasi Mobile -->
     <div id="mobile-menu" x-cloak x-show="mobileOpen" x-transition @click.away="mobileOpen = false"
         class="md:hidden shadow-2xl bg-white p-3 absolute left-0 right-0 top-full w-full rounded-b-2xl border-t border-slate-200 text-slate-700 grid divide-y divide-slate-100">
-
         <a href="/"
             class="w-full text-base font-semibold flex justify-between items-center hover:bg-slate-50 p-2.5 rounded-xl group transition-colors">
             <span class="group-hover:text-orange-600">Beranda</span>

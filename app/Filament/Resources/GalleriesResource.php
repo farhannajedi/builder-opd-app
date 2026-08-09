@@ -86,17 +86,29 @@ class GalleriesResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('opd.name')
                     ->label('Nama OPD')
+                    ->color('info')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Judul')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->wrap()
+                    ->limit(50),
                 Tables\Columns\ImageColumn::make('images')
                     ->label('Gambar')
                     ->disk('public'),
                 Tables\Columns\TextColumn::make('deskripsi')
-                    ->label('Deskripsi'),
+                    ->label('Deskripsi')
+                    ->formatStateUsing(fn($state) => Str::limit(strip_tags($state), 60))
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Tanggal Unggah')
+                    ->dateTime('d M Y')
+                    ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 // filter berdasarkan opd 
                 SelectFilter::make('opd_id')
@@ -136,7 +148,7 @@ class GalleriesResource extends Resource
     // pembatasan data berdasarkan opd id, agar admin opd hanya melihat data hero section miliknya, sedangkan super admin melihat semua data
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()->with(['opd']);
 
         $user = Auth::user();
 

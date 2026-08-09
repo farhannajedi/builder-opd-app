@@ -6,57 +6,75 @@ use App\Filament\Resources\PlanningDocumentCategoryResource\Pages;
 use App\Models\PlanningDocumentCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PlanningDocumentCategoryResource extends Resource
 {
     protected static ?string $model = PlanningDocumentCategory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     protected static ?string $navigationLabel = 'Kategori Dokumen';
+
+    protected static ?string $navigationGroup = 'Manajemen Dokumen';
 
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
-
-        // ini adalah validasi, agar admin opd tidak dapat memilih opd, namun otomatis terisi berdasarkan user->opd id
         $auth = Auth::user();
 
-        // Tentukan input untuk opd_id berdasarkan role user
+        // Tentukan input opd_id berdasarkan role user
         $opdField = is_null($auth->opd_id)
             ? Forms\Components\Select::make('opd_id')
-            ->label('OPD')
+            ->label('OPD / Instansi')
             ->relationship('opd', 'name')
             ->searchable()
             ->preload()
             ->required()
+            ->live()
             : Forms\Components\Hidden::make('opd_id')
             ->default($auth->opd_id);
 
         return $form
             ->schema([
-                $opdField,
-                Forms\Components\TextInput::make('title')
-                    ->label('Judul')
-                    ->placeholder('Contoh: Rencana Kerja')
-                    ->live(onBlur: true)
-                    ->maxLength(250)
-                    ->afterStateUpdated(function ($state, callable $set) {
-                        $set('slug', \Illuminate\Support\Str::slug($state));
-                    }) // mengisi kolom slug sesuai dengan isian kolom title
-                    ->required(),
+                Forms\Components\Section::make('Detail Kategori Dokumen')
+                    ->schema([
+                        $opdField,
 
-                Forms\Components\TextInput::make('slug')
-                    ->label('Slug URL')
-                    ->required()
-                    ->readOnly()
-                    ->maxLength(255),
+                        Forms\Components\TextInput::make('title')
+                            ->label('Nama Kategori')
+                            ->placeholder('Contoh: Rencana Kerja (Renja)')
+                            ->live(onBlur: true)
+                            ->maxLength(250)
+                            ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state)))
+                            ->required(),
+
+                        Forms\Components\TextInput::make('slug')
+                            ->label('Slug URL')
+                            ->placeholder('Akan otomatis terisi sesuai judul')
+                            ->required()
+                            ->readOnly()
+                            ->dehydrated()
+                            ->maxLength(255)
+                            ->unique(
+                                table: PlanningDocumentCategory::class,
+                                column: 'slug',
+                                ignoreRecord: true,
+                                modifyRuleUsing: function ($rule, Get $get) use ($auth) {
+                                    $opdId = $auth->opd_id ?? $get('opd_id');
+
+                                    return $rule->where('opd_id', $opdId);
+                                }
+                            ),
+                    ])->columns(2),
             ]);
     }
 
@@ -70,12 +88,20 @@ class PlanningDocumentCategoryResource extends Resource
                     ->sortable()
                     ->weight('bold'),
 
-                Tables\Columns\TextColumn::make('opd.name')
-                    ->label('Instansi / OPD')
-                    ->searchable()
+                Tables\Columns\TextColumn::make('slug')
+                    ->label('Slug')
                     ->sortable()
                     ->badge()
-                    ->color('info'),
+                    ->color('gray')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('opd.name')
+                    ->label('Instansi / OPD')
+                    ->badge()
+                    ->color('info')
+                    ->sortable()
+                    ->searchable()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
 
                 Tables\Columns\TextColumn::make('documents_count')
                     ->counts('documents')
@@ -89,12 +115,14 @@ class PlanningDocumentCategoryResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                Tables\Filters\SelectFilter::make('opd_id')
-                    ->relationship('opd', 'name')
+                SelectFilter::make('opd_id')
                     ->label('Filter Instansi')
+                    ->relationship('opd', 'name')
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -123,13 +151,14 @@ class PlanningDocumentCategoryResource extends Resource
         ];
     }
 
+    // pembatasan data berdasarkan opd id, agar admin opd hanya melihat data kategori dokumen miliknya, sedangkan super admin melihat semua data
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()->with(['opd']);
 
         $user = Auth::user();
 
-        if ($user->opd_id !== null) {
+        if ($user && $user->opd_id !== null) {
             $query->where('opd_id', $user->opd_id);
         }
 
