@@ -23,7 +23,7 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
     <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 hidden md:block border-b border-slate-800">
         <div class="max-w-screen-lg mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <span class="flex items-center gap-1.5 text-orange-400 font-medium">
+                <span class="flex items-center gap-1.5 text-brand font-medium">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />

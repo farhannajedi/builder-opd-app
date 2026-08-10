@@ -14,6 +14,7 @@ class OpdConfigs extends Model
 
     protected $fillable = [
         'opd_id',
+        'primary_color',
         'logo',
         'favicon',
         'address',

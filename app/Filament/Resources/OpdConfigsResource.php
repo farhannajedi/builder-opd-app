@@ -40,6 +40,36 @@ class OpdConfigsResource extends Resource implements HasShieldPermissions
 
         return $form
             ->schema([
+                Forms\Components\Section::make('Identitas Visual & Tema Website')
+                    ->description('Atur warna khas dan susunan tampilan beranda website instansi Anda.')
+                    ->schema([
+                        // ColorPicker untuk memilih warna utama OPD
+                        Forms\Components\Select::make('primary_color')
+                            ->label('Warna Utama Instansi')
+                            ->helperText('Pilih warna dominan sesuai identitas atau logo instansi Anda.')
+                            ->default('#f97316') // Default Oranye
+                            ->options([
+                                '#f97316' => 'Oranye (Diskominfo / Default)',
+                                '#0284c7' => 'Biru Sky (Dinas Perhubungan / BPKAD)',
+                                '#10b981' => 'Hijau Emerald (Dinas Kesehatan / DLH)',
+                                '#e11d48' => 'Merah Rose (Satpol PP / Kesbangpol)',
+                                '#0f172a' => 'Dark Slate (Sekretariat Daerah)',
+                                '#8b5cf6' => 'Ungu Violet (P3AP2KB)',
+                            ])
+                            ->required(),
+
+                        // untuk memilih layout beranda
+                        Forms\Components\Select::make('homepage_layout')
+                            ->label('Tata Letak Beranda (Layout)')
+                            ->options([
+                                'default'         => 'Standar (Pengumuman & Berita Utama)',
+                                'service_focus' => 'Fokus Pada Layanan Publik',
+                                'news_focus'    => 'Fokus Pada Portal Berita & Siaran Pers',
+                            ])
+                            ->default('default')
+                            ->required(),
+                    ])->columns(2),
+
                 Forms\Components\Section::make('Identitas & Kontak OPD')
                     ->description('Atur identitas utama, logo, serta kontak resmi instansi.')
                     ->schema([
