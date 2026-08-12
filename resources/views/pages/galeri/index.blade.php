@@ -15,11 +15,11 @@ $opdName = $opd?->name ?? 'Instansi';
         <div
             class="relative overflow-hidden bg-slate-900 text-white rounded-3xl p-8 sm:p-12 shadow-lg border border-slate-800">
             <div
-                class="absolute -right-10 -bottom-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
+                class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none">
             </div>
             <div class="relative z-10 max-w-3xl space-y-3">
                 <div
-                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-[9px] font-extrabold uppercase tracking-widest">
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 border border-brand-500/30 text-brand-400 text-[9px] font-extrabold uppercase tracking-widest">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -40,7 +40,7 @@ $opdName = $opd?->name ?? 'Instansi';
         <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm space-y-8">
             <div class="flex items-center justify-between border-b border-slate-100 pb-5">
                 <div class="flex items-center gap-2 text-slate-800 font-bold text-sm">
-                    <span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-brand-500"></span>
                     <span>Koleksi Album Foto Resmi</span>
                 </div>
                 <span class="text-xs font-semibold text-slate-400">
@@ -52,7 +52,7 @@ $opdName = $opd?->name ?? 'Instansi';
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 @forelse ($galleries as $gal)
                 <div
-                    class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white hover:border-orange-300 hover:shadow-xl transition-all duration-300">
+                    class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white hover:border-brand-300 hover:shadow-xl transition-all duration-300">
                     <div>
                         <!-- Gambar Visual -->
                         <div class="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
@@ -72,13 +72,13 @@ $opdName = $opd?->name ?? 'Instansi';
                         <!-- Detail Deskripsi Teks -->
                         <div class="p-5">
                             <span
-                                class="block text-[10px] font-extrabold text-orange-600 uppercase tracking-wider mb-1.5">
+                                class="block text-[10px] font-extrabold text-brand-600 uppercase tracking-wider mb-1.5">
                                 {{ $gal->opd->name ?? $opdName }}
                             </span>
 
                             <a href="{{ url('galeri/' . $gal->slug) }}" class="block group/title">
                                 <h3
-                                    class="text-base font-bold text-slate-800 group-hover/title:text-orange-600 transition-colors leading-snug line-clamp-2">
+                                    class="text-base font-bold text-slate-800 group-hover/title:text-brand-600 transition-colors leading-snug line-clamp-2">
                                     {{ $gal->title }}
                                 </h3>
                             </a>
@@ -88,7 +88,7 @@ $opdName = $opd?->name ?? 'Instansi';
                     <!-- Tombol Detail -->
                     <div class="p-5 pt-0">
                         <a href="{{ url('galeri/' . $gal->slug) }}"
-                            class="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200 shadow-sm">
+                            class="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-brand-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-brand-500 text-xs font-bold transition-all duration-200 shadow-sm">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -107,7 +107,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 <!-- Jika Galeri Kosong -->
                 <div class="col-span-full bg-slate-50 border border-slate-200/80 p-12 text-center rounded-2xl">
                     <div class="flex flex-col items-center justify-center gap-3">
-                        <div class="p-4 bg-orange-50 rounded-full text-orange-500 border border-orange-100">
+                        <div class="p-4 bg-brand-50 rounded-full text-brand-500 border border-brand-100">
                             <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />

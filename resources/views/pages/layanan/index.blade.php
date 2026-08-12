@@ -16,11 +16,11 @@ $opdName = $opd?->name ?? 'Instansi';
         <!-- Header -->
         <div class="relative overflow-hidden bg-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-lg">
             <div
-                class="absolute -right-10 -bottom-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
+                class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none">
             </div>
             <div class="relative z-10 max-w-2xl space-y-3">
                 <div
-                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-[9px] font-extrabold uppercase tracking-widest">
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 border border-brand-500/30 text-brand-400 text-[9px] font-extrabold uppercase tracking-widest">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -44,13 +44,13 @@ $opdName = $opd?->name ?? 'Instansi';
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($services as $service)
                 <div
-                    class="group relative flex flex-col justify-between p-6 bg-white rounded-2xl border border-slate-200/80 hover:border-orange-300 hover:shadow-xl transition-all duration-300">
+                    class="group relative flex flex-col justify-between p-6 bg-white rounded-2xl border border-slate-200/80 hover:border-brand-300 hover:shadow-xl transition-all duration-300">
 
                     <div>
                         <!-- Ikon & Badge Status -->
                         <div class="flex items-start justify-between gap-4 mb-5">
                             <div
-                                class="p-3.5 bg-orange-50 text-orange-600 border border-orange-100 rounded-2xl group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors duration-300 shadow-sm">
+                                class="p-3.5 bg-brand-50 text-brand-600 border border-brand-100 rounded-2xl group-hover:bg-brand-500 group-hover:text-white group-hover:border-brand-500 transition-colors duration-300 shadow-sm">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -67,7 +67,7 @@ $opdName = $opd?->name ?? 'Instansi';
                         <!-- Nama Layanan -->
                         <a href="/layanan/{{ $service->id }}" class="block group/title">
                             <h2
-                                class="text-base sm:text-lg font-bold text-slate-800 group-hover/title:text-orange-600 transition-colors leading-snug line-clamp-2 mb-2">
+                                class="text-base sm:text-lg font-bold text-slate-800 group-hover/title:text-brand-600 transition-colors leading-snug line-clamp-2 mb-2">
                                 {{ $service->name }}
                             </h2>
                         </a>
@@ -81,7 +81,7 @@ $opdName = $opd?->name ?? 'Instansi';
                     <!-- Tombol Aksi -->
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
                         <a href="/layanan/{{ $service->id }}"
-                            class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200 shadow-sm">
+                            class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-brand-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-brand-500 text-xs font-bold transition-all duration-200 shadow-sm">
                             <span>Akses Detail Layanan</span>
                             <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24">
@@ -95,7 +95,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 <!-- Jika Data Layanan Kosong -->
                 <div class="col-span-full bg-slate-50 border border-slate-200/80 p-12 text-center rounded-2xl">
                     <div class="flex flex-col items-center justify-center gap-3">
-                        <div class="p-4 bg-orange-50 rounded-full text-orange-500 border border-orange-100">
+                        <div class="p-4 bg-brand-50 rounded-full text-brand-500 border border-brand-100">
                             <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />

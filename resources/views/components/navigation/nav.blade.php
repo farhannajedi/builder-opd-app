@@ -23,7 +23,7 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
     <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 hidden md:block border-b border-slate-800">
         <div class="max-w-screen-lg mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <span class="flex items-center gap-1.5 text-brand font-medium">
+                <span class="flex items-center gap-1.5 text-brand-500 font-medium">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -89,10 +89,10 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
 
         <!-- Search Bar Desktop  -->
         <div
-            class="bg-white w-1/3 h-10 border border-slate-300 rounded-lg hidden md:flex p-1 shadow-sm focus-within:border-orange-500 transition-colors">
+            class="bg-white w-1/3 h-10 border border-slate-300 rounded-lg hidden md:flex p-1 shadow-sm focus-within:border-brand-500 transition-colors">
             <input type="text" class="flex-1 focus:outline-none pl-2 text-sm text-slate-700" placeholder="Pencarian">
             <button class="bg-white hover:bg-amber-300 rounded-r-md px-3 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="text-orange-600 h-5 w-auto" viewBox="0 0 24 24"
+                <svg xmlns="http://www.w3.org/2000/svg" class="text-brand-500 h-5 w-auto" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
@@ -107,7 +107,7 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
         <ul class="text-xs font-bold uppercase flex gap-1 lg:gap-2 text-slate-700">
             <li>
                 <a href="/"
-                    class="{{ ($activePage ?? '') === 'beranda' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} flex gap-1.5 items-center border-b-2 py-3 px-3 transition-all duration-200">
+                    class="{{ ($activePage ?? '') === 'beranda' ? 'text-brand-500 border-brand-500 bg-slate-100' : 'hover:text-brand-500 hover:bg-slate-50 border-transparent' }} flex gap-1.5 items-center border-b-2 py-3 px-3 transition-all duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path
@@ -118,7 +118,7 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
             </li>
             <li>
                 <a href="/pengumuman"
-                    class="{{ ($activePage ?? '') === 'pengumuman' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
+                    class="{{ ($activePage ?? '') === 'pengumuman' ? 'text-brand-500 border-brand-500 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
                     Pengumuman
                 </a>
             </li>
@@ -131,7 +131,7 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
             <li class="group relative">
                 <!-- Tombol Utama Menu -->
                 <a href="javascript:void(0)"
-                    class="{{ ($activePage ?? '') === 'berita' || ($activePage ?? '') === 'Berita' || ($activePage ?? '') === 'Berita' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} border-b-2 py-3 px-3 flex items-center gap-1 transition-all duration-200">
+                    class="{{ ($activePage ?? '') === 'berita' || ($activePage ?? '') === 'Berita' || ($activePage ?? '') === 'Berita' ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} border-b-2 py-3 px-3 flex items-center gap-1 transition-all duration-200">
                     <span>Berita</span>
                     <x-icons.chevron-down class="h-4 w-4 stroke-2 group-hover:rotate-180 duration-300" />
                 </a>
@@ -141,8 +141,8 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                     <!-- Menu Utama Semua Dokumen -->
                     <a href="{{ url('/berita') }}" class="block">
                         <div
-                            class="hover:bg-orange-50 hover:text-orange-600 p-2.5 rounded-xl text-xs font-semibold text-slate-700 transition-colors flex items-center gap-2">
-                            <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="hover:bg-brand-50 hover:text-brand-600 p-2.5 rounded-xl text-xs font-semibold text-slate-700 transition-colors flex items-center gap-2">
+                            <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
@@ -161,8 +161,8 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                     @foreach ($newsCategories as $cat)
                     <a href="{{ url('/berita/kategori/' . $cat->slug) }}" class="block">
                         <div
-                            class="hover:bg-orange-50 hover:text-orange-600 p-2.5 rounded-xl text-xs font-medium text-slate-600 transition-colors flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                            class="hover:bg-brand-50 hover:text-brand-600 p-2.5 rounded-xl text-xs font-medium text-slate-600 transition-colors flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
                             <span>{{ $cat->title }}</span>
                         </div>
                     </a>
@@ -178,20 +178,20 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
             </li> -->
             <li>
                 <a href="/layanan"
-                    class="{{ ($activePage ?? '') === 'Layanan' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
+                    class="{{ ($activePage ?? '') === 'Layanan' ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
                     Layanan
                 </a>
             </li>
             <li>
                 <a href="/galeri"
-                    class="{{ ($activePage ?? '') === 'galeri' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
+                    class="{{ ($activePage ?? '') === 'galeri' ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
                     Galeri
                 </a>
             </li>
             <li class="group relative">
                 <!-- Tombol Utama Menu -->
                 <a href="javascript:void(0)"
-                    class="{{ ($activePage ?? '') === 'arsip-dokumen' || ($activePage ?? '') === 'Arsip Dokumen' || ($activePage ?? '') === 'Arsip Dokumen' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} border-b-2 py-3 px-3 flex items-center gap-1 transition-all duration-200">
+                    class="{{ ($activePage ?? '') === 'arsip-dokumen' || ($activePage ?? '') === 'Arsip Dokumen' || ($activePage ?? '') === 'Arsip Dokumen' ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} border-b-2 py-3 px-3 flex items-center gap-1 transition-all duration-200">
                     <span>Arsip Dokumen</span>
                     <x-icons.chevron-down class="h-4 w-4 stroke-2 group-hover:rotate-180 duration-300" />
                 </a>
@@ -201,8 +201,8 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                     <!-- Menu Utama Semua Dokumen -->
                     <a href="{{ url('/planning-dokumen') }}" class="block">
                         <div
-                            class="hover:bg-orange-50 hover:text-orange-600 p-2.5 rounded-xl text-xs font-semibold text-slate-700 transition-colors flex items-center gap-2">
-                            <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="hover:bg-brand-50 hover:text-brand-600 p-2.5 rounded-xl text-xs font-semibold text-slate-700 transition-colors flex items-center gap-2">
+                            <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
@@ -221,8 +221,8 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                     @foreach ($docCategories as $cat)
                     <a href="{{ url('/planning-dokumen/kategori/' . $cat->slug) }}" class="block">
                         <div
-                            class="hover:bg-orange-50 hover:text-orange-600 p-2.5 rounded-xl text-xs font-medium text-slate-600 transition-colors flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                            class="hover:bg-brand-50 hover:text-brand-600 p-2.5 rounded-xl text-xs font-medium text-slate-600 transition-colors flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
                             <span>{{ $cat->title }}</span>
                         </div>
                     </a>
@@ -238,42 +238,42 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
         class="md:hidden shadow-2xl bg-white p-3 absolute left-0 right-0 top-full w-full rounded-b-2xl border-t border-slate-200 text-slate-700 grid divide-y divide-slate-100">
         <a href="/"
             class="w-full text-base font-semibold flex justify-between items-center hover:bg-slate-50 p-2.5 rounded-xl group transition-colors">
-            <span class="group-hover:text-orange-600">Beranda</span>
+            <span class="group-hover:text-brand-600">Beranda</span>
         </a>
         <a href="/berita"
             class="w-full text-base font-semibold flex justify-between items-center hover:bg-slate-50 p-2.5 rounded-xl group transition-colors">
-            <span class="group-hover:text-orange-600">Berita</span>
+            <span class="group-hover:text-brand-600">Berita</span>
         </a>
         <a href="/planning-dokumen"
             class="w-full text-base font-semibold flex justify-between items-center hover:bg-slate-50 p-2.5 rounded-xl group transition-colors">
-            <span class="group-hover:text-orange-600">Arsip Dokumen</span>
+            <span class="group-hover:text-brand-600">Arsip Dokumen</span>
         </a>
         <a href="/layanan"
             class="w-full text-base font-semibold flex justify-between items-center hover:bg-slate-50 p-2.5 rounded-xl group transition-colors">
-            <span class="group-hover:text-orange-600">Layanan</span>
+            <span class="group-hover:text-brand-600">Layanan</span>
         </a>
         <a href="/galeri"
             class="w-full text-base font-semibold flex justify-between items-center hover:bg-slate-50 p-2.5 rounded-xl group transition-colors">
-            <span class="group-hover:text-orange-600">Galeri</span>
+            <span class="group-hover:text-brand-600">Galeri</span>
         </a>
 
         <!-- Submenu Mobile dengan Toggle Dropdown -->
         <div class="py-2 px-1">
             <button @click="mobileSubmenuOpen = !mobileSubmenuOpen" type="button"
                 class="w-full text-base font-semibold flex justify-between items-center hover:bg-slate-50 p-1.5 rounded-xl group transition-colors">
-                <span class="group-hover:text-orange-600">Informasi Publik</span>
+                <span class="group-hover:text-brand-600">Informasi Publik</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" class="h-5 w-5 duration-200 text-slate-400 group-hover:text-orange-600"
+                    stroke-linejoin="round" class="h-5 w-5 duration-200 text-slate-400 group-hover:text-brand-600"
                     :class="{ 'rotate-180': mobileSubmenuOpen }">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M6 9l6 6l6 -6" />
                 </svg>
             </button>
             <ul x-show="mobileSubmenuOpen" x-collapse
-                class="text-slate-600 space-y-1 w-full border-l-2 border-orange-400 pl-3 mt-2 text-sm font-medium">
+                class="text-slate-600 space-y-1 w-full border-l-2 border-brand-400 pl-3 mt-2 text-sm font-medium">
                 <li>
                     <a href="/pengumuman"
-                        class="block p-2 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors">Pengumuman</a>
+                        class="block p-2 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors">Pengumuman</a>
                 </li>
             </ul>
         </div>
@@ -284,7 +284,7 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                 <input type="text" class="flex-1 focus:outline-none pl-2 text-sm text-slate-700"
                     placeholder="Pencarian">
                 <button class="bg-white hover:bg-amber-300 rounded-r-md px-2 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="text-orange-600 h-5 w-auto" viewBox="0 0 24 24"
+                    <svg xmlns="http://www.w3.org/2000/svg" class="text-brand-600 h-5 w-auto" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -299,16 +299,16 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
 
 <!-- menampilkan waktu -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dateDisplay = document.getElementById('nav-date-display');
-        if (dateDisplay) {
-            const options = {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            };
-            dateDisplay.textContent = new Date().toLocaleDateString('id-ID', options);
-        }
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    const dateDisplay = document.getElementById('nav-date-display');
+    if (dateDisplay) {
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+        dateDisplay.textContent = new Date().toLocaleDateString('id-ID', options);
+    }
+});
 </script>

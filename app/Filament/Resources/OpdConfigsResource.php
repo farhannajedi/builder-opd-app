@@ -49,7 +49,7 @@ class OpdConfigsResource extends Resource implements HasShieldPermissions
                             ->helperText('Pilih warna dominan sesuai identitas atau logo instansi Anda.')
                             ->default('#f97316') // Default Oranye
                             ->options([
-                                '#f97316' => 'Oranye (Diskominfo / Default)',
+                                '#f97316' => 'Oranye (Dinas Kominfo / Diskominfo)',
                                 '#0284c7' => 'Biru Sky (Dinas Perhubungan / BPKAD)',
                                 '#10b981' => 'Hijau Emerald (Dinas Kesehatan / DLH)',
                                 '#e11d48' => 'Merah Rose (Satpol PP / Kesbangpol)',

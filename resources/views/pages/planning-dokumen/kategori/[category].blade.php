@@ -34,12 +34,12 @@ $opdName = $opd?->name ?? 'Instansi';
         <div
             class="relative overflow-hidden bg-slate-900 text-white rounded-3xl p-8 sm:p-12 shadow-lg border border-slate-800">
             <div
-                class="absolute -right-10 -bottom-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
+                class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none">
             </div>
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div class="space-y-3 max-w-2xl">
                     <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-[9px] font-extrabold uppercase tracking-widest">
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 border border-brand-500/30 text-brand-400 text-[9px] font-extrabold uppercase tracking-widest">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -51,7 +51,7 @@ $opdName = $opd?->name ?? 'Instansi';
                     </h1>
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
                         Menampilkan seluruh arsip dokumen resmi dalam kategori <span
-                            class="text-orange-400 font-bold">{{ $activeCategory->title }}</span> yang dipublikasikan
+                            class="text-brand-400 font-bold">{{ $activeCategory->title }}</span> yang dipublikasikan
                         oleh {{ $opdName }}.
                     </p>
                 </div>
@@ -59,7 +59,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 <!-- Tombol Kembali ke Semua Dokumen -->
                 <div class="flex-none">
                     <a href="{{ url('/planning-dokumen') }}"
-                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 text-xs font-bold transition-all backdrop-blur-md shadow-sm">
+                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-brand-500 text-white border border-white/20 hover:border-brand-500 text-xs font-bold transition-all backdrop-blur-md shadow-sm">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -82,7 +82,7 @@ $opdName = $opd?->name ?? 'Instansi';
                     </a>
                     @foreach($categoryList as $cat)
                     <a href="{{ url('/planning-dokumen/kategori/' . $cat->slug) }}"
-                        class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap {{ $cat->id === $activeCategory->id ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
+                        class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap {{ $cat->id === $activeCategory->id ? 'bg-brand-500 text-white shadow-md shadow-brand-500/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
                         {{ $cat->title }}
                     </a>
                     @endforeach
@@ -97,13 +97,13 @@ $opdName = $opd?->name ?? 'Instansi';
             <div class="space-y-4">
                 @forelse ($documents as $doc)
                 <div
-                    class="group relative bg-white rounded-2xl border border-slate-200/80 hover:border-orange-300 hover:shadow-lg transition-all duration-300 p-5 sm:p-6">
+                    class="group relative bg-white rounded-2xl border border-slate-200/80 hover:border-brand-300 hover:shadow-lg transition-all duration-300 p-5 sm:p-6">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
 
                         <!-- Ikon & Detail -->
                         <div class="flex items-start gap-4 flex-grow min-w-0">
                             <div
-                                class="p-3.5 bg-orange-50 text-orange-600 border border-orange-100 rounded-2xl flex-none group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors duration-300 shadow-sm">
+                                class="p-3.5 bg-brand-50 text-brand-600 border border-brand-100 rounded-2xl flex-none group-hover:bg-brand-500 group-hover:text-white group-hover:border-brand-500 transition-colors duration-300 shadow-sm">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -113,7 +113,7 @@ $opdName = $opd?->name ?? 'Instansi';
                             <div class="space-y-2 flex-grow min-w-0">
                                 <div class="flex flex-wrap items-center gap-2">
                                     <span
-                                        class="text-[10px] font-black text-white bg-orange-500 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                        class="text-[10px] font-black text-white bg-brand-500 px-2 py-0.5 rounded-md uppercase tracking-wider">
                                         {{ $activeCategory->title }}
                                     </span>
                                     <span class="text-xs text-slate-300">•</span>
@@ -122,7 +122,7 @@ $opdName = $opd?->name ?? 'Instansi';
 
                                 <a href="/planning-dokumen/{{ $doc->slug }}" class="block group/title">
                                     <h2
-                                        class="text-base sm:text-lg font-bold text-slate-800 group-hover/title:text-orange-600 transition-colors leading-snug line-clamp-2">
+                                        class="text-base sm:text-lg font-bold text-slate-800 group-hover/title:text-brand-600 transition-colors leading-snug line-clamp-2">
                                         {{ $doc->title }}
                                     </h2>
                                 </a>
@@ -156,7 +156,7 @@ $opdName = $opd?->name ?? 'Instansi';
                         <div
                             class="flex-none self-end md:self-center w-full md:w-auto pt-3 md:pt-0 border-t md:border-t-0 border-slate-100">
                             <a href="/planning-dokumen/{{ $doc->slug }}"
-                                class="inline-flex items-center justify-center gap-2 w-full md:w-auto px-5 py-2.5 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200 shadow-sm">
+                                class="inline-flex items-center justify-center gap-2 w-full md:w-auto px-5 py-2.5 rounded-xl bg-slate-50 hover:bg-brand-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-brand-500 text-xs font-bold transition-all duration-200 shadow-sm">
                                 <span>Pratinjau & Unduh</span>
                                 <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24">
@@ -171,7 +171,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 <!-- Jika Dokumen Kosong -->
                 <div class="bg-slate-50 border border-slate-200/80 p-12 text-center rounded-2xl">
                     <div class="flex flex-col items-center justify-center gap-3">
-                        <div class="p-4 bg-orange-50 rounded-full text-orange-500 border border-orange-100">
+                        <div class="p-4 bg-brand-50 rounded-full text-brand-500 border border-brand-100">
                             <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

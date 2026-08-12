@@ -17,12 +17,12 @@ $opdName = $opd->name ?? 'Instansi';
         <div
             class="relative overflow-hidden bg-slate-900 text-white rounded-3xl p-8 sm:p-12 shadow-lg border border-slate-800">
             <div
-                class="absolute -right-10 -bottom-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
+                class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none">
             </div>
             <div class="relative z-10 max-w-3xl space-y-3">
                 <div
-                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-[9px] font-extrabold uppercase tracking-widest">
-                    <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 border border-brand-500/30 text-brand-400 text-[9px] font-extrabold uppercase tracking-widest">
+                    <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
                     Portal Publikasi & Pers Resmi
                 </div>
                 <h1 class="text-xl sm:text-2xl font-black tracking-tight leading-tight">
@@ -39,7 +39,7 @@ $opdName = $opd->name ?? 'Instansi';
             <!-- Filter Kategori Berita -->
             <div class="border-b border-slate-100 pb-6">
                 <div class="flex items-center gap-2 mb-3 text-xs font-bold text-slate-400 uppercase tracking-wider">
-                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M3 4a1 1 0 011-1h16a1 1 0 011 1v25a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" />
                     </svg>
@@ -74,7 +74,7 @@ $opdName = $opd->name ?? 'Instansi';
                             <!-- Badge Kategori & Sorotan -->
                             <div class="flex items-center gap-2 mb-4">
                                 <span
-                                    class="px-3 py-1 bg-orange-500 text-white text-[10px] font-black uppercase tracking-wider rounded-lg shadow-sm">
+                                    class="px-3 py-1 bg-brand-500 text-white text-[10px] font-black uppercase tracking-wider rounded-lg shadow-sm">
                                     BERITA UTAMA
                                 </span>
                                 @if($featured->category)
@@ -88,7 +88,7 @@ $opdName = $opd->name ?? 'Instansi';
                             <!-- Judul Utama -->
                             <a href="/berita/{{ $featured->slug }}" class="block group/title">
                                 <h2
-                                    class="text-xl sm:text-2xl lg:text-3xl font-bold group-hover/title:text-orange-400 transition-colors leading-snug tracking-tight mb-3">
+                                    class="text-xl sm:text-2xl lg:text-3xl font-bold group-hover/title:text-brand-400 transition-colors leading-snug tracking-tight mb-3">
                                     {{ $featured->title }}
                                 </h2>
                             </a>
@@ -103,7 +103,7 @@ $opdName = $opd->name ?? 'Instansi';
                         <div
                             class="pt-6 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
                             <div class="flex items-center gap-1.5 font-medium">
-                                <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor"
+                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -112,7 +112,7 @@ $opdName = $opd->name ?? 'Instansi';
                             </div>
 
                             <a href="/berita/{{ $featured->slug }}"
-                                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold transition-all shadow-md shadow-orange-500/20">
+                                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-500 hover:bg-brand-900 text-white font-bold transition-all shadow-md shadow-orange-500/20">
                                 <span>Baca Artikel</span>
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -139,13 +139,13 @@ $opdName = $opd->name ?? 'Instansi';
                     @foreach ($otherNews->when($otherNews->currentPage() == 1, fn($collection) => $collection->skip(1))
                     as $news)
                     <div
-                        class="group flex flex-col justify-between bg-white rounded-2xl border border-slate-200/80 hover:border-orange-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                        class="group flex flex-col justify-between bg-white rounded-2xl border border-slate-200/80 hover:border-brand-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
                         <div>
                             <!-- Foto Berita -->
                             <div class="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
                                 @if($news->category)
                                 <span
-                                    class="absolute top-3 left-3 z-10 px-3 py-1 bg-slate-900/80 backdrop-blur-md text-white border border-white/20 text-[10px] font-bold uppercase tracking-wider rounded-lg shadow-sm">
+                                    class="absolute top-3 left-3 z-10 px-3 py-1 bg-brand-900/80 backdrop-blur-md text-white border border-white/20 text-[10px] font-bold uppercase tracking-wider rounded-lg shadow-sm">
                                     {{ $news->category->title }}
                                 </span>
                                 @endif
@@ -174,7 +174,7 @@ $opdName = $opd->name ?? 'Instansi';
                                 <!-- Judul Berita -->
                                 <a href="/berita/{{ $news->slug }}" class="block">
                                     <h4
-                                        class="text-base sm:text-lg font-bold text-slate-800 group-hover:text-orange-600 transition-colors leading-snug line-clamp-2">
+                                        class="text-base sm:text-lg font-bold text-slate-800 group-hover:text-brand-600 transition-colors leading-snug line-clamp-2">
                                         {{ $news->title }}
                                     </h4>
                                 </a>
@@ -184,7 +184,7 @@ $opdName = $opd->name ?? 'Instansi';
                         <!-- Link Selengkapnya -->
                         <div class="p-5 pt-0">
                             <a href="/berita/{{ $news->slug }}"
-                                class="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700 transition-colors">
+                                class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-500 hover:text-brand-900 transition-colors">
                                 <span>Baca Selengkapnya</span>
                                 <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24">
@@ -202,7 +202,7 @@ $opdName = $opd->name ?? 'Instansi';
             <!-- Jika Berita Kosong -->
             <div class="bg-slate-50 border border-slate-200/80 p-12 text-center rounded-2xl">
                 <div class="flex flex-col items-center justify-center gap-3">
-                    <div class="p-4 bg-orange-50 rounded-full text-orange-500 border border-orange-100">
+                    <div class="p-4 bg-brand-50 rounded-full text-brand-500 border border-brand-100">
                         <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
@@ -231,7 +231,7 @@ $opdName = $opd->name ?? 'Instansi';
                     @if ($start > 1)
                     <li>
                         <a href="{{ $otherNews->url(1) }}"
-                            class="px-3.5 py-2 bg-slate-100 hover:bg-orange-500 hover:text-white rounded-xl text-slate-700 transition-colors">1</a>
+                            class="px-3.5 py-2 bg-slate-100 hover:bg-brand-500 hover:text-white rounded-xl text-slate-700 transition-colors">1</a>
                     </li>
                     @if ($start > 2)
                     <li class="text-slate-400 px-1">...</li>
@@ -240,15 +240,14 @@ $opdName = $opd->name ?? 'Instansi';
 
                     @for ($i = $start; $i <= $end; $i++) @if ($i==$otherNews->currentPage())
                         <li>
-                            <span
-                                class="px-3.5 py-2 bg-orange-500 text-white rounded-xl shadow-md shadow-orange-500/20">
+                            <span class="px-3.5 py-2 bg-brand-500 text-white rounded-xl shadow-md shadow-brand-500/20">
                                 {{ $i }}
                             </span>
                         </li>
                         @else
                         <li>
                             <a href="{{ $otherNews->url($i) }}"
-                                class="px-3.5 py-2 bg-slate-100 hover:bg-orange-500 hover:text-white rounded-xl text-slate-700 transition-colors">
+                                class="px-3.5 py-2 bg-slate-100 hover:bg-brand-500 hover:text-white rounded-xl text-slate-700 transition-colors">
                                 {{ $i }}
                             </a>
                         </li>
@@ -261,7 +260,7 @@ $opdName = $opd->name ?? 'Instansi';
                                 @endif
                                 <li>
                                     <a href="{{ $otherNews->url($otherNews->lastPage()) }}"
-                                        class="px-3.5 py-2 bg-slate-100 hover:bg-orange-500 hover:text-white rounded-xl text-slate-700 transition-colors">
+                                        class="px-3.5 py-2 bg-slate-100 hover:bg-brand-500 hover:text-white rounded-xl text-slate-700 transition-colors">
                                         {{ $otherNews->lastPage() }}
                                     </a>
                                 </li>
@@ -271,7 +270,7 @@ $opdName = $opd->name ?? 'Instansi';
                 <!-- Tombol Navigasi -->
                 <div class="flex items-center gap-2">
                     <a href="{{ $otherNews->previousPageUrl() }}"
-                        class="{{ $otherNews->onFirstPage() ? 'pointer-events-none opacity-40' : 'hover:bg-orange-500 hover:text-white' }} px-3.5 py-2 bg-slate-100 text-slate-700 rounded-xl font-bold text-xs flex items-center gap-1 transition-colors">
+                        class="{{ $otherNews->onFirstPage() ? 'pointer-events-none opacity-40' : 'hover:bg-brand-500 hover:text-white' }} px-3.5 py-2 bg-slate-100 text-slate-700 rounded-xl font-bold text-xs flex items-center gap-1 transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
@@ -279,7 +278,7 @@ $opdName = $opd->name ?? 'Instansi';
                     </a>
 
                     <a href="{{ $otherNews->nextPageUrl() }}"
-                        class="{{ $otherNews->hasMorePages() ? 'hover:bg-orange-500 hover:text-white' : 'pointer-events-none opacity-40' }} px-3.5 py-2 bg-slate-100 text-slate-700 rounded-xl font-bold text-xs flex items-center gap-1 transition-colors">
+                        class="{{ $otherNews->hasMorePages() ? 'hover:bg-brand-500 hover:text-white' : 'pointer-events-none opacity-40' }} px-3.5 py-2 bg-slate-100 text-slate-700 rounded-xl font-bold text-xs flex items-center gap-1 transition-colors">
                         <span>Berikutnya</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

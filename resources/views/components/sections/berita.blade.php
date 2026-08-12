@@ -18,8 +18,8 @@ $latestNews = $news;
         <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
             <div class="space-y-1">
                 <div
-                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 border border-orange-200/80 text-orange-600 text-[11px] font-extrabold uppercase tracking-widest">
-                    <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 border border-brand-200/80 text-brand-600 text-[11px] font-extrabold uppercase tracking-widest">
+                    <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
                     Kabar Terkini
                 </div>
                 <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
@@ -32,9 +32,9 @@ $latestNews = $news;
 
             <!-- Tombol Lihat Semua Berita -->
             <a href="/berita"
-                class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-slate-200 hover:border-orange-500 text-slate-700 hover:text-orange-600 text-xs font-bold shadow-sm hover:shadow-md transition-all duration-200 group">
+                class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-brand-500 text-white text-xs font-bold shadow-sm transition-all duration-200 group">
                 <span>Lihat Semua Berita</span>
-                <svg class="w-4 h-4 text-slate-400 group-hover:text-orange-600 group-hover:translate-x-1 transition-all"
+                <svg class="w-4 h-4 text-slate-400 group-hover:text-slate-100 group-hover:translate-x-1 transition-all"
                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -185,8 +185,8 @@ $latestNews = $news;
         <!-- Apabila Berita Kosong -->
         <div class="bg-white border border-slate-200/80 rounded-2xl p-12 text-center shadow-sm">
             <div class="flex flex-col items-center justify-center gap-3">
-                <div class="bg-orange-50 p-4 rounded-full border border-orange-100">
-                    <svg class="h-8 w-8 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="bg-brand-50 p-4 rounded-full border border-brand-100">
+                    <svg class="h-8 w-8 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                     </svg>
@@ -204,7 +204,7 @@ $latestNews = $news;
         <!-- Tombol Selengkapnya -->
         <div class="mt-8 flex items-center justify-center sm:hidden">
             <a href="/berita"
-                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-xs shadow-lg shadow-orange-500/20 transition-all w-full justify-center">
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-extrabold text-xs shadow-lg shadow-brand-500/20 transition-all w-full justify-center">
                 <span>Lihat Seluruh Berita</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

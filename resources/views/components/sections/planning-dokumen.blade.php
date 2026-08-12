@@ -16,7 +16,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4 border-b border-slate-100 pb-6">
                 <div>
                     <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 border border-orange-200/80 text-orange-600 text-[11px] font-extrabold uppercase tracking-widest mb-2">
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 border border-brand-200/80 text-brand-600 text-[11px] font-extrabold uppercase tracking-widest mb-2">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -33,7 +33,7 @@ $opdName = $opd?->name ?? 'Instansi';
 
                 <!-- Tombol Selengkapnya -->
                 <a href="/planning-dokumen" wire:navigate
-                    class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-orange-500 text-white text-xs font-bold shadow-sm transition-all duration-200 group">
+                    class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-brand-500 text-white text-xs font-bold shadow-sm transition-all duration-200 group">
                     <span>Lihat Semua Dokumen</span>
                     <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
@@ -48,12 +48,12 @@ $opdName = $opd?->name ?? 'Instansi';
                 {{-- Langsung iterasi variabel $documents yang dikirim dari controller / beranda.blade.php --}}
                 @forelse($documents as $doc)
                 <a href="/planning-dokumen/{{ $doc->slug }}"
-                    class="group block p-5 rounded-2xl border border-slate-200/80 bg-white hover:border-orange-300 hover:shadow-lg transition-all duration-300">
+                    class="group block p-5 rounded-2xl border border-slate-200/80 bg-white hover:border-brand-300 hover:shadow-lg transition-all duration-300">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <!-- Ikon & Detail Dokumen -->
                         <div class="flex items-start gap-4 flex-grow">
                             <div
-                                class="p-3.5 bg-orange-50 text-orange-600 border border-orange-100 rounded-2xl flex-none group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors duration-300">
+                                class="p-3.5 bg-brand-50 text-brand-600 border border-brand-100 rounded-2xl flex-none group-hover:bg-brand-500 group-hover:text-white group-hover:border-brand-500 transition-colors duration-300">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -64,12 +64,12 @@ $opdName = $opd?->name ?? 'Instansi';
                             <div class="space-y-1.5 flex-grow">
                                 <div class="flex flex-wrap items-center gap-2">
                                     <span
-                                        class="inline-block text-[10px] font-black text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                        class="inline-block text-[10px] font-black text-slate-600 bg-brand-100 border border-slate-200 px-2 py-0.5 rounded-md uppercase tracking-wider">
                                         {{ $doc->category->title ?? 'PDF / DOKUMEN' }}
                                     </span>
                                 </div>
                                 <h3
-                                    class="text-base sm:text-lg font-bold text-slate-800 group-hover:text-orange-600 transition-colors duration-200 line-clamp-2 leading-snug">
+                                    class="text-base sm:text-lg font-bold text-slate-800 group-hover:text-brand-600 transition-colors duration-200 line-clamp-2 leading-snug">
                                     {{ $doc->title }}
                                 </h3>
                                 <div
@@ -100,7 +100,7 @@ $opdName = $opd?->name ?? 'Instansi';
                         <!-- Tombol Indikator File -->
                         <div class="flex-none self-end sm:self-center pt-2 sm:pt-0">
                             <span
-                                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-orange-50 group-hover:bg-orange-500 text-orange-600 group-hover:text-white font-bold text-xs transition-all duration-300 border border-orange-200/60 group-hover:border-orange-500 shadow-sm">
+                                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-50 group-hover:bg-brand-500 text-brand-600 group-hover:text-white font-bold text-xs transition-all duration-300 border border-brand-200/60 group-hover:border-brand-500 shadow-sm">
                                 <span>Detail File</span>
                                 <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24">

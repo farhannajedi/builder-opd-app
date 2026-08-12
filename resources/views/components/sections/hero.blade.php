@@ -2,11 +2,8 @@
 $opdSlug = env('APP_ID');
 $opd = App\Models\Opd::where('slug', $opdSlug)->first();
 
-$hero = App\Models\HeroSection::where('opd_id', $opd?->id)
-->with('banners')
-->where('is_active', true)
-->latest('published_at')
-->first();
+$hero = App\Models\HeroSection::where('opd_id', $opd?->id)->with('banners')->where('is_active',
+true)->latest('published_at')->first();
 
 $opdName = $opd->name ?? 'Instansi Pemerintah';
 @endphp
@@ -25,8 +22,7 @@ $opdName = $opd->name ?? 'Instansi Pemerintah';
 }
 
 .heroSwiper .swiper-pagination-bullet-active {
-    background: #f97316 !important;
-    /* warna orange-500 */
+    background: var(--color-primary) !important;
     opacity: 1;
     width: 28px;
     border-radius: 9999px;
@@ -52,10 +48,10 @@ $opdName = $opd->name ?? 'Instansi Pemerintah';
 
         <!-- Tombol Navigasi Swiper -->
         <div
-            class="swiper-button-prev !hidden sm:!flex !w-12 !h-12 !bg-slate-900/60 backdrop-blur-md !text-white rounded-full after:!text-lg hover:!bg-orange-500 transition-all border border-white/10 !left-6">
+            class="swiper-button-prev !hidden sm:!flex !w-12 !h-12 !bg-slate-900/60 backdrop-blur-md !text-white rounded-full after:!text-lg hover:!bg-brand-500 transition-all border border-white/10 !left-6">
         </div>
         <div
-            class="swiper-button-next !hidden sm:!flex !w-12 !h-12 !bg-slate-900/60 backdrop-blur-md !text-white rounded-full after:!text-lg hover:!bg-orange-500 transition-all border border-white/10 !right-6">
+            class="swiper-button-next !hidden sm:!flex !w-12 !h-12 !bg-slate-900/60 backdrop-blur-md !text-white rounded-full after:!text-lg hover:!bg-brand-500 transition-all border border-white/10 !right-6">
         </div>
         <div class="swiper-pagination !bottom-6"></div>
     </div>
@@ -64,14 +60,14 @@ $opdName = $opd->name ?? 'Instansi Pemerintah';
     <div class="relative py-24 lg:py-32 bg-slate-950 border-b border-slate-800/80 overflow-hidden">
         <!-- Aksen Background Blur -->
         <div
-            class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
+            class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none">
         </div>
 
         <div class="max-w-screen-lg mx-auto px-6 text-center relative z-10">
             <!-- Badge Identitas Resmi -->
             <div
-                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-orange-400 text-xs font-semibold uppercase tracking-widest mb-6 shadow-inner">
-                <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-brand-400 text-xs font-semibold uppercase tracking-widest mb-6 shadow-inner">
+                <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
                 Portal Resmi Informasip
             </div>
 
@@ -81,7 +77,7 @@ $opdName = $opd->name ?? 'Instansi Pemerintah';
             </h1>
 
             <div
-                class="w-24 h-1.5 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto my-6 rounded-full shadow-lg shadow-orange-500/30">
+                class="w-24 h-1.5 bg-gradient-to-r from-brand-500 to-amber-400 mx-auto my-6 rounded-full shadow-lg shadow-brand-500/30">
             </div>
 
             @php
@@ -101,12 +97,12 @@ $opdName = $opd->name ?? 'Instansi Pemerintah';
     @else
     <div class="relative py-24 lg:py-32 bg-slate-950 border-b border-slate-800/80 overflow-hidden">
         <div
-            class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
+            class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none">
         </div>
 
         <div class="max-w-screen-lg mx-auto px-6 text-center relative z-10">
             <div
-                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-orange-400 text-xs font-semibold uppercase tracking-widest mb-6">
+                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-brand-400 text-xs font-semibold uppercase tracking-widest mb-6">
                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                 Website Publik
             </div>
@@ -116,7 +112,7 @@ $opdName = $opd->name ?? 'Instansi Pemerintah';
             </h1>
 
             <div
-                class="w-24 h-1.5 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto my-6 rounded-full shadow-lg shadow-orange-500/30">
+                class="w-24 h-1.5 bg-gradient-to-r from-brand-400 to-brand-600 mx-auto my-6 rounded-full shadow-lg shadow-brand-500/30">
             </div>
 
             <p class="text-lg sm:text-2xl font-medium text-slate-300 italic max-w-xl mx-auto">
@@ -128,7 +124,7 @@ $opdName = $opd->name ?? 'Instansi Pemerintah';
 
 </section>
 
-<!-- Swiper Javascript -->
+<!-- Swiper Untuk Javascript -->
 @if($hero && $hero->banners->count() > 0)
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 

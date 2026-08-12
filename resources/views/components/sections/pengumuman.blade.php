@@ -18,7 +18,7 @@ $announcements = $announcement;
         <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
             <div>
                 <div
-                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 border border-orange-200 text-orange-600 text-xs font-bold uppercase tracking-wider mb-2">
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand border border-slate-200 text-slate-100 text-xs font-bold uppercase tracking-wider mb-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -36,7 +36,7 @@ $announcements = $announcement;
 
             <!-- Lihat Semua -->
             <a href="/pengumuman"
-                class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 hover:border-orange-500 text-slate-700 hover:text-orange-600 rounded-full transition-all duration-200 font-bold text-xs shadow-sm hover:shadow-md self-start sm:self-auto">
+                class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-brand-500 text-white text-xs font-bold shadow-sm transition-all duration-200 group">
                 <span>Lihat Semua Pengumuman</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
@@ -51,22 +51,22 @@ $announcements = $announcement;
             @foreach ($announcements as $item)
             <div class="group h-full">
                 <a href="/pengumuman/{{ $item->slug }}"
-                    class="relative flex flex-col p-6 h-full rounded-2xl shadow-sm border border-slate-200/80 bg-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group-hover:border-orange-200">
+                    class="relative flex flex-col p-6 h-full rounded-2xl shadow-sm border border-slate-200/80 bg-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group-hover:border-brand">
 
                     <div
-                        class="absolute top-0 left-0 right-0 h-1 bg-slate-200 group-hover:bg-orange-500 transition-colors duration-300">
+                        class="absolute top-0 left-0 right-0 h-1 bg-slate-200 group-hover:bg-brand-500 transition-colors duration-300">
                     </div>
 
                     <div class="flex-grow pt-2">
                         <div class="flex items-center gap-1.5 mb-3">
                             <span
-                                class="text-[10px] bg-orange-50 text-orange-600 border border-orange-200 font-bold uppercase px-2.5 py-0.5 rounded-md tracking-wider">
+                                class="text-[10px] bg-slate-50 text-brand-500 border border-brand font-bold uppercase px-2.5 py-0.5 rounded-md tracking-wider">
                                 PENGUMUMAN
                             </span>
                         </div>
 
                         <h3
-                            class="text-base font-bold text-slate-800 group-hover:text-orange-600 leading-snug mb-3 transition-colors line-clamp-2">
+                            class="text-base font-bold text-slate-800 group-hover:text-brand leading-snug mb-3 transition-colors line-clamp-2">
                             {{ $item->title }}
                         </h3>
 
@@ -78,8 +78,8 @@ $announcements = $announcement;
                     <div class="mt-6 pt-3 border-t border-slate-100 flex items-center justify-between text-slate-400">
                         <div class="flex items-center gap-1.5 text-slate-400">
                             <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-3.5 w-3.5 text-slate-400 group-hover:text-orange-500 transition-colors"
-                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                class="h-3.5 w-3.5 text-slate-400 group-hover:text-brand transition-colors" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
@@ -88,7 +88,7 @@ $announcements = $announcement;
                             </span>
                         </div>
                         <span
-                            class="text-xs font-bold text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5">
+                            class="text-xs font-bold text-brand-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5">
                             Baca
                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -103,9 +103,9 @@ $announcements = $announcement;
         @else
         <div class="bg-white border border-slate-200/80 rounded-2xl p-10 text-center shadow-sm">
             <div class="flex flex-col items-center justify-center gap-3">
-                <div class="bg-orange-50 p-3.5 rounded-full border border-orange-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-orange-500" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
+                <div class="bg-slate-50 p-3.5 rounded-full border border-brand">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
                     </svg>

@@ -24,7 +24,7 @@ $imagePath = asset('storage/' . $berita->images);
 
         <!-- Navigasi -->
         <nav class="flex items-center gap-2 mb-8 text-xs font-semibold text-slate-500 overflow-x-auto pb-2">
-            <a href="{{ url('/') }}" class="hover:text-orange-600 transition-colors flex items-center gap-1 shrink-0">
+            <a href="{{ url('/') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1 shrink-0">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -32,7 +32,7 @@ $imagePath = asset('storage/' . $berita->images);
                 Beranda
             </a>
             <span class="text-slate-300">/</span>
-            <a href="{{ url('/berita') }}" class="hover:text-orange-600 transition-colors shrink-0">Berita</a>
+            <a href="{{ url('/berita') }}" class="hover:text-brand-600 transition-colors shrink-0">Berita</a>
             <span class="text-slate-300">/</span>
             <span class="text-slate-800 font-bold truncate max-w-[200px] sm:max-w-xs">{{ $berita->title }}</span>
         </nav>
@@ -65,7 +65,7 @@ $imagePath = asset('storage/' . $berita->images);
                         <!-- Instansi -->
                         <div class="flex items-center gap-2">
                             <div
-                                class="w-7 h-7 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+                                class="w-7 h-7 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V11m0 0V7" />
@@ -105,7 +105,7 @@ $imagePath = asset('storage/' . $berita->images);
                 <div
                     class="pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <a href="{{ url('/berita') }}"
-                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-100 hover:bg-orange-500 hover:text-white text-slate-700 text-xs font-bold transition-all duration-200 w-full sm:w-auto justify-center">
+                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-100 hover:bg-brand-500 hover:text-white text-slate-700 text-xs font-bold transition-all duration-200 w-full sm:w-auto justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -178,7 +178,7 @@ $imagePath = asset('storage/' . $berita->images);
                     <div class="space-y-4">
                         @forelse ($otherNews as $item)
                         <a href="{{ url('berita/' . $item->slug) }}"
-                            class="group flex gap-4 p-3 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:border-orange-200 hover:shadow-md transition-all duration-300">
+                            class="group flex gap-4 p-3 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:border-brand-200 hover:shadow-md transition-all duration-300">
 
                             <!-- Thumbnail Foto -->
                             <div class="w-24 aspect-[4/3] shrink-0 rounded-xl overflow-hidden bg-slate-200">
@@ -189,7 +189,7 @@ $imagePath = asset('storage/' . $berita->images);
                             <!-- Detail Teks -->
                             <div class="flex flex-col justify-between flex-grow py-0.5">
                                 <h3
-                                    class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-orange-600 transition-colors line-clamp-2 leading-snug">
+                                    class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-brand-600 transition-colors line-clamp-2 leading-snug">
                                     {{ $item->title }}
                                 </h3>
 
@@ -222,43 +222,43 @@ $imagePath = asset('storage/' . $berita->images);
 @endsection
 
 <script>
-    function copyUrlToClipboard(url) {
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(url).then(() => {
-                alert('Tautan berita berhasil disalin!');
-            }).catch(err => {
-                fallbackCopyTextToClipboard(url);
-            });
-        } else {
-            // Fallback untuk HTTP
+function copyUrlToClipboard(url) {
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(url).then(() => {
+            alert('Tautan berita berhasil disalin!');
+        }).catch(err => {
             fallbackCopyTextToClipboard(url);
+        });
+    } else {
+        // Fallback untuk HTTP
+        fallbackCopyTextToClipboard(url);
+    }
+}
+
+// Fungsi cadangan menggunakan dokumen teks sementara
+function fallbackCopyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        var successful = document.execCommand('copy');
+        if (successful) {
+            alert('Tautan berita berhasil disalin!');
+        } else {
+            alert('Gagal menyalin tautan.');
         }
+    } catch (err) {
+        alert('Browser Anda tidak mendukung fitur salin otomatis.');
     }
 
-    // Fungsi cadangan menggunakan dokumen teks sementara
-    function fallbackCopyTextToClipboard(text) {
-        var textArea = document.createElement("textarea");
-        textArea.value = text;
-
-        textArea.style.top = "0";
-        textArea.style.left = "0";
-        textArea.style.position = "fixed";
-
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-
-        try {
-            var successful = document.execCommand('copy');
-            if (successful) {
-                alert('Tautan berita berhasil disalin!');
-            } else {
-                alert('Gagal menyalin tautan.');
-            }
-        } catch (err) {
-            alert('Browser Anda tidak mendukung fitur salin otomatis.');
-        }
-
-        document.body.removeChild(textArea);
-    }
+    document.body.removeChild(textArea);
+}
 </script>

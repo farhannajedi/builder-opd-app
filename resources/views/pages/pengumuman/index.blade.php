@@ -16,12 +16,12 @@ $opdName = $opd?->name ?? 'Instansi';
         <div
             class="relative overflow-hidden bg-slate-900 text-white rounded-3xl p-8 sm:p-12 shadow-lg border border-slate-800">
             <div
-                class="absolute -right-10 -bottom-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
+                class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none">
             </div>
             <div class="relative z-10 max-w-3xl space-y-3">
                 <div
-                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-[9px] font-extrabold uppercase tracking-widest">
-                    <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 border border-brand-500/30 text-brand-400 text-[9px] font-extrabold uppercase tracking-widest">
+                    <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
                     Pemberitahuan & Informasi Resmi
                 </div>
                 <h1 class="text-xl sm:text-2xl font-black tracking-tight leading-tight">
@@ -39,7 +39,7 @@ $opdName = $opd?->name ?? 'Instansi';
             <!-- Header -->
             <div class="flex items-center justify-between border-b border-slate-100 pb-5">
                 <div class="flex items-center gap-2 text-slate-800 font-bold text-sm">
-                    <span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-brand-500"></span>
                     <span>Daftar Pengumuman Aktif</span>
                 </div>
                 <span class="text-xs font-semibold text-slate-400">
@@ -51,12 +51,12 @@ $opdName = $opd?->name ?? 'Instansi';
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse ($announcements as $item)
                 <div
-                    class="group relative flex flex-col justify-between p-6 bg-white rounded-2xl border border-slate-200/80 hover:border-orange-300 hover:shadow-xl transition-all duration-300 shadow-xl">
+                    class="group relative flex flex-col justify-between p-6 bg-white rounded-2xl border border-slate-200/80 hover:border-brand-300 hover:shadow-xl transition-all duration-300 shadow-xl">
                     <div>
                         <!-- Header Kartu -->
                         <div class="flex items-start justify-between gap-4 mb-5">
                             <div
-                                class="p-3.5 bg-orange-50 text-orange-600 border border-orange-100 rounded-2xl group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors duration-300 shadow-sm">
+                                class="p-3.5 bg-brand-50 text-brand-600 border border-brand-100 rounded-2xl group-hover:bg-brand-500 group-hover:text-white group-hover:border-brand-500 transition-colors duration-300 shadow-sm">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -73,7 +73,7 @@ $opdName = $opd?->name ?? 'Instansi';
                         <!-- Judul Pengumuman -->
                         <a href="/pengumuman/{{ $item->slug }}" class="block group/title">
                             <h2
-                                class="text-base sm:text-lg font-bold text-slate-800 group-hover/title:text-orange-600 transition-colors leading-snug line-clamp-2 mb-3">
+                                class="text-base sm:text-lg font-bold text-slate-800 group-hover/title:text-brand-600 transition-colors leading-snug line-clamp-2 mb-3">
                                 {{ $item->title }}
                             </h2>
                         </a>
@@ -106,7 +106,7 @@ $opdName = $opd?->name ?? 'Instansi';
                     <!-- Footer Aksi -->
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
                         <a href="/pengumuman/{{ $item->slug }}"
-                            class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200 shadow-sm">
+                            class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-brand-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-brand-500 text-xs font-bold transition-all duration-200 shadow-sm">
                             <span>Lihat Pengumuman</span>
                             <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24">
@@ -120,7 +120,7 @@ $opdName = $opd?->name ?? 'Instansi';
                 <!-- Jika Pengumuman Kosong -->
                 <div class="col-span-full bg-slate-50 border border-slate-200/80 p-12 text-center rounded-2xl">
                     <div class="flex flex-col items-center justify-center gap-3">
-                        <div class="p-4 bg-orange-50 rounded-full text-orange-500 border border-orange-100">
+                        <div class="p-4 bg-brand-50 rounded-full text-brand-500 border border-brand-100">
                             <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.684A1.761 1.761 0 013 12c0-.972.784-1.761 1.761-1.761l.675 1.922zm10.128-4.248a5 5 0 010 5.128" />

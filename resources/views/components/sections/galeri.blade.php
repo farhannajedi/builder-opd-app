@@ -20,7 +20,7 @@ $latestGalleries = $galleries;
                 class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4 border-b border-slate-100 pb-6">
                 <div>
                     <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 border border-orange-200/80 text-orange-600 text-[11px] font-extrabold uppercase tracking-widest mb-2">
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 border border-brand-200/80 text-brand-600 text-[11px] font-extrabold uppercase tracking-widest mb-2">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -37,7 +37,7 @@ $latestGalleries = $galleries;
 
                 <!-- Tombol Selengkapnya -->
                 <a href="/galeri" wire:navigate
-                    class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-orange-500 text-white text-xs font-bold shadow-sm transition-all duration-200 group">
+                    class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-brand-500 text-white text-xs font-bold shadow-sm transition-all duration-200 group">
                     <span>Lihat Seluruh Galeri</span>
                     <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
@@ -51,7 +51,7 @@ $latestGalleries = $galleries;
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @forelse ($latestGalleries as $gal)
                 <div wire:key="gal-{{ $gal->id }}"
-                    class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white hover:border-orange-300 hover:shadow-xl transition-all duration-300">
+                    class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white hover:border-brand-300 hover:shadow-xl transition-all duration-300">
 
                     <!-- Gambar -->
                     <div class="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
@@ -72,7 +72,7 @@ $latestGalleries = $galleries;
                     <div class="p-5 flex flex-col justify-between flex-grow">
                         <div>
                             <h3
-                                class="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors leading-snug line-clamp-1 mb-2">
+                                class="text-base font-bold text-slate-800 group-hover:text-brand-600 transition-colors leading-snug line-clamp-1 mb-2">
                                 {{ $gal->title }}
                             </h3>
 
@@ -84,7 +84,7 @@ $latestGalleries = $galleries;
                         <!-- Detail -->
                         <div class="pt-3 border-t border-slate-100">
                             <a href="/galeri/{{ $gal->slug }}"
-                                class="inline-flex items-center justify-between w-full px-4 py-2 rounded-xl bg-slate-50 hover:bg-orange-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-orange-500 text-xs font-bold transition-all duration-200">
+                                class="inline-flex items-center justify-between w-full px-4 py-2 rounded-xl bg-slate-50 hover:bg-brand-500 text-slate-700 hover:text-white border border-slate-200/80 hover:border-brand-500 text-xs font-bold transition-all duration-200">
                                 <span class="flex items-center gap-1.5">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -106,7 +106,7 @@ $latestGalleries = $galleries;
                 <!-- Jika Data Galeri Kosong -->
                 <div class="col-span-full bg-slate-50 border border-slate-200/80 p-10 text-center rounded-2xl">
                     <div class="flex flex-col items-center justify-center gap-2">
-                        <div class="p-3 bg-orange-50 rounded-full text-orange-500 mb-1">
+                        <div class="p-3 bg-brand-50 rounded-full text-brand-500 mb-1">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -124,7 +124,7 @@ $latestGalleries = $galleries;
             <!-- Tombol Selengkapnya -->
             <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-center sm:hidden">
                 <a href="/galeri" wire:navigate
-                    class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-md shadow-orange-500/20 w-full">
+                    class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-500 text-white font-bold text-xs shadow-md shadow-brand-500/20 w-full">
                     <span>Lihat Seluruh Galeri Foto</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

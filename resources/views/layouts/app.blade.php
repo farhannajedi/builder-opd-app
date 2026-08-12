@@ -6,11 +6,8 @@ $opdConfigs = \App\Models\OpdConfigs::where('opd_id', $opd?->id)->first();
 
 $opdName = $opd?->name ?? 'Dinas Kabupaten Karimun';
 
-// Ambil konfigurasi warna milik OPD ini dari database
-$config = App\Models\OpdConfigs::where('opd_id', $opd?->id)->first();
-
 // Set warna utama (jika belum diisi, fallback ke oren)
-$primaryColor = $config?->primary_color ?? '#f97316';
+$primaryColor = $opdConfigs?->primary_color ?? '#f97316';
 
 // Link sosial media OPD
 $socialMedia = [
@@ -42,7 +39,7 @@ $socialMedia = [
 @endphp
 
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id" style="--color-primary: {{ $primaryColor }};">
 
 <head>
     <meta charset="UTF-8">
@@ -68,23 +65,29 @@ $socialMedia = [
 
     <!-- Injeksi CSS Variables (Ditulis dalam 1 baris agar tidak corrupt) -->
     <style>
-        :root {
-            --color-primary: {
-                    {
-                    $primaryColor
-                }
-            }
+    /* untuk shade warnanya dengan kode brand (app.css / tailwind.configs.)*/
+    :root {
+        --color-brand-50: color-mix(in srgb, var(--color-primary) 5%, white);
+        --color-brand-100: color-mix(in srgb, var(--color-primary) 10%, white);
+        --color-brand-200: color-mix(in srgb, var(--color-primary) 20%, white);
+        --color-brand-300: color-mix(in srgb, var(--color-primary) 30%, white);
+        --color-brand-400: color-mix(in srgb, var(--color-primary) 40%, white);
 
-            ;
-        }
+        --color-brand-500: var(--color-primary);
 
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+        --color-brand-600: color-mix(in srgb, var(--color-primary) 90%, black);
+        --color-brand-700: color-mix(in srgb, var(--color-primary) 75%, black);
+        --color-brand-800: color-mix(in srgb, var(--color-primary) 60%, black);
+        --color-brand-900: color-mix(in srgb, var(--color-primary) 45%, black);
+    }
 
-        [x-cloak] {
-            display: none !important;
-        }
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
     </style>
 
 </head>
@@ -98,8 +101,9 @@ $socialMedia = [
         @yield('content')
     </main>
     <!-- Footer Utama Portal Pemerintahan -->
+    </div>
     <footer
-        class="w-full bg-slate-900 text-slate-300 pt-12 pb-8 relative overflow-hidden border-t-4 border-brand shadow-lg">
+        class="w-full bg-slate-900 text-brand-500 pt-12 pb-8 relative overflow-hidden border-t-4 border-brand-200 shadow-lg">
         <div
             class="pointer-events-none select-none absolute -right-2 -bottom-2 text-[120px] font-black tracking-widest text-slate-800/40 uppercase leading-none hidden lg:block">
             KARIMUN
@@ -114,7 +118,7 @@ $socialMedia = [
                         <img src="{{ $opdConfigs?->logo ? Storage::url($opdConfigs->logo) : asset('assets/images/logo_kab.png') }}"
                             class="w-16 h-10 object-contain" alt="logo_opd">
                         <div class="border-l border-slate-700 pl-3">
-                            <p class="text-xs font-bold text-brand uppercase tracking-wider">Pemerintah Kabupaten
+                            <p class="text-xs font-bold text-brand-500 uppercase tracking-wider">Pemerintah Kabupaten
                             </p>
                             <p class="text-xs font-extrabold text-white">Karimun</p>
                         </div>
@@ -139,7 +143,7 @@ $socialMedia = [
                         <p class="flex items-center gap-2">
                             <span class="text-slate-400 shrink-0">Email:</span>
                             <a href="mailto:{{ $opdConfigs?->email }}"
-                                class="text-slate-200 hover:text-brand transition-colors">{{ $opdConfigs?->email ?? '-' }}</a>
+                                class="text-slate-200 hover:text-brand-400 transition-colors">{{ $opdConfigs?->email ?? '-' }}</a>
                         </p>
                         <p class="flex items-center gap-2">
                             <span class="text-slate-400 shrink-0">Telepon:</span>
@@ -153,7 +157,8 @@ $socialMedia = [
                     <h3 class="text-sm font-bold text-brand uppercase tracking-wider flex items-center gap-2">
                         Media Sosial Resmi
                     </h3>
-                    <p class="text-xs text-slate-400">Ikuti saluran komunikasi resmi kami untuk mendapatkan pembaruan
+                    <p class="text-xs text-slate-400">Ikuti saluran komunikasi resmi kami untuk mendapatkan
+                        pembaruan
                         informasi publik secara berkala.</p>
 
                     <div class="flex flex-wrap gap-2.5 pt-1">
@@ -161,7 +166,7 @@ $socialMedia = [
                         @if(!empty($socmed['url']))
                         <a href="{{ $socmed['url'] }}" target="_blank" rel="noopener noreferrer"
                             title="{{ $socmed['name'] }}"
-                            class="p-2.5 bg-slate-800 hover:bg-brand text-slate-300 hover:text-white border border-slate-700/80 rounded-xl duration-200 transition-all transform hover:-translate-y-0.5 shadow-sm">
+                            class="p-2.5 bg-slate-800 hover:bg-brand-900 text-slate-300 hover:text-white border border-slate-700/80 rounded-xl duration-200 transition-all transform hover:-translate-y-0.5 shadow-sm">
                             @if($socmed['icon'] === 'facebook')
                             <x-icons.facebook class="w-4 h-4" />
                             @elseif($socmed['icon'] === 'instagram')
