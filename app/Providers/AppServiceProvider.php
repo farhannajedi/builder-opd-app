@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\OpdConfigs;
+use App\Models\Service;
 use App\Policies\RolePolicy;
+use App\Policies\ServicePolicy;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -32,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::policy(Service::class, ServicePolicy::class);
         // view composer lama
         // View::composer('*', function ($view) {
 

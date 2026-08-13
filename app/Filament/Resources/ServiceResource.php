@@ -94,6 +94,15 @@ class ServiceResource extends Resource
                     ->dateTime('d M Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('opd.name')
+                    ->label('Pemilik OPD')
+                    ->badge()
+                    ->color('info')
+                    ->sortable()
+                    ->searchable()
+                    // Hanya muncul di layar Super Admin (user dengan opd_id null)
+                    ->visible(fn() => is_null(Auth::user()->opd_id)),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
