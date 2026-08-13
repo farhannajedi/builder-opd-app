@@ -12,7 +12,7 @@ class NewsCategoriesPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_news_categories');
+        return $user->can('view_any_news::categories');
     }
 
     /**
@@ -20,7 +20,7 @@ class NewsCategoriesPolicy
      */
     public function view(User $user, NewsCategories $newsCategories): bool
     {
-        return $user->can('view_news_categories');
+        return $user->can('view_news::categories');
     }
 
     /**
@@ -28,7 +28,7 @@ class NewsCategoriesPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_news_categories');
+        return $user->can('create_news::categories');
     }
 
     /**
@@ -36,7 +36,7 @@ class NewsCategoriesPolicy
      */
     public function update(User $user, NewsCategories $newsCategories): bool
     {
-        return $user->can('update_news_categories');
+        return $user->can('update_news::categories');
     }
 
     /**
@@ -44,7 +44,7 @@ class NewsCategoriesPolicy
      */
     public function delete(User $user, NewsCategories $newsCategories): bool
     {
-        return $user->can('delete_news_categories');
+        return $user->can('delete_news::categories');
     }
 
     /**
@@ -52,7 +52,7 @@ class NewsCategoriesPolicy
      */
     public function restore(User $user, NewsCategories $newsCategories): bool
     {
-        return $user->can('restore_news_categories');
+        return $user->can('restore_news::categories');
     }
 
     /**
@@ -60,6 +60,6 @@ class NewsCategoriesPolicy
      */
     public function forceDelete(User $user, NewsCategories $newsCategories): bool
     {
-        return $user->can('force_delete_news_categories');
+        return $user->can('force_delete_news::categories');
     }
 }

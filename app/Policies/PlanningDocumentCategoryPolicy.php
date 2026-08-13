@@ -12,7 +12,7 @@ class PlanningDocumentCategoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_planning_document_category');
+        return $user->can('view_any_planning::document::category');
     }
 
     /**
@@ -20,7 +20,7 @@ class PlanningDocumentCategoryPolicy
      */
     public function view(User $user, PlanningDocumentCategory $planningDocumentCategory): bool
     {
-        return $user->can('view_planning_document_category');
+        return $user->can('view_planning::document::category');
     }
 
     /**
@@ -28,7 +28,7 @@ class PlanningDocumentCategoryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_planning_document_category');
+        return $user->can('create_planning::document::category');
     }
 
     /**
@@ -36,7 +36,7 @@ class PlanningDocumentCategoryPolicy
      */
     public function update(User $user, PlanningDocumentCategory $planningDocumentCategory): bool
     {
-        return $user->can('update_planning_document_category');
+        return $user->can('update_planning::document::category');
     }
 
     /**
@@ -44,7 +44,7 @@ class PlanningDocumentCategoryPolicy
      */
     public function delete(User $user, PlanningDocumentCategory $planningDocumentCategory): bool
     {
-        return $user->can('delete_planning_document_category');
+        return $user->can('delete_planning::document::category');
     }
 
     /**
@@ -52,7 +52,7 @@ class PlanningDocumentCategoryPolicy
      */
     public function restore(User $user, PlanningDocumentCategory $planningDocumentCategory): bool
     {
-        return $user->can('restore_planning_document_category');
+        return $user->can('restore_planning::document::category');
     }
 
     /**
@@ -60,6 +60,6 @@ class PlanningDocumentCategoryPolicy
      */
     public function forceDelete(User $user, PlanningDocumentCategory $planningDocumentCategory): bool
     {
-        return $user->can('force_delete_planning_document_category');
+        return $user->can('force_delete_planning::document::category');
     }
 }

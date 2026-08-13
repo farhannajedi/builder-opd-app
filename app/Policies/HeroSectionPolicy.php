@@ -12,7 +12,7 @@ class HeroSectionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_hero_section');
+        return $user->can('view_any_hero::section');
     }
 
     /**
@@ -20,7 +20,7 @@ class HeroSectionPolicy
      */
     public function view(User $user, HeroSection $heroSection): bool
     {
-        return $user->can('view_hero_section');
+        return $user->can('view_hero::section');
     }
 
     /**
@@ -28,7 +28,7 @@ class HeroSectionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_hero_section');
+        return $user->can('create_hero::section');
     }
 
     /**
@@ -36,7 +36,7 @@ class HeroSectionPolicy
      */
     public function update(User $user, HeroSection $heroSection): bool
     {
-        return $user->can('update_hero_section');
+        return $user->can('update_hero::section');
     }
 
     /**
@@ -44,7 +44,7 @@ class HeroSectionPolicy
      */
     public function delete(User $user, HeroSection $heroSection): bool
     {
-        return $user->can('delete_hero_section');
+        return $user->can('delete_hero::section');
     }
 
     /**
@@ -52,7 +52,7 @@ class HeroSectionPolicy
      */
     public function restore(User $user, HeroSection $heroSection): bool
     {
-        return $user->can('restore_hero_section');
+        return $user->can('restore_hero::section');
     }
 
     /**
@@ -60,6 +60,6 @@ class HeroSectionPolicy
      */
     public function forceDelete(User $user, HeroSection $heroSection): bool
     {
-        return $user->can('force_delete_hero_section');
+        return $user->can('force_delete_hero::section');
     }
 }

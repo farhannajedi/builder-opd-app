@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\NewsCategoriesResource\Pages;
 use App\Models\NewsCategories;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class NewsCategoriesResource extends Resource
+class NewsCategoriesResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = NewsCategories::class;
 

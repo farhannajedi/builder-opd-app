@@ -2,16 +2,18 @@
 
 namespace App\Providers;
 
+use App\Models\NewsCategories;
 use App\Models\OpdConfigs;
 use App\Models\Service;
+use App\Policies\NewsCategoriesPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\ServicePolicy;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Permission\Models\Role;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,7 +36,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::policy(Service::class, ServicePolicy::class);
+        Gate::policy(Service
+        ::class, ServicePolicy::class);
+        Gate::policy(NewsCategories::class, NewsCategoriesPolicy::class);
         // view composer lama
         // View::composer('*', function ($view) {
 

@@ -12,8 +12,7 @@ class PlanningDocumentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_planning_document
-        ');
+        return $user->can('view_any_planning::document');
     }
 
     /**
@@ -21,8 +20,7 @@ class PlanningDocumentPolicy
      */
     public function view(User $user, PlanningDocument $planningDocument): bool
     {
-        return $user->can('view_planning_document
-        ');
+        return $user->can('view_planning::document');
     }
 
     /**
@@ -30,8 +28,7 @@ class PlanningDocumentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_planning_document
-        ');
+        return $user->can('create_planning::document');
     }
 
     /**
@@ -39,8 +36,7 @@ class PlanningDocumentPolicy
      */
     public function update(User $user, PlanningDocument $planningDocument): bool
     {
-        return $user->can('update_planning_document
-        ');
+        return $user->can('update_planning::document');
     }
 
     /**
@@ -48,8 +44,7 @@ class PlanningDocumentPolicy
      */
     public function delete(User $user, PlanningDocument $planningDocument): bool
     {
-        return $user->can('delete_planning_document
-        ');
+        return $user->can('delete_planning::document');
     }
 
     /**
@@ -57,8 +52,7 @@ class PlanningDocumentPolicy
      */
     public function restore(User $user, PlanningDocument $planningDocument): bool
     {
-        return $user->can('restore_planning_document
-        ');
+        return $user->can('restore_planning::document');
     }
 
     /**
@@ -66,7 +60,6 @@ class PlanningDocumentPolicy
      */
     public function forceDelete(User $user, PlanningDocument $planningDocument): bool
     {
-        return $user->can('force_delete_planning_document
-        ');
+        return $user->can('force_delete_planning::document');
     }
 }
