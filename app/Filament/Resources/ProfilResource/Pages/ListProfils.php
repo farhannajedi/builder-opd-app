@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\OpdConfigsResource\Pages;
+namespace App\Filament\Resources\ProfilResource\Pages;
 
-use App\Filament\Resources\OpdConfigsResource;
-use App\Models\OpdConfigs;
+use App\Filament\Resources\ProfilResource;
+use App\Models\Profil;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\Auth;
 
-class ListOpdConfigs extends ListRecords
+class ListProfils extends ListRecords
 {
-    protected static string $resource = OpdConfigsResource::class;
+    protected static string $resource = ProfilResource::class;
 
     public function mount(): void
     {
@@ -21,10 +21,10 @@ class ListOpdConfigs extends ListRecords
         // Jika user adalah Admin OPD dan data profilnya sudah dibuat,
         // langsung alihkan ke halaman Edit profil milik OPD tersebut
         if ($user && $user->opd_id) {
-            $opdConfigs = OpdConfigs::where('opd_id', $user->opd_id)->first();
+            $profil = Profil::where('opd_id', $user->opd_id)->first();
 
-            if ($opdConfigs) {
-                $this->redirect(OpdConfigsResource::getUrl('edit', ['record' => $opdConfigs->id]));
+            if ($profil) {
+                $this->redirect(ProfilResource::getUrl('edit', ['record' => $profil->id]));
             }
         }
     }
@@ -33,7 +33,7 @@ class ListOpdConfigs extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-                ->label('Tambah Pengaturan Instansi'),
+                ->label('Tambah Profil Instansi'),
         ];
     }
 }

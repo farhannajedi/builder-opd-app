@@ -117,6 +117,12 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                 </a>
             </li>
             <li>
+                <a href="/profil"
+                    class="{{ ($activePage ?? '') === 'profil' ? 'text-brand-500 border-brand-500 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
+                    Profil
+                </a>
+            </li>
+            <li>
                 <a href="/pengumuman"
                     class="{{ ($activePage ?? '') === 'pengumuman' ? 'text-brand-500 border-brand-500 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
                     Pengumuman
@@ -299,16 +305,16 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
 
 <!-- menampilkan waktu -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const dateDisplay = document.getElementById('nav-date-display');
-    if (dateDisplay) {
-        const options = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        };
-        dateDisplay.textContent = new Date().toLocaleDateString('id-ID', options);
-    }
-});
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateDisplay = document.getElementById('nav-date-display');
+        if (dateDisplay) {
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            dateDisplay.textContent = new Date().toLocaleDateString('id-ID', options);
+        }
+    });
 </script>

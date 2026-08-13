@@ -22,6 +22,8 @@ class OpdConfigsResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationLabel = 'Pengaturan OPD';
 
+    protected static ?string $navigationGroup = 'Pengaturan Instansi';
+
     public static function form(Form $form): Form
     {
         $auth = Auth::user();
