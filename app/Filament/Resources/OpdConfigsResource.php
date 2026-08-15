@@ -18,6 +18,10 @@ class OpdConfigsResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = OpdConfigs::class;
 
+    protected static ?string $modelLabel = 'Pengaturan OPD';
+
+    protected static ?string $pluralModelLabel = 'Pengaturan OPD';
+
     protected static ?string $navigationIcon = 'heroicon-o-cog';
 
     protected static ?string $navigationLabel = 'Pengaturan OPD';

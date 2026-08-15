@@ -55,6 +55,7 @@ class OpdResource extends Resource implements HasShieldPermissions
                             ->maxLength(255)
                             ->nullable(),
 
+                        // opsional
                         Forms\Components\Textarea::make('description')
                             ->label('Deskripsi / Tugas Fungsi')
                             ->placeholder('Tuliskan ringkasan fungsi OPD...')
