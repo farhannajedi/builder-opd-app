@@ -88,11 +88,16 @@ $socialMedia = [
     [x-cloak] {
         display: none !important;
     }
+
+    ::selection {
+        background-color: #2563eb;
+        color: #ffffff;
+    }
     </style>
 
 </head>
 
-<body class="min-h-screen flex flex-col bg-brand text-brand antialiased selection:bg-brand selection:text-white">
+<body class="min-h-screen flex flex-col bg-brand text-brand antialiased">
 
     <!--navbar-->
     <x-navigation.nav :activePage="$activePage ?? ''" />

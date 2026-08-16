@@ -19,6 +19,10 @@ class OpdResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Opd::class;
 
+    protected static ?string $modelLabel = 'Daftra OPD';
+
+    protected static ?string $pluralModelLabel = 'Daftar OPD';
+
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?string $navigationLabel = 'OPD / Instansi';

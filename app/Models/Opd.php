@@ -8,6 +8,7 @@ use App\Models\Galleries;
 use App\Models\News;
 use App\Models\NewsCategories;
 use App\Models\OpdConfigs;
+use App\Models\Page;
 use App\Models\PlanningDocument;
 use App\Models\Profil;
 use App\Models\Service;
@@ -43,6 +44,11 @@ class Opd extends Model
         return $this->hasMany(NewsCategories::class);
     }
 
+    public function planningDocumentCategory()
+    {
+        return $this->hasMany(PlanningDocumentCategory::class);
+    }
+
     public function news()
     {
         return $this->hasMany(News::class);
@@ -76,6 +82,16 @@ class Opd extends Model
     public function profil()
     {
         return $this->hasMany(Profil::class);
+    }
+
+    public function pages()
+    {
+        return $this->hasMany(Page::class);
+    }
+
+    public function menu()
+    {
+        return $this->hasMany(PageMenu::class);
     }
 
     // ditulis di filament

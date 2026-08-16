@@ -1,6 +1,5 @@
 @props(['activePage'])
 
-
 @php
 use Illuminate\Support\Facades\Date;
 
@@ -10,9 +9,16 @@ $opdConfigs = \App\Models\OpdConfigs::where('opd_id', $opd?->id)->first();
 $opdName = $opd->name ?? 'Portal Resmi Instansi';
 
 // Ambil kategori dokumen perencanaan
-$docCategories = App\Models\PlanningDocumentCategory::where('opd_id', $opd?->id)->get();
+$docCategories = \App\Models\PlanningDocumentCategory::where('opd_id', $opd?->id)->get();
+
 // Kategori berita
-$newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
+$newsCategories = \App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
+
+// Ambil semua halaman kustom dinamis milik OPD terkait yang aktif
+$customMenus = \App\Models\PageMenu::where('opd_id', $opd?->id)
+->where('is_active', true)
+->orderBy('order', 'asc')
+->get();
 @endphp
 
 <!-- Container Navigasi Utama -->
@@ -43,10 +49,8 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
         </div>
     </div>
 
-    <!-- logo hamburger menu -->
+    <!-- Bar Logo & Search Desktop -->
     <div class="max-w-screen-lg flex items-center justify-between mx-auto w-full py-3 px-4">
-
-        <!-- logo -->
         <div class="flex items-center gap-3">
             <a href="/" class="block">
                 <img src="{{ asset('assets/images/logo_kab.png') }}"
@@ -63,35 +67,34 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                 alt="logo_favicon">
         </div>
 
-        <!-- Tombol Hamburger Navbar Mobile -->
+        <!-- Tombol Hamburger Mobile -->
         <div class="block md:hidden">
             <button @click="mobileOpen = !mobileOpen" type="button"
                 class="bg-white hover:bg-slate-800 p-2.5 active:scale-95 rounded-xl border border-slate-300 group duration-200 shadow-sm">
-                <!-- Icon Hamburger (Saat Tertutup) -->
                 <svg x-show="!mobileOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round"
                     class="text-slate-700 group-hover:text-white h-6 w-6">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M4 6l16 0" />
                     <path d="M4 12l16 0" />
                     <path d="M4 18l16 0" />
                 </svg>
-                <!-- Icon tutup (Saat Terbuka) -->
                 <svg x-cloak x-show="mobileOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round"
                     class="text-slate-700 group-hover:text-white h-6 w-6">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M18 6l-12 12" />
                     <path d="M6 6l12 12" />
                 </svg>
             </button>
         </div>
 
-        <!-- Search Bar Desktop  -->
-        <div
+        <!-- Search Bar Desktop -->
+        <form action="/pencarian" method="GET"
             class="bg-white w-1/3 h-10 border border-slate-300 rounded-lg hidden md:flex p-1 shadow-sm focus-within:border-brand-500 transition-colors">
-            <input type="text" class="flex-1 focus:outline-none pl-2 text-sm text-slate-700" placeholder="Pencarian">
-            <button class="bg-white hover:bg-amber-300 rounded-r-md px-3 transition-colors">
+            <input type="text" name="q" value="{{ request('q') }}"
+                class="flex-1 focus:outline-none pl-2 text-sm text-slate-700 bg-transparent" placeholder="Pencarian..."
+                required>
+            <button type="submit"
+                class="bg-white hover:bg-amber-300 rounded-r-md px-3 transition-colors cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="text-brand-500 h-5 w-auto" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -99,12 +102,12 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                     <path d="M21 21l-6 -6" />
                 </svg>
             </button>
-        </div>
+        </form>
     </div>
 
     <!-- Menu Navigasi Desktop -->
     <div class="hidden md:block max-w-screen-lg px-2 mx-auto w-full border-t border-slate-200">
-        <ul class="text-xs font-bold uppercase flex gap-1 lg:gap-2 text-slate-700">
+        <ul class="text-xs font-bold uppercase flex flex-wrap gap-1 lg:gap-2 text-slate-700">
             <li>
                 <a href="/"
                     class="{{ ($activePage ?? '') === 'beranda' ? 'text-brand-500 border-brand-500 bg-slate-100' : 'hover:text-brand-500 hover:bg-slate-50 border-transparent' }} flex gap-1.5 items-center border-b-2 py-3 px-3 transition-all duration-200">
@@ -128,23 +131,16 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                     Pengumuman
                 </a>
             </li>
-            <!-- <li>
-                <a href="/berita"
-                    class="{{ ($activePage ?? '') === 'berita' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
-                    Berita
-                </a>
-            </li> -->
+
+            <!-- Dropdown Berita -->
             <li class="group relative">
-                <!-- Tombol Utama Menu -->
                 <a href="javascript:void(0)"
-                    class="{{ ($activePage ?? '') === 'berita' || ($activePage ?? '') === 'Berita' || ($activePage ?? '') === 'Berita' ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} border-b-2 py-3 px-3 flex items-center gap-1 transition-all duration-200">
+                    class="{{ in_array(strtolower($activePage ?? ''), ['berita']) ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} border-b-2 py-3 px-3 flex items-center gap-1 transition-all duration-200">
                     <span>Berita</span>
                     <x-icons.chevron-down class="h-4 w-4 stroke-2 group-hover:rotate-180 duration-300" />
                 </a>
-                <!-- Dropdown Menu -->
                 <div
                     class="hidden group-hover:block bg-white p-2 min-w-60 w-max rounded-2xl shadow-xl border border-slate-100 absolute top-full left-0 z-50 transition-all duration-200 space-y-1">
-                    <!-- Menu Utama Semua Dokumen -->
                     <a href="{{ url('/berita') }}" class="block">
                         <div
                             class="hover:bg-brand-50 hover:text-brand-600 p-2.5 rounded-xl text-xs font-semibold text-slate-700 transition-colors flex items-center gap-2">
@@ -155,15 +151,11 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                             <span>Semua Berita</span>
                         </div>
                     </a>
-
-                    <!-- Pembatas jika ada kategori -->
                     @if($newsCategories->isNotEmpty())
                     <div class="my-1 border-t border-slate-100"></div>
                     <div class="px-2.5 pt-1 pb-0.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
                         Kategori Berita
                     </div>
-
-                    <!-- Loop Kategori Dokumen Perencanaan secara Dinamis -->
                     @foreach ($newsCategories as $cat)
                     <a href="{{ url('/berita/kategori/' . $cat->slug) }}" class="block">
                         <div
@@ -176,35 +168,29 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                     @endif
                 </div>
             </li>
-            <!-- <li>
-                <a href="/planning-dokumen"
-                    class="{{ ($activePage ?? '') === 'Arsip Dokumen' ? 'text-orange-600 border-orange-600 bg-orange-50/50' : 'hover:text-orange-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
-                    Arsip Dokumen
-                </a>
-            </li> -->
+
             <li>
                 <a href="/layanan"
-                    class="{{ ($activePage ?? '') === 'Layanan' ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
+                    class="{{ in_array(strtolower($activePage ?? ''), ['layanan']) ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
                     Layanan
                 </a>
             </li>
             <li>
                 <a href="/galeri"
-                    class="{{ ($activePage ?? '') === 'galeri' ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
+                    class="{{ in_array(strtolower($activePage ?? ''), ['galeri']) ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
                     Galeri
                 </a>
             </li>
+
+            <!-- Dropdown Arsip Dokumen -->
             <li class="group relative">
-                <!-- Tombol Utama Menu -->
                 <a href="javascript:void(0)"
-                    class="{{ ($activePage ?? '') === 'arsip-dokumen' || ($activePage ?? '') === 'Arsip Dokumen' || ($activePage ?? '') === 'Arsip Dokumen' ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} border-b-2 py-3 px-3 flex items-center gap-1 transition-all duration-200">
+                    class="{{ in_array(strtolower($activePage ?? ''), ['arsip-dokumen', 'arsip dokumen']) ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} border-b-2 py-3 px-3 flex items-center gap-1 transition-all duration-200">
                     <span>Arsip Dokumen</span>
                     <x-icons.chevron-down class="h-4 w-4 stroke-2 group-hover:rotate-180 duration-300" />
                 </a>
-                <!-- Dropdown Menu -->
                 <div
                     class="hidden group-hover:block bg-white p-2 min-w-60 w-max rounded-2xl shadow-xl border border-slate-100 absolute top-full left-0 z-50 transition-all duration-200 space-y-1">
-                    <!-- Menu Utama Semua Dokumen -->
                     <a href="{{ url('/planning-dokumen') }}" class="block">
                         <div
                             class="hover:bg-brand-50 hover:text-brand-600 p-2.5 rounded-xl text-xs font-semibold text-slate-700 transition-colors flex items-center gap-2">
@@ -215,15 +201,11 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                             <span>Semua Dokumen Perencanaan</span>
                         </div>
                     </a>
-
-                    <!-- Pembatas jika ada kategori -->
                     @if($docCategories->isNotEmpty())
                     <div class="my-1 border-t border-slate-100"></div>
                     <div class="px-2.5 pt-1 pb-0.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
                         Kategori Dokumen
                     </div>
-
-                    <!-- Loop Kategori Dokumen Perencanaan secara Dinamis -->
                     @foreach ($docCategories as $cat)
                     <a href="{{ url('/planning-dokumen/kategori/' . $cat->slug) }}" class="block">
                         <div
@@ -236,12 +218,22 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                     @endif
                 </div>
             </li>
+
+            <!-- Menu Dinamis Halaman Custom Admin -->
+            @foreach($customMenus as $cMenu)
+            <li>
+                <a href="{{ url('/halaman/' . $cMenu->slug) }}"
+                    class="{{ ($activePage ?? '') === $cMenu->title ? 'text-brand-600 border-brand-600 bg-brand-50/50' : 'hover:text-brand-600 hover:bg-slate-50 border-transparent' }} block border-b-2 py-3 px-3 transition-all duration-200">
+                    {{ $cMenu->title }}
+                </a>
+            </li>
+            @endforeach
         </ul>
     </div>
 
     <!-- Menu Navigasi Mobile -->
     <div id="mobile-menu" x-cloak x-show="mobileOpen" x-transition @click.away="mobileOpen = false"
-        class="md:hidden shadow-2xl bg-white p-3 absolute left-0 right-0 top-full w-full rounded-b-2xl border-t border-slate-200 text-slate-700 grid divide-y divide-slate-100">
+        class="md:hidden shadow-2xl bg-white p-3 absolute left-0 right-0 top-full w-full rounded-b-2xl border-t border-slate-200 text-slate-700 grid divide-y divide-slate-100 max-h-[80vh] overflow-y-auto">
         <a href="/"
             class="w-full text-base font-semibold flex justify-between items-center hover:bg-slate-50 p-2.5 rounded-xl group transition-colors">
             <span class="group-hover:text-brand-600">Beranda</span>
@@ -262,8 +254,15 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
             class="w-full text-base font-semibold flex justify-between items-center hover:bg-slate-50 p-2.5 rounded-xl group transition-colors">
             <span class="group-hover:text-brand-600">Galeri</span>
         </a>
+        <!-- Halaman Kustom di Menu Mobile -->
+        @foreach($customMenus as $cMenu)
+        <a href="{{ url('/halaman/' . $cMenu->slug) }}"
+            class="w-full text-base font-semibold flex justify-between items-center hover:bg-slate-50 p-2.5 rounded-xl group transition-colors">
+            <span class="group-hover:text-brand-600">{{ $cMenu->title }}</span>
+        </a>
+        @endforeach
 
-        <!-- Submenu Mobile dengan Toggle Dropdown -->
+        <!-- Submenu Mobile Informasi Publik -->
         <div class="py-2 px-1">
             <button @click="mobileSubmenuOpen = !mobileSubmenuOpen" type="button"
                 class="w-full text-base font-semibold flex justify-between items-center hover:bg-slate-50 p-1.5 rounded-xl group transition-colors">
@@ -286,10 +285,13 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
 
         <!-- Input Search Mobile -->
         <div class="pt-3 pb-1 px-1">
-            <div class="bg-white w-full h-10 border border-slate-300 rounded-lg flex p-1 shadow-sm">
-                <input type="text" class="flex-1 focus:outline-none pl-2 text-sm text-slate-700"
-                    placeholder="Pencarian">
-                <button class="bg-white hover:bg-amber-300 rounded-r-md px-2 transition-colors">
+            <form action="/pencarian" method="GET"
+                class="bg-white w-full h-10 border border-slate-300 rounded-lg flex p-1 shadow-sm focus-within:border-brand-500">
+                <input type="text" name="q" value="{{ request('q') }}"
+                    class="flex-1 focus:outline-none pl-2 text-sm text-slate-700 bg-transparent"
+                    placeholder="Pencarian..." required>
+                <button type="submit"
+                    class="bg-white hover:bg-amber-300 rounded-r-md px-2 transition-colors cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="text-brand-600 h-5 w-auto" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -298,12 +300,12 @@ $newsCategories = App\Models\NewsCategories::where('opd_id', $opd?->id)->get();
                         <path d="M21 21l-6 -6" />
                     </svg>
                 </button>
-            </div>
+            </form>
         </div>
     </div>
 </nav>
 
-<!-- menampilkan waktu -->
+<!-- Menampilkan Waktu -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const dateDisplay = document.getElementById('nav-date-display');
