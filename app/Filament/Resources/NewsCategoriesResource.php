@@ -25,6 +25,8 @@ class NewsCategoriesResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationGroup = 'Manajemen Berita';
 
+    protected static ?string $modelLabel = 'Kategori Berita';
+
     public static function form(Form $form): Form
     {
         // ini adalah validasi, agar admin opd tidak dapat memilih opd, namun otomatis terisi berdasarkan user->opd id

@@ -25,6 +25,8 @@ class PlanningDocumentResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen Dokumen';
 
+    protected static ?string $modelLabel = 'Publikasi Dokumen';
+
     public static function form(Form $form): Form
     {
         $auth = Auth::user();

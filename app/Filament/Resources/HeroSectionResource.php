@@ -25,6 +25,8 @@ class HeroSectionResource extends Resource
 
     protected static ?string $navigationLabel = 'Banner Carousel';
 
+    protected static ?string $modelLabel = 'Banner';
+
     public static function form(Form $form): Form
     {
 

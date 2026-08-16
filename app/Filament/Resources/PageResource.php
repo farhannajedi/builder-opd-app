@@ -24,6 +24,8 @@ class PageResource extends Resource
 
     protected static ?string $navigationGroup = 'Tambah Halaman OPD';
 
+    protected static ?string $modelLabel = 'Daftar Isi Halaman';
+
     public static function form(Form $form): Form
     {
         $auth = Auth::user();
@@ -71,7 +73,7 @@ class PageResource extends Resource
                                     ->label('Deskripsi Pengantar'),
                             ])
                             ->helperText('Pilih Menu Navbar yang menaungi halaman ini, atau klik (+) untuk buat menu baru.'),
-                            
+
                         Forms\Components\TextInput::make('badge_text')
                             ->label('Teks Label / Badge')
                             ->placeholder('Contoh: KEAGAMAAN, JANUARI 2026')

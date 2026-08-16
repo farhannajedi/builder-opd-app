@@ -24,6 +24,8 @@ class ServiceResource extends Resource
 
     protected static ?string $navigationGroup = 'Layanan Publik';
 
+    protected static ?string $modelLabel = 'Layanan';
+
     public static function form(Form $form): Form
     {
         $auth = Auth::user();

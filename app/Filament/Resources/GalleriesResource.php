@@ -22,6 +22,8 @@ class GalleriesResource extends Resource
 
     protected static ?string $navigationLabel = 'Galeri';
 
+    protected static ?string $modelLabel = 'Galeri';
+
     public static function form(Form $form): Form
     {
         // ini adalah validasi, agar admin opd tidak dapat memilih opd, namun otomatis terisi berdasarkan user->opd id

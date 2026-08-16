@@ -27,6 +27,8 @@ class PlanningDocumentCategoryResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $modelLabel = 'Kategori Dokumen';
+
     public static function form(Form $form): Form
     {
         $auth = Auth::user();

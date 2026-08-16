@@ -23,6 +23,8 @@ class AnnouncementResource extends Resource
 
     protected static ?string $navigationLabel = 'Pengumuman';
 
+    protected static ?string $modelLabel = 'Pengumuman';
+
     public static function form(Form $form): Form
     {
 

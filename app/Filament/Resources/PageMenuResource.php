@@ -25,6 +25,8 @@ class PageMenuResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $modelLabel = 'Daftar Halaman Baru';
+
     public static function form(Form $form): Form
     {
         $auth = Auth::user();
