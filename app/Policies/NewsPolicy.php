@@ -20,7 +20,17 @@ class NewsPolicy
      */
     public function view(User $user, News $news): bool
     {
-        return $user->can('view_news');
+        if (!$user->can('view_news')) {
+            return false;
+        }
+
+        // Super Admin dapat melihat semua OPD
+        if ($user->opd_id === null) {
+            return true;
+        }
+
+        // Admin OPD hanya dapat melihat berita OPD sendiri
+        return $news->opd_id === $user->opd_id;
     }
 
     /**
@@ -36,7 +46,17 @@ class NewsPolicy
      */
     public function update(User $user, News $news): bool
     {
-        return $user->can('update_news');
+        if (!$user->can('update_news')) {
+            return false;
+        }
+
+        // Super Admin dapat mengubah berita semua OPD
+        if ($user->opd_id === null) {
+            return true;
+        }
+
+        // Admin OPD hanya dapat mengubah berita miliknya
+        return $news->opd_id === $user->opd_id;
     }
 
     /**
@@ -44,7 +64,17 @@ class NewsPolicy
      */
     public function delete(User $user, News $news): bool
     {
-        return $user->can('delete_news');
+        if (!$user->can('delete_news')) {
+            return false;
+        }
+
+        // Super Admin dapat menghapus semua berita
+        if ($user->opd_id === null) {
+            return true;
+        }
+
+        // Admin OPD hanya dapat menghapus berita miliknya
+        return $news->opd_id === $user->opd_id;
     }
 
     /**
@@ -52,7 +82,15 @@ class NewsPolicy
      */
     public function restore(User $user, News $news): bool
     {
-        return $user->can('restore_news');
+        if (!$user->can('restore_news')) {
+            return false;
+        }
+
+        if ($user->opd_id === null) {
+            return true;
+        }
+
+        return $news->opd_id === $user->opd_id;
     }
 
     /**
@@ -60,6 +98,14 @@ class NewsPolicy
      */
     public function forceDelete(User $user, News $news): bool
     {
-        return $user->can('force_delete_news');
+        if (!$user->can('force_delete_news')) {
+            return false;
+        }
+
+        if ($user->opd_id === null) {
+            return true;
+        }
+
+        return $news->opd_id === $user->opd_id;
     }
 }

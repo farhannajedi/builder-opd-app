@@ -191,6 +191,97 @@ class OpdObserver
         }
     }
 
-    public function updated(Opd $opd): void {}
+    public function updated(Opd $opd): void
+    {
+        if (!$opd->wasChanged('slug')) {
+            return;
+        }
+
+        $oldSlug = $opd->getOriginal('slug');
+        $newSlug = $opd->slug;
+
+        if (empty($oldSlug) || empty($newSlug) || $oldSlug === $newSlug) {
+            return;
+        }
+
+        $rootPath = config('opd.root_path', realpath(base_path('..')));
+
+        $oldProjectPath = $rootPath . DIRECTORY_SEPARATOR . $oldSlug;
+        $newProjectPath = $rootPath . DIRECTORY_SEPARATOR . $newSlug;
+
+        Log::info("Slug OPD berubah: {$oldSlug} → {$newSlug}");
+
+        if (!File::isDirectory($oldProjectPath)) {
+            Log::warning(
+                "Folder child lama tidak ditemukan: {$oldProjectPath}"
+            );
+
+            return;
+        }
+
+        // Memastikan Tidak Menimpa Folder Lama, 
+        if (File::exists($newProjectPath)) {
+            Log::error(
+                "Gagal rename child web. Folder tujuan sudah ada: {$newProjectPath}"
+            );
+
+            return;
+        }
+
+        try {
+
+            // Rename folder childnya
+            File::moveDirectory(
+                $oldProjectPath,
+                $newProjectPath
+            );
+
+            Log::info(
+                "Folder child berhasil diubah: {$oldProjectPath} → {$newProjectPath}"
+            );
+
+            // Update .env di file child
+            $envPath = $newProjectPath . DIRECTORY_SEPARATOR . '.env';
+
+            if (File::exists($envPath)) {
+
+                $env = File::get($envPath);
+
+                // Masukkan APP_ID
+                $env = preg_replace(
+                    '/^APP_ID=.*$/m',
+                    'APP_ID="' . $newSlug . '"',
+                    $env
+                );
+
+                // Ubah APP_URL
+                $env = preg_replace(
+                    '/^APP_URL=.*$/m',
+                    'APP_URL="http://' . $newSlug . '.test"',
+                    $env
+                );
+
+                // Mengubah APP_NAME
+                $env = preg_replace(
+                    '/^APP_NAME=.*$/m',
+                    'APP_NAME="' . $opd->name . '"',
+                    $env
+                );
+
+                File::put($envPath, $env);
+
+                Log::info(
+                    "File .env child berhasil diperbarui: {$envPath}"
+                );
+            }
+        } catch (\Throwable $e) {
+
+            Log::error(
+                "Gagal mengubah slug child web {$oldSlug} → {$newSlug}: "
+                    . $e->getMessage()
+            );
+        }
+    }
+
     public function restored(Opd $opd): void {}
 }

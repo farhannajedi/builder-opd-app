@@ -50,6 +50,7 @@ class PageMenuResource extends Resource
                         Forms\Components\TextInput::make('title')
                             ->label('Nama Menu')
                             ->placeholder('Contoh Nama Menu: (Layanan), Publikasi Dokumen')
+                            ->helperText('Buatlah Nama Halaman Menarik')
                             ->required()
                             ->live(onBlur: true)
                             ->afterStateUpdated(
@@ -60,8 +61,7 @@ class PageMenuResource extends Resource
                         Forms\Components\TextInput::make('slug')
                             ->label('Slug URL Menu')
                             ->placeholder('Akan Diisi Secara Otomatis')
-                            ->required()
-                            ->unique(PageMenu::class, 'slug', ignoreRecord: true),
+                            ->required(),
 
                         Forms\Components\Textarea::make('description')
                             ->label('Deskripsi Singkat Tentang Menu Ini')

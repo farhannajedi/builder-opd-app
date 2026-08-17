@@ -67,6 +67,7 @@ class PageResource extends Resource
                                     ->afterStateUpdated(fn($state, Forms\Set $set) => $set('slug', Str::slug($state))),
                                 Forms\Components\TextInput::make('slug')
                                     ->label('Slug')
+                                    ->placeholder('Diisi Secara Otomatis')
                                     ->required()
                                     ->unique(PageMenu::class, 'slug'),
                                 Forms\Components\Textarea::make('description')

@@ -34,30 +34,23 @@ class OpdResource extends Resource implements HasShieldPermissions
         return $form
             ->schema([
                 Forms\Components\Section::make('Informasi Instansi / OPD')
-                    ->description('Kelola data induk instansi, slug URL, dan subdomain portal.')
+                    ->description('Kelola data induk instansi dan slug URL portal.')
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label('Nama OPD')
                             ->placeholder('Contoh: Dinas Komunikasi dan Informatika')
                             ->required()
-                            ->maxLength(255)
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state))),
+                            ->maxLength(255),
+                        // ->live(onBlur: true),
+                        // ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state))), ->otomatis membuat slug
 
                         Forms\Components\TextInput::make('slug')
                             ->label('Slug URL')
                             ->placeholder('Akan otomatis terisi sesuai Nama OPD')
                             ->required()
-                            ->readOnly()
+                            // ->readOnly()
                             ->dehydrated()
                             ->unique(table: Opd::class, column: 'slug', ignoreRecord: true),
-
-                        Forms\Components\TextInput::make('domain')
-                            ->label('Subdomain')
-                            ->placeholder('Contoh: diskominfo')
-                            ->helperText('Catatan: Subdomain yang digunakan untuk mengakses portal instansi ini.')
-                            ->maxLength(255)
-                            ->nullable(),
 
                         // opsional
                         Forms\Components\Textarea::make('description')
@@ -88,14 +81,6 @@ class OpdResource extends Resource implements HasShieldPermissions
                     ->badge()
                     ->color('gray')
                     ->searchable(),
-
-                Tables\Columns\TextColumn::make('domain')
-                    ->label('Subdomain')
-                    ->badge()
-                    ->color('info')
-                    ->searchable()
-                    ->sortable()
-                    ->placeholder('Tanpa Subdomain'),
 
                 Tables\Columns\TextColumn::make('description')
                     ->label('Deskripsi')
