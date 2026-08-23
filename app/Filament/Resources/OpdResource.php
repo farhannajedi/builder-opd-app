@@ -46,7 +46,8 @@ class OpdResource extends Resource implements HasShieldPermissions
 
                         Forms\Components\TextInput::make('slug')
                             ->label('Slug URL')
-                            ->placeholder('Akan otomatis terisi sesuai Nama OPD')
+                            ->placeholder('Isi Dalam Huruf Kecil Dan Gunakan (-) sebagai tanda hubung')
+                            ->helperText('** !! Contoh : dinas-capil (huruf kecil dan tanda -)')
                             ->required()
                             // ->readOnly()
                             ->dehydrated()

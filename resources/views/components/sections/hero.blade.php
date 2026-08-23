@@ -42,6 +42,31 @@ $opdName = $opd->name ?? 'Instansi Pemerintah';
 
                 <!-- Overlay Gradien -->
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"></div>
+
+                <!-- (Opsional) Teks Judul di atas Banner -->
+                <div class="absolute inset-0 flex items-center justify-center text-center p-6 z-10">
+                    <div class="max-w-4xl space-y-4">
+                        <!-- Badge Kategori/Instansi -->
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-semibold tracking-wide uppercase shadow-lg">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Portal Resmi • {{ $opdName }}
+                        </div>
+
+                        <!-- Judul Utama -->
+                        <h2
+                            class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight drop-shadow-md leading-tight">
+                            {{ $hero->title }}
+                        </h2>
+
+                        <!-- Subtitle / Slogan -->
+                        @if($hero->subtitle)
+                        <p class="text-sm sm:text-lg text-slate-200 max-w-2xl mx-auto font-medium drop-shadow">
+                            {{ $hero->subtitle }}
+                        </p>
+                        @endif
+                    </div>
+                </div>
             </div>
             @endforeach
         </div>
@@ -68,7 +93,7 @@ $opdName = $opd->name ?? 'Instansi Pemerintah';
             <div
                 class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-brand-400 text-xs font-semibold uppercase tracking-widest mb-6 shadow-inner">
                 <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
-                Portal Resmi Informasip
+                Portal Resmi Informasi
             </div>
 
             <h1

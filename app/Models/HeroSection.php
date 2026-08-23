@@ -30,6 +30,19 @@ class HeroSection extends Model
 
     public function banners()
     {
-        return $this->hasMany(HeroBanner::class)->orderBy('order');
+        return $this->hasMany(HeroBanner::class)->orderBy('order', 'asc');
+    }
+
+    // Memastikan agar hanya ada 1 Hero Section yang aktif per OPD
+    protected static function booted()
+    {
+        static::saving(function ($heroSection) {
+            if ($heroSection->is_active) {
+                // Matikan status is_active pada hero section lain milik opd_id yang sama
+                static::where('opd_id', $heroSection->opd_id)
+                    ->where('id', '!=', $heroSection->id)
+                    ->update(['is_active' => false]);
+            }
+        });
     }
 }

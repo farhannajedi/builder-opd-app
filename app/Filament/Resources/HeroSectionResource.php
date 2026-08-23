@@ -6,6 +6,7 @@ use App\Filament\Resources\HeroSectionResource\Pages;
 use App\Models\HeroSection;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
@@ -86,6 +87,7 @@ class HeroSectionResource extends Resource
                         Repeater::make('banners')
                             ->relationship('banners')
                             ->schema([
+                                Hidden::make('id'),
                                 FileUpload::make('image_path')
                                     ->label('Gambar Banner')
                                     ->image()
@@ -96,7 +98,7 @@ class HeroSectionResource extends Resource
                                 Forms\Components\TextInput::make('order')
                                     ->label('Urutan Tampil')
                                     ->numeric()
-                                    ->default(1)
+                                    ->default(fn($get) => count($get('../../banners') ?? []) + 1)
                                     ->required(),
                             ])
                             ->columns(3)

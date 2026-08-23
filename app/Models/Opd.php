@@ -81,7 +81,7 @@ class Opd extends Model
 
     public function profil()
     {
-        return $this->hasMany(Profil::class);
+        return $this->hasOne(Profil::class);
     }
 
     public function pages()

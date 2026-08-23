@@ -52,7 +52,7 @@ $socialMedia = [
     <title>{{ $title ?? 'Website Resmi ' . $opdName }}</title>
 
     <!-- memuat semua aset yang didaftarkan di AppServiceProvider / Vite -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'], 'web-builder-app')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Fonts Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,34 +65,34 @@ $socialMedia = [
 
     <!-- Injeksi CSS Variables (Ditulis dalam 1 baris agar tidak corrupt) -->
     <style>
-    /* untuk shade warnanya dengan kode brand (app.css / tailwind.configs.)*/
-    :root {
-        --color-brand-50: color-mix(in srgb, var(--color-primary) 5%, white);
-        --color-brand-100: color-mix(in srgb, var(--color-primary) 10%, white);
-        --color-brand-200: color-mix(in srgb, var(--color-primary) 20%, white);
-        --color-brand-300: color-mix(in srgb, var(--color-primary) 30%, white);
-        --color-brand-400: color-mix(in srgb, var(--color-primary) 40%, white);
+        /* untuk shade warnanya dengan kode brand (app.css / tailwind.configs.)*/
+        :root {
+            --color-brand-50: color-mix(in srgb, var(--color-primary) 5%, white);
+            --color-brand-100: color-mix(in srgb, var(--color-primary) 10%, white);
+            --color-brand-200: color-mix(in srgb, var(--color-primary) 20%, white);
+            --color-brand-300: color-mix(in srgb, var(--color-primary) 30%, white);
+            --color-brand-400: color-mix(in srgb, var(--color-primary) 40%, white);
 
-        --color-brand-500: var(--color-primary);
+            --color-brand-500: var(--color-primary);
 
-        --color-brand-600: color-mix(in srgb, var(--color-primary) 90%, black);
-        --color-brand-700: color-mix(in srgb, var(--color-primary) 75%, black);
-        --color-brand-800: color-mix(in srgb, var(--color-primary) 60%, black);
-        --color-brand-900: color-mix(in srgb, var(--color-primary) 45%, black);
-    }
+            --color-brand-600: color-mix(in srgb, var(--color-primary) 90%, black);
+            --color-brand-700: color-mix(in srgb, var(--color-primary) 75%, black);
+            --color-brand-800: color-mix(in srgb, var(--color-primary) 60%, black);
+            --color-brand-900: color-mix(in srgb, var(--color-primary) 45%, black);
+        }
 
-    body {
-        font-family: 'Inter', sans-serif;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
 
-    [x-cloak] {
-        display: none !important;
-    }
+        [x-cloak] {
+            display: none !important;
+        }
 
-    ::selection {
-        background-color: #2563eb;
-        color: #ffffff;
-    }
+        ::selection {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
     </style>
 
 </head>
