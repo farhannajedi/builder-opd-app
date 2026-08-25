@@ -15,7 +15,7 @@ class OpdConfigsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('view_any_opd::configs');
     }
 
     /**
@@ -23,7 +23,7 @@ class OpdConfigsPolicy
      */
     public function view(User $user, OpdConfigs $opdConfigs): bool
     {
-        return true; //$user->can('view_opd::configs');
+        return $user->can('view_opd::configs');
     }
 
     /**
@@ -31,7 +31,7 @@ class OpdConfigsPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('create_opd::configs');
     }
 
     /**
@@ -39,7 +39,7 @@ class OpdConfigsPolicy
      */
     public function update(User $user, OpdConfigs $opdConfigs): bool
     {
-        return true; // $user->can('update_opd::configs');
+        return $user->can('update_opd::configs');
     }
 
     /**
@@ -47,7 +47,7 @@ class OpdConfigsPolicy
      */
     public function delete(User $user, OpdConfigs $opdConfigs): bool
     {
-        return true; // $user->can('delete_opd::configs');
+        return $user->can('delete_opd::configs');
     }
 
     /**
@@ -55,7 +55,7 @@ class OpdConfigsPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true; // $user->can('{{ DeleteAny }}');
+        return $user->can('delete_any_opd::configs');
     }
 
     /**
@@ -63,7 +63,7 @@ class OpdConfigsPolicy
      */
     public function forceDelete(User $user, OpdConfigs $opdConfigs): bool
     {
-        return true; // $user->can('{{ ForceDelete }}');
+        return $user->can('force_delete_opd::configs');
     }
 
     /**
@@ -71,7 +71,7 @@ class OpdConfigsPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return true; // $user->can('{{ ForceDeleteAny }}');
+        return $user->can('force_delete_any_opd::configs');
     }
 
     /**
@@ -79,7 +79,7 @@ class OpdConfigsPolicy
      */
     public function restore(User $user, OpdConfigs $opdConfigs): bool
     {
-        return true; // $user->can('{{ Restore }}');
+        return $user->can('restore_opd::configs');
     }
 
     /**
@@ -87,22 +87,6 @@ class OpdConfigsPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return true; // $user->can('{{ RestoreAny }}');
-    }
-
-    /**
-     * Determine whether the user can replicate.
-     */
-    public function replicate(User $user, OpdConfigs $opdConfigs): bool
-    {
-        return true; // $user->can('{{ Replicate }}');
-    }
-
-    /**
-     * Determine whether the user can reorder.
-     */
-    public function reorder(User $user): bool
-    {
-        return true; // $user->can('{{ Reorder }}');
+        return $user->can('restore_any_opd::configs');
     }
 }
