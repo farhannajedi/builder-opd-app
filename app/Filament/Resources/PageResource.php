@@ -52,11 +52,26 @@ class PageResource extends Resource
                             ->relationship(
                                 name: 'page_menu',
                                 titleAttribute: 'title',
-                                modifyQueryUsing: fn(Builder $query) => $auth?->opd_id ? $query->where('opd_id', $auth->opd_id) : $query
+                                modifyQueryUsing: fn(Builder $query) =>
+                                $auth?->opd_id
+                                    ? $query->where('opd_id', $auth->opd_id)
+                                    : $query
                             )
                             ->searchable()
                             ->preload()
+                            ->live()
                             ->required()
+                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+
+                                if (!$state) {
+                                    $set('order', 1);
+                                    return;
+                                }
+
+                                $nextOrder = (Page::where('page_menu_id', $state)->max('order') ?? 0) + 1;
+
+                                $set('order', $nextOrder);
+                            })
                             ->createOptionForm([
                                 Forms\Components\Hidden::make('opd_id')->default(fn() => Auth::user()?->opd_id),
                                 Forms\Components\TextInput::make('title')
@@ -109,7 +124,20 @@ class PageResource extends Resource
                         Forms\Components\TextInput::make('order')
                             ->label('Urutan Kartu')
                             ->numeric()
-                            ->default(0),
+                            ->minValue(1)
+                            ->required()
+                            ->helperText(function (Forms\Get $get) {
+
+                                $menuId = $get('page_menu_id');
+
+                                if (!$menuId) {
+                                    return 'Pilih Menu Induk terlebih dahulu.';
+                                }
+
+                                $total = Page::where('page_menu_id', $menuId)->count();
+
+                                return "Total halaman dalam menu ini: {$total}. Nomor lebih kecil akan tampil lebih awal.";
+                            }),
                     ])->columns(2),
 
                 Forms\Components\Section::make('Isi Konten Sub-Halaman')

@@ -14,7 +14,6 @@ $pages = \App\Models\Page::where('page_menu_id', $menu->id)
 ->where('opd_id', $opd?->id)
 ->where('is_active', true)
 ->orderBy('order', 'asc')
-->latest()
 ->paginate(9);
 @endphp
 

@@ -32,7 +32,6 @@ class ProfilResource extends Resource implements HasShieldPermissions
     {
         $auth = Auth::user();
 
-        // Tentukan input opd_id berdasarkan role user
         $opdField = is_null($auth->opd_id)
             ? Forms\Components\Select::make('opd_id')
             ->label('OPD / Instansi')
@@ -119,6 +118,7 @@ class ProfilResource extends Resource implements HasShieldPermissions
             ]);
     }
 
+    // Tabel dikembalikan agar fungsi list aktif kembali
     public static function table(Table $table): Table
     {
         return $table
@@ -171,6 +171,7 @@ class ProfilResource extends Resource implements HasShieldPermissions
         return [];
     }
 
+    // Mengembalikan halaman index, create, dan edit agar struktur aslinya tetap utuh
     public static function getPages(): array
     {
         return [
@@ -191,11 +192,9 @@ class ProfilResource extends Resource implements HasShieldPermissions
         ];
     }
 
-    // Pembatasan data berdasarkan OPD ID
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery()->with(['opd']);
-
         $user = Auth::user();
 
         if ($user && $user->opd_id) {
