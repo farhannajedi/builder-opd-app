@@ -117,27 +117,32 @@ class OpdConfigsResource extends Resource implements HasShieldPermissions
                         Forms\Components\TextInput::make('facebook_url')
                             ->label('Facebook URL')
                             ->url()
-                            ->placeholder('https://facebook.com/...')
+                            ->placeholder('https://facebook.com/nama-akun')
+                            ->helperText('Masukkan URL lengkap akun Facebook.')
                             ->nullable(),
                         Forms\Components\TextInput::make('instagram_url')
                             ->label('Instagram URL')
                             ->url()
-                            ->placeholder('https://instagram.com/...')
+                            ->helperText('Masukkan URL lengkap akun Instagram.')
+                            ->placeholder('https://instagram.com/nama-akun')
                             ->nullable(),
                         Forms\Components\TextInput::make('twitter_url')
                             ->label('X / Twitter URL')
                             ->url()
-                            ->placeholder('https://x.com/...')
+                            ->helperText('Masukkan URL lengkap akun twitter.')
+                            ->placeholder('https://x.com/nama-akun')
                             ->nullable(),
                         Forms\Components\TextInput::make('tiktok_url')
                             ->label('TikTok URL')
                             ->url()
-                            ->placeholder('https://tiktok.com/@...')
+                            ->helperText('Masukkan URL lengkap akun Tiktok.')
+                            ->placeholder('https://tiktok.com/nama-akun')
                             ->nullable(),
                         Forms\Components\TextInput::make('youtube_url')
                             ->label('YouTube Channel URL')
                             ->url()
-                            ->placeholder('https://youtube.com/@...')
+                            ->helperText('Masukkan URL lengkap akun Youtube.')
+                            ->placeholder('https://youtube.com/nama-akun')
                             ->nullable(),
                     ])->columns(2)->collapsible(),
             ]);

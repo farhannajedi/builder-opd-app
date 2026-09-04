@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Date;
 $opdSlug = env('APP_ID');
 $opd = \App\Models\Opd::where('slug', $opdSlug)->first();
 $opdConfigs = \App\Models\OpdConfigs::where('opd_id', $opd?->id)->first();
+
 $opdName = $opd->name ?? 'Portal Resmi Instansi';
 
 // Ambil kategori dokumen perencanaan
@@ -52,19 +53,26 @@ $customMenus = \App\Models\PageMenu::where('opd_id', $opd?->id)
     <!-- Bar Logo & Search Desktop -->
     <div class="max-w-screen-lg flex items-center justify-between mx-auto w-full py-3 px-4">
         <div class="flex items-center gap-3">
+            <!-- Logo default sistem -->
             <a href="/" class="block">
                 <img src="{{ asset('assets/images/logo_kab.png') }}"
                     class="w-20 md:w-24 h-10 md:h-12 object-contain hover:scale-105 transition-transform duration-200"
-                    alt="logo_kab">
+                    alt="Logo Kabupaten">
             </a>
+            <!-- Logo OPD yang diupload oleh adminny -->
+            @if ($opdConfigs?->logo)
             <span class="h-8 w-[1px] bg-slate-300 hidden sm:block"></span>
-            <img src="{{ $opdConfigs?->logo ? Storage::url($opdConfigs->logo) : asset('assets/images/logo_kab.png') }}"
+            <img src="{{ Storage::url($opdConfigs->logo) }}"
                 class="w-20 md:w-24 h-10 md:h-12 object-contain hover:scale-105 transition-transform duration-200"
-                alt="logo_opd">
+                alt="Logo {{ $opdName }}">
+            @endif
+            <!-- Favicon -->
+            @if ($opdConfigs?->favicon)
             <span class="h-8 w-[1px] bg-slate-300 hidden sm:block"></span>
-            <img src="{{ $opdConfigs?->favicon ? Storage::url($opdConfigs->favicon) : asset('assets/images/logo_kab.png') }}"
+            <img src="{{ Storage::url($opdConfigs->favicon) }}"
                 class="w-20 md:w-24 h-10 md:h-12 object-contain hover:scale-105 transition-transform duration-200"
-                alt="logo_favicon">
+                alt="Favicon {{ $opdName }}">
+            @endif
         </div>
 
         <!-- Tombol Hamburger Mobile -->

@@ -10,6 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -29,6 +30,11 @@ class UserResource extends Resource
 
     public static function form(Form $form): Form
     {
+
+        // testing agar yang bisa mengubah hanya super admin
+        $user = Auth::user();
+        $isSuperAdmin = is_null($user->opd_id);
+
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
@@ -48,12 +54,16 @@ class UserResource extends Resource
                 Forms\Components\Select::make('opd_id')
                     ->label('OPD')
                     ->relationship('opd', 'name')
-                    ->preload()
+                    ->preload('false')
+                    ->visible($isSuperAdmin) // Hilang dari form jika bukan super admin
                     ->searchable(),
                 Forms\Components\Select::make('roles')
                     ->multiple()
                     ->relationship('roles', 'name')
-                    ->preload(), // fungsinya adalah agar datanya ada
+                    ->label('Role')
+                    ->preload('false')
+                    ->searchable()
+                    ->visible($isSuperAdmin), // Hilang dari form jika bukan super admin
             ]);
     }
 
@@ -75,6 +85,7 @@ class UserResource extends Resource
                     ->label('Roles'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
+                    ->sortable()
                     ->dateTime('d M Y'),
             ])
             ->filters([
@@ -111,5 +122,14 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with([
+                'opd',
+                'roles',
+            ]);
     }
 }
