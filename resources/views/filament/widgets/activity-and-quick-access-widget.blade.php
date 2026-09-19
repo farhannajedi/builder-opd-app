@@ -2,7 +2,7 @@ use Illuminate\Support\Str;
 <x-filament-widgets::widget>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        {{-- Aktivitas --}}
+        <!-- Aktifitas -->
         <div class="lg:col-span-2">
             <x-filament::section>
                 <x-slot name="heading">
@@ -73,7 +73,7 @@ use Illuminate\Support\Str;
             </x-filament::section>
         </div>
 
-        {{-- Akses Cepat --}}
+        <!-- Akses cepat -->
         <div class="lg:col-span-1">
             <x-filament::section>
                 <x-slot name="heading">
