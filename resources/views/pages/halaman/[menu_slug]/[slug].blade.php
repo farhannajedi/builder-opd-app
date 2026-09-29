@@ -34,7 +34,6 @@ $menu = $page->page_menu;
             <span class="text-slate-800 font-bold truncate max-w-[200px] sm:max-w-xs">{{ $page->title }}</span>
         </nav>
 
-        <!-- Header Section -->
         <div class="relative overflow-hidden bg-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-lg">
             <div
                 class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none">
@@ -69,7 +68,7 @@ $menu = $page->page_menu;
             @if(!empty($page->content) && is_array($page->content))
             @foreach ($page->content as $block)
 
-            {{-- Blok Teks / Paragraf Bebas --}}
+            <!-- paragraf bebas -->
             @if (($block['type'] ?? '') === 'paragraph')
             <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm">
                 <div class="prose prose-slate max-w-none text-slate-700 text-sm sm:text-base leading-relaxed">
@@ -77,17 +76,20 @@ $menu = $page->page_menu;
                 </div>
             </div>
 
-            {{-- Blok Gambar / Foto --}}
+            <!-- Gambar -->
             @elseif (($block['type'] ?? '') === 'image_block')
-            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm text-center">
+            <div
+                class="w-full overflow-hidden rounded-2xl bg-slate-100/80 border border-slate-200/80 shadow-sm flex items-center justify-center p-1 sm:p-2">
                 <img src="{{ Storage::url($block['data']['image_url']) }}" alt="Gambar"
-                    class="mx-auto rounded-2xl max-h-[500px] w-full object-cover border border-slate-100 shadow-sm">
-                @if(!empty($block['data']['caption']))
-                <p class="text-xs text-slate-500 mt-3 italic font-medium">{{ $block['data']['caption'] }}</p>
-                @endif
+                    class="w-full h-auto max-h-[700px] object-contain rounded-xl mx-auto">
             </div>
+            @if(!empty($block['data']['caption']))
+            <div class="prose prose-slate max-w-none text-slate-700 text-sm sm:text-base leading-relaxed pt-2">
+                <p class="whitespace-pre-line">{{ $block['data']['caption'] }}</p>
+            </div>
+            @endif
 
-            {{-- Blok Dokumen PDF --}}
+            <!-- Dokumen PDF -->
             @elseif (($block['type'] ?? '') === 'pdf_document')
             <div
                 class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between gap-4">
@@ -99,7 +101,8 @@ $menu = $page->page_menu;
                         </svg>
                     </div>
                     <div>
-                        <h4 class="text-sm font-bold text-slate-800">{{ $block['data']['doc_title'] ?? 'Dokumen PDF' }}
+                        <h4 class="text-sm font-bold text-slate-800">
+                            {{ $block['data']['doc_title'] ?? 'Dokumen PDF' }}
                         </h4>
                         <p class="text-[11px] text-slate-400">Berkas Lampiran Resmi</p>
                     </div>
